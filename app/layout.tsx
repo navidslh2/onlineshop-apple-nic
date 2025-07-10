@@ -7,7 +7,7 @@ import Footer from "@/components/footer/Footer";
 export const metadata: Metadata = {
   title: "اپل ان ای سی",
     icons: {
-    icon: "/favicon.png", // ← Add this line
+    icon: "/favicon.png",
   },
 };
 
