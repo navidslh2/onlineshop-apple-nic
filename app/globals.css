@@ -127,4 +127,7 @@
   .hoverEffect {
     @apply transition-all duration-300 ease-in-out
   }
+  .flexCenter {
+    @apply flex items-center justify-center
+  }
 }

@@ -162,3 +162,12 @@ export const contactInformation:ContactInformationItem[] = [
   { id: 7, title: "رجیستری", href:"/" },
 ];
 
+export const certificate =[
+  {id:1, href:"/nic.webp",alt:"mag.apple"},
+  {id:2,href:"/giftcard.webp",alt:"gift-card"},
+  {id:3 ,href:"/businessunion.png",alt:"business-union"},
+  {id:4,href:"/enamad.png",alt:"enamad"}
+]
+
+
+
