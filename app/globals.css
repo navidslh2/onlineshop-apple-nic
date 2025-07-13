@@ -130,4 +130,7 @@
   .flexCenter {
     @apply flex items-center justify-center
   }
+  .textColor {
+    @apply text-gray-700
+  }
 }

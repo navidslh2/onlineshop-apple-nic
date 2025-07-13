@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl">
       <body
-        className={`antialiased`}
+        className="antialiased bg-gray-100"
       >
         <Navbar />
         {children}

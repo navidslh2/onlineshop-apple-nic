@@ -1,18 +1,17 @@
-import Container from '@/components/container/Container'
-import { Button } from '@/components/ui/button'
-import React from 'react'
-
+import Container from "@/components/container/Container";
+import Introduce from "@/components/introduce/Introduce";
+import ProductsList from "@/components/productsList/ProductsList";
+import React from "react";
 
 const Home = () => {
   return (
     <main>
       <Container>
-        <section>
-          salam
-        </section>
+        <Introduce />
+        <ProductsList />
       </Container>
     </main>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

@@ -12,6 +12,7 @@ export const headerData = [
     href: "/mac",
     tooltip: "mac",
     logo: "/mac-svgrepo-com.svg",
+    img:"/macs.webp"
   },
   {
     id: 4,
@@ -19,6 +20,7 @@ export const headerData = [
     href: "/iphone",
     tooltip: "iphone",
     logo: "/iphone10-svgrepo-com.svg",
+    img:"/iphone16e.webp"
   },
   {
     id: 5,
@@ -26,6 +28,7 @@ export const headerData = [
     href: "/ipad",
     tooltip: "ipad",
     logo: "/ipad-svgrepo-com.svg",
+    img:"/ipads.webp"
   },
   {
     id: 6,
@@ -33,6 +36,7 @@ export const headerData = [
     href: "/airpod",
     tooltip: "airpod",
     logo: "/airpods-pro-svgrepo-com.svg",
+    img:"/airpodss.webp"
   },
   {
     id: 7,
@@ -40,6 +44,7 @@ export const headerData = [
     href: "/watch",
     tooltip: "apple watch",
     logo: "/watch-alt-svgrepo-com.svg",
+    img:"/apple-watchs.webp"
   },
   {
     id: 8,
@@ -47,6 +52,7 @@ export const headerData = [
     href: "/C",
     tooltip: "accessories",
     logo: "/wristwatch-outline-svgrepo-com.svg",
+    img:"/accesorynew.webp"
   },
   {
     id: 9,
@@ -54,6 +60,7 @@ export const headerData = [
     href: "/accessories/headphone-speaker",
     tooltip: "/audio and visual device",
     logo: "speaker-svgrepo-com.svg",
+    img:"/audio-visual.webp"
   },
   {
     id: 10,
