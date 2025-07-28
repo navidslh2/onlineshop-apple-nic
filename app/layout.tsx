@@ -3,10 +3,9 @@ import "./globals.css";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
 
-
 export const metadata: Metadata = {
   title: "اپل ان ای سی",
-    icons: {
+  icons: {
     icon: "/favicon.png",
   },
 };
@@ -18,11 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fa" dir="rtl">
-      <body
-        className="antialiased bg-gray-100"
-      >
+      <body className="antialiased bg-gray-100">
         <Navbar />
-        {children}
+        <main>{children}</main>
         <Footer />
       </body>
     </html>
