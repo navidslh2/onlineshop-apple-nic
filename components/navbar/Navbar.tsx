@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, type FC } from "react";
-import Container from "../container/Container";
 import Logo from "../logo/Logo";
 import HeaderMenu from "../headerMenu/HeaderMenu";
 import SearchBar from "../ui/SearchBar";

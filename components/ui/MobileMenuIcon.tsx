@@ -8,7 +8,7 @@ interface Props {
   isOpen: boolean;
 }
 
-const MobileMenuIcon: FC<Props> = ({ onOpen, onClose, isOpen }) => {
+const MobileMenuIcon = ({ onOpen, onClose, isOpen }: Props) => {
   return (
     <>
       {isOpen ? (

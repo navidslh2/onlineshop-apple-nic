@@ -1,11 +1,13 @@
-export interface Product   {
+export interface Products {
+  category_id?: number;
+  product_name: string;
+  capacity: string;
+  img?: string;
+}
+
+export interface Categories {
   id: number;
-  product_id: number;
-  capacity_id: number;
-  color_id: number;
-  part_number_id: number;
-  active_status_id: number;
-  price: number;
-  discount_price: number;
-  stock: number;
+  name: string;
+  e_name?: string;
+  icon?: string;
 }
