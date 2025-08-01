@@ -8,16 +8,19 @@ interface Props {
   category: Categories;
 }
 const Cards = ({ product, category }: Props) => {
+  
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 overflow-hidden">
       <CardTitle category={category} />
-      <div>
+      <div className="flex gap-4">
         {product.map((item, index) => (
           <Card
             key={index}
             product_name={item.product_name}
             capacity={item.capacity}
-            image={item.img}
+            img={item.img}
+            minPrice={item.minPrice}
+            colors={item.colors}
           />
         ))}
       </div>

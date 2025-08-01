@@ -10,7 +10,7 @@ const CardTitle = ({ category }: Props) => {
   return (
     <div className="flex justify-between border-b-1 border-dashed border-gray-300 h-8 ">
       <div className="border-b-2 border-black h-full leading-[100%] px-2.5">
-        <p>
+        <p className="text-sm">
           {category?.name} | {category?.e_name}
         </p>
       </div>

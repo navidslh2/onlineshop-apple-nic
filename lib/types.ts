@@ -1,8 +1,10 @@
 export interface Products {
   category_id?: number;
   product_name: string;
-  capacity: string;
+  capacity?: string;
   img?: string;
+  minPrice?: number
+  colors?: string
 }
 
 export interface Categories {
