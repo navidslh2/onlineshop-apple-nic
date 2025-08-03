@@ -4,7 +4,7 @@ export interface Products {
   capacity?: string;
   img?: string;
   minPrice?: number
-  colors?: string
+  colors: string
 }
 
 export interface Categories {

@@ -1,6 +1,6 @@
 "use client";
 
-import Cards from "@/components/cards/Cards";
+import Cards from "@/components/card/Cards";
 import Container from "@/components/container/Container";
 import Introduce from "@/components/introduce/Introduce";
 import ProductsList from "@/components/productsList/ProductsList";
