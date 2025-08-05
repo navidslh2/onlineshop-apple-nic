@@ -1,26 +1,26 @@
 .swiper-button-next,
 .swiper-button-prev {
-  background-color: #f3f4f6;
-  width: 40px;
-  height: 40px;
-  color: #b3b3b3;
-  border-radius: 100%;
-  z-index: 1000;
-}
-.swiper-button-next {
-  left: -30px !important;
-}
-.swiper-button-prev {
-  left: -30px !important;
+  background-color: #f3f4f6 !important;
+  width: 40px !important;
+  height: 40px !important;
+  color: #b3b3b3 !important;
+  border-radius: 100% !important;
 }
 
 .swiper-button-next::after,
 .swiper-button-prev::after {
-  font-size: 20px;
+  font-size: 20px !important;
+
 }
 
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
-  color: #f3f4f6;
-  background-color: #a0a0a0;
+  color: #f3f4f6 !important;
+  background-color: #a0a0a0 !important;
+}
+@media (max-width: 1024px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none !important;
+  }
 }

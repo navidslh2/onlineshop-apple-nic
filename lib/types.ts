@@ -5,6 +5,8 @@ export interface Products {
   img?: string;
   minPrice?: number
   colors: string
+  brand?: string
+  simcard?:string
 }
 
 export interface Categories {

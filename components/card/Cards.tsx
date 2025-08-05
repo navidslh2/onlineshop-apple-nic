@@ -6,22 +6,27 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Navigation } from "swiper/modules";
 import "swiper/css/navigation";
-import "./cards.scss"
+import "./cards.scss";
 
 interface Props {
   product: Products[];
   category: Categories;
 }
 const Cards = ({ product, category }: Props) => {
+  console.log(product)
   return (
-    <div className="overflow-visible">
+    <div>
       <CardTitle category={category} />
       <Swiper
+        className="swiper"
         modules={[Navigation]}
         navigation
         spaceBetween={10}
-        slidesPerView={4}
-  
+        slidesPerView={4.4}
+        breakpoints={{
+          0: { slidesPerView: 1.1, navigation: { enabled: false } },
+          768: { slidesPerView: 4.4, navigation: { enabled: true } },
+        }}
       >
         {product.map((item, index) => (
           <SwiperSlide>
@@ -32,6 +37,8 @@ const Cards = ({ product, category }: Props) => {
               img={item.img}
               minPrice={item.minPrice}
               colors={item.colors}
+              brand={item.brand}
+              simcard={item.simcard}
             />
           </SwiperSlide>
         ))}
