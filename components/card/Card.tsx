@@ -46,9 +46,9 @@ const Card = ({
         </div>
       </Link>
       <Link href="/">
-        <div className="bg-white hidden md:flex flex-col md:px-4 md:h-[300px] rounded-xl px-2 gap-4 lg:px-4 overflow-hidden justify-center">
+        <div className="bg-white hidden md:flex flex-col md:px-4 md:h-[300px]  lg:h-[350px] rounded-xl px-2 gap-4 lg:px-4 overflow-hidden justify-center lg:pb-3 lg:max-w-[250px] 2xl:max-w-[300px]">
           <div className="flex flex-col gap-4">
-            <div className="mx-auto w-[100%] aspect-[1/1] relative ">
+            <div className="mx-auto w-[100%] aspect-[1/1] relative xl:w-[75%]">
               <Image
                 src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/${img}`}
                 alt="image"

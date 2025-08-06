@@ -15,10 +15,10 @@ interface Props {
 const Cards = ({ product, category }: Props) => {
   console.log(product)
   return (
-    <div>
+    <div >
       <CardTitle category={category} />
       <Swiper
-        className="swiper"
+        
         modules={[Navigation]}
         navigation
         spaceBetween={10}
@@ -29,9 +29,9 @@ const Cards = ({ product, category }: Props) => {
         }}
       >
         {product.map((item, index) => (
-          <SwiperSlide>
+          <SwiperSlide key={index}>
             <Card
-              key={index}
+              
               product_name={item.product_name}
               capacity={item.capacity}
               img={item.img}
