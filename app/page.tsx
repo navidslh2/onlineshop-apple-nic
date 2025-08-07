@@ -31,8 +31,10 @@ const Home = () => {
     loadProducts();
     loadCategories();
   }, []);
-
-  const iphone = products.filter((p) => p.category_id === 1);
+  useEffect(()=>{
+    console.log(products)
+  },[products])
+  const iphone = products.filter((p) => p.parentId === 1);
   const categoryIphone = categories[0]
   return (
     <Container>

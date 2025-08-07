@@ -7,6 +7,8 @@ export interface Products {
   colors: string
   brand?: string
   simcard?:string
+  parentId?:number
+  categoriesName?:string
 }
 
 export interface Categories {

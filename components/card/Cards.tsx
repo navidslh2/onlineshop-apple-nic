@@ -13,7 +13,6 @@ interface Props {
   category: Categories;
 }
 const Cards = ({ product, category }: Props) => {
-  console.log(product)
   return (
     <div >
       <CardTitle category={category} />
