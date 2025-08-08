@@ -29,16 +29,7 @@ const Cards = ({ product, category }: Props) => {
       >
         {product.map((item, index) => (
           <SwiperSlide key={index}>
-            <Card
-              
-              product_name={item.product_name}
-              capacity={item.capacity}
-              img={item.img}
-              minPrice={item.minPrice}
-              colors={item.colors}
-              brand={item.brand}
-              simcard={item.simcard}
-            />
+            <Card product={item}  />
           </SwiperSlide>
         ))}
       </Swiper>

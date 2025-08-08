@@ -7,48 +7,27 @@ import Link from "next/link";
 import "./cards.scss";
 import Image from "next/image";
 
-const Card = ({
-  product_name,
-  capacity,
-  img,
-  minPrice,
-  colors,
-  brand,
-  simcard,
-}: Products) => {
+interface Props {
+  product: Products;
+}
+
+const Card = ({ product }: Props) => {
+  const {
+    product_name,
+    brand,
+    capacity,
+    simcard,
+    minPrice,
+    img,
+    colors,
+    stock,
+  } = product;
   return (
     <div>
       <Link href="/">
-        <div className="bg-white h-[200px] rounded-xl px-2 pb-5 grid grid-cols-2 gap-4 md:hidden max-w-[500px] ">
-          <div className="flex flex-col justify-center items-center">
-            <div className="flex justify-center items-center w-full h-full relative ">
-              <Image
-                src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/${img}`}
-                alt="image"
-                fill
-                className="object-contain"
-              />
-            </div>
-            <Colors colors={colors} />
-          </div>
-          <div className="flex flex-col justify-center gap-3">
-            <Text>
-              {product_name} | {brand}
-            </Text>
-            <TextTitle>
-              {`${product_name + capacity}`} - {simcard}
-            </TextTitle>
-            <div className="flex justify-end textColor text-sm">
-              <span>{minPrice?.toLocaleString("fa-IR")}</span>
-              <span className="mr-1">تومان</span>
-            </div>
-          </div>
-        </div>
-      </Link>
-      <Link href="/">
-        <div className="bg-white hidden md:flex flex-col md:px-4 md:h-[300px]  lg:h-[350px] rounded-xl px-2 gap-4 lg:px-4 overflow-hidden justify-center lg:pb-3 lg:max-w-[250px] 2xl:max-w-[300px]">
-          <div className="flex flex-col gap-4">
-            <div className="mx-auto w-[100%] aspect-[1/1] relative xl:w-[75%]">
+        <div className="bg-white h-[200px] max-w-[500px] rounded-xl px-2 pb-5 grid grid-cols-2 md:flex md:flex-col md:px-4 md:h-[300px]  lg:h-[350px]  lg:px-4 lg:pb-3 lg:max-w-[250px] 2xl:max-w-[300px] gap-4">
+          <div className="flex flex-col gap-1">
+            <div className="mx-auto w-full sm:h-full md:aspect-[1/1] relative xl:w-[75%]">
               <Image
                 src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/${img}`}
                 alt="image"
@@ -58,17 +37,23 @@ const Card = ({
             </div>
             <Colors colors={colors} />
           </div>
-          <div className="flex flex-col gap-4">
-            <Text className="truncate ">
+          <div className="flex flex-col gap-4 justify-center">
+            <Text className="md:truncate ">
               {product_name} | {brand}
             </Text>
-            <TextTitle className="line-clamp-2">
+            <TextTitle className="md:line-clamp-2">
               {`${product_name + capacity}`} - {simcard}
             </TextTitle>
-            <div className="flex justify-end textColor text-[13px]">
-              <span>{minPrice?.toLocaleString("fa-IR")}</span>
-              <span className="mr-1">تومان</span>
-            </div>
+            {stock > 0 ? (
+              <div className="flex justify-end textColor text-[13px]">
+                <span>{minPrice?.toLocaleString("fa-IR")}</span>
+                <span className="mr-1">تومان</span>
+              </div>
+            ) : (
+              <div className="flex justify-end text-blue-800 text-[15px]">
+                <span>ناموجود</span>
+              </div>
+            )}
           </div>
         </div>
       </Link>

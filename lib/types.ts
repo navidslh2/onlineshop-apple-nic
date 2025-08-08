@@ -1,14 +1,15 @@
 export interface Products {
-  category_id?: number;
+  category_id: number;
   product_name: string;
   capacity?: string;
-  img?: string;
-  minPrice?: number
+  img: string;
+  minPrice: number
   colors: string
-  brand?: string
+  brand: string
   simcard?:string
-  parentId?:number
-  categoriesName?:string
+  parentId:number
+  categoriesName:string
+  stock: number
 }
 
 export interface Categories {
