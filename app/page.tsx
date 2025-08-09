@@ -6,7 +6,7 @@ import Introduce from "@/components/introduce/Introduce";
 import ProductsList from "@/components/productsList/ProductsList";
 import { fetchCategories, fetchProducts } from "@/lib/api";
 import type { Categories, Products } from "@/lib/types";
-import { Loader} from "lucide-react";
+import { Loader } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
 const Home = () => {
@@ -35,9 +35,6 @@ const Home = () => {
     loadProducts();
     loadCategories();
   }, []);
-  useEffect(() => {
-    console.log(products);
-  }, [products]);
   const iphone = products.filter((p) => p.parentId === 1);
   const categoryIphone = categories[0];
   const ipad = products.filter((p) => p.parentId === 14);
@@ -46,10 +43,9 @@ const Home = () => {
     <Container>
       <Introduce />
       <ProductsList />
-
       {loading ? (
         <div className="flex gap-5 m-auto justify-center text-xl">
-          <Loader className="animate-spin"/>
+          <Loader className="animate-spin" />
           <span>در حال بارگذاری محصولات</span>
         </div>
       ) : (

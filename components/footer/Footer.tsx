@@ -15,7 +15,7 @@ const Footer = () => {
   return (
     <footer>
       <Container>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 border-b-1 border-black/9 py-9 gap-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 border-b-1 border-black/9 py-9 gap-10  bg-gray-100">
           <FooterSection data={store} />
           <FooterSection data={accessories} />
           <FooterSection data={newProduct} />

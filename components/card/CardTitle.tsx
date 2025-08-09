@@ -11,12 +11,17 @@ const CardTitle = ({ category }: Props) => {
     <div className="flex justify-between border-b-1 border-dashed border-gray-300 h-8 mb-4 mt-10 ">
       <div className="border-b-2 border-black h-full leading-[100%] px-2.5">
         <p className="text-sm">
-          {category?.name} | {category?.e_name}
+          {category?.name} | {category?.eName}
         </p>
       </div>
-      <Link href="" className="font-bold text-sm text-blue-800 px-2.5">
-        مشاهده سایر&gt;
-      </Link>
+      {category?.slug && (
+        <Link
+          href={category?.slug}
+          className="font-bold text-sm text-blue-800 px-2.5"
+        >
+          مشاهده سایر&gt;
+        </Link>
+      )}
     </div>
   );
 };
