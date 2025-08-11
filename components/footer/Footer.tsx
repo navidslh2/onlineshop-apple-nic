@@ -7,7 +7,7 @@ import {
   contactInformation,
   store,
   newProduct,
-} from "@/constants/data";
+} from "@/lib/data";
 import AboutUs from "./AboutUs";
 import Certificate from "./Certificate";
 

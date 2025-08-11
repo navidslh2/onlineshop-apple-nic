@@ -1,5 +1,5 @@
 import React, { type FC } from "react";
-import { headerData } from "@/constants/data";
+import { headerData } from "@/lib/data";
 import Link from "next/link";
 interface Props {
   isOpen: boolean;

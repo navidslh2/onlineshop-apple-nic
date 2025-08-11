@@ -1,5 +1,5 @@
 "use client";
-import { headerData } from "@/constants/data";
+import { headerData } from "@/lib/data";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 

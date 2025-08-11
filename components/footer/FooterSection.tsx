@@ -1,4 +1,4 @@
-import type { StoreItem } from "@/constants/data";
+import type { StoreItem } from "@/lib/data";
 import Link from "next/link";
 import React, { type FC } from "react";
 

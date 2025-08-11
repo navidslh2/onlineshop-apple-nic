@@ -3,15 +3,17 @@
 import Cards from "@/components/card/Cards";
 import Container from "@/components/container/Container";
 import Introduce from "@/components/introduce/Introduce";
+import Loading from "@/components/loading/Loading";
 import ProductsList from "@/components/productsList/ProductsList";
-import { fetchCategories, fetchProducts } from "@/lib/api";
-import type { Categories, Products } from "@/lib/types";
-import { Loader } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { CategoriesContext } from "@/context/catgoriesContext";
+import { fetchProducts } from "@/lib/api";
+import type { Products } from "@/lib/types";
+import React, { useContext, useEffect, useState } from "react";
 
 const Home = () => {
   const [products, setProducts] = useState<Products[]>([]);
-  const [categories, setCategories] = useState<Categories[]>([]);
+  const context = useContext(CategoriesContext)
+  const {categories} = context
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     async function loadProducts() {
@@ -24,16 +26,7 @@ const Home = () => {
       }
       setLoading(false);
     }
-    async function loadCategories() {
-      try {
-        const data = await fetchCategories();
-        setCategories(data);
-      } catch (error) {
-        console.error("fail to fetch catrgories", error);
-      }
-    }
     loadProducts();
-    loadCategories();
   }, []);
   const iphone = products.filter((p) => p.parentId === 1);
   const categoryIphone = categories[0];
@@ -44,10 +37,7 @@ const Home = () => {
       <Introduce />
       <ProductsList />
       {loading ? (
-        <div className="flex gap-5 m-auto justify-center text-xl">
-          <Loader className="animate-spin" />
-          <span>در حال بارگذاری محصولات</span>
-        </div>
+        <Loading />
       ) : (
         <div>
           <Cards product={iphone} category={categoryIphone} />

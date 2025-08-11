@@ -19,4 +19,6 @@ export interface Categories {
   parent_id?: number;
   slug: string;
   icon?: string;
+  img?:string
+  description?: string
 }

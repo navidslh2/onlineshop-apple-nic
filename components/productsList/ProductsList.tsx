@@ -1,4 +1,4 @@
-import { headerData } from "@/constants/data";
+import { headerData } from "@/lib/data";
 import Link from "next/link";
 import React from "react";
 

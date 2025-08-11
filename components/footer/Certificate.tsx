@@ -1,4 +1,4 @@
-import { certificate } from '@/constants/data'
+import { certificate } from '@/lib/data'
 import React from 'react'
 
 const Certificate = () => {
