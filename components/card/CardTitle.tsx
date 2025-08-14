@@ -1,6 +1,9 @@
 import type { Categories } from "@/lib/types";
+import { HelpCircle, Home, HomeIcon, Smartphone } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
+import DynamicIcon from "../ui/DynamicIcon";
 
 interface Props {
   category: Categories;
@@ -8,10 +11,12 @@ interface Props {
 
 const CardTitle = ({ category }: Props) => {
   return (
-    <div className="flex justify-between border-b-1 border-dashed border-gray-300 h-8 mb-4 mt-10 ">
-      <div className="border-b-2 border-black h-full leading-[100%] px-2.5">
+    <div className="flex justify-between border-b border-dashed border-gray-300 h-8 mb-4 mt-10 ">
+      <div className="border-b-2 border-black h-full leading-[100%] px-2.5 flex gap-2">
+        {category?.icon && <DynamicIcon icon={category.icon} className="text-black/60"  />}
         <p className="text-sm">
-          {category?.name} | {category?.eName}
+          <span>{category?.name}</span>{" "}
+          {category?.eName && <span>| {category?.eName}</span>}
         </p>
       </div>
       {category?.slug && (

@@ -1,5 +1,5 @@
 import React from "react";
-import Container from "../container/Container";
+import Container from "../ui/Container";
 import FooterSection from "./FooterSection";
 import {
   accessories,

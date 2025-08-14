@@ -1,7 +1,7 @@
 "use client";
 
 import Cards from "@/components/card/Cards";
-import Container from "@/components/container/Container";
+import Container from "@/components/ui/Container";
 import Introduce from "@/components/introduce/Introduce";
 import Loading from "@/components/loading/Loading";
 import ProductsList from "@/components/productsList/ProductsList";
@@ -21,6 +21,7 @@ const Home = () => {
       try {
         const data = await fetchProducts();
         setProducts(data);
+        console.log(data)
       } catch (error) {
         console.log((error as Error).message);
       }

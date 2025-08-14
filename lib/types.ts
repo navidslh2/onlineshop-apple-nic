@@ -1,3 +1,5 @@
+import type { Icon } from "next/dist/lib/metadata/types/metadata-types";
+
 export interface Products {
   category_id: number;
   product_name: string;
@@ -18,7 +20,7 @@ export interface Categories {
   eName?: string;
   parent_id?: number;
   slug: string;
-  icon?: string;
+  icon?: "PhoneIphoneIcon" | "TabletMacIcon" | "CableIcon" |"ClassIcon" ;
   img?:string
   description?: string
 }
