@@ -1,5 +1,6 @@
 "use client";
 import CardTitle from "@/components/card/CardTitle";
+import Loading from "@/components/loading/Loading";
 import TopBanner from "@/components/topBanner/TopBanner";
 import Container from "@/components/ui/Container";
 import { CategoriesContext } from "@/context/catgoriesContext";
@@ -12,7 +13,7 @@ const page = () => {
     | undefined;
 
   if (!context) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
   const { categories } = context;
 

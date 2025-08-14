@@ -9,26 +9,22 @@ import { CategoriesContext } from "@/context/catgoriesContext";
 import { fetchProducts } from "@/lib/api";
 import type { Products } from "@/lib/types";
 import React, { useContext, useEffect, useState } from "react";
+import { ProductsContext } from "@/context/productsContext";
 
 const Home = () => {
-  const [products, setProducts] = useState<Products[]>([]);
-  const context = useContext(CategoriesContext)
-  const {categories} = context
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    async function loadProducts() {
-      setLoading(true);
-      try {
-        const data = await fetchProducts();
-        setProducts(data);
-        console.log(data)
-      } catch (error) {
-        console.log((error as Error).message);
-      }
-      setLoading(false);
-    }
-    loadProducts();
-  }, []);
+  const categoriesContext = useContext(CategoriesContext)
+  if(!categoriesContext){
+    return <div>...loading</div>
+  }
+  const {categories} = categoriesContext
+  const productsContext = useContext(ProductsContext)
+  if(!productsContext) {
+    return <div>...loading</div>
+  }
+  const {products, loading} = productsContext
+ 
+  
+
   const iphone = products.filter((p) => p.parentId === 1);
   const categoryIphone = categories[0];
   const ipad = products.filter((p) => p.parentId === 14);

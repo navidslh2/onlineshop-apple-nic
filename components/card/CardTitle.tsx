@@ -1,8 +1,7 @@
 import type { Categories } from "@/lib/types";
-import { HelpCircle, Home, HomeIcon, Smartphone } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
+
 import DynamicIcon from "../ui/DynamicIcon";
 
 interface Props {

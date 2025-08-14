@@ -2,16 +2,13 @@
 
 import { fetchCategories } from "@/lib/api";
 import type { Categories } from "@/lib/types";
-import { data } from "framer-motion/client";
 import { createContext, useEffect, useState } from "react";
 
 interface CategoriesContextType {
   categories: Categories[];
 }
 
-export const CategoriesContext = createContext<CategoriesContextType | null>(
-  null
-);
+export const CategoriesContext = createContext<CategoriesContextType | null>(null);
 
 const CategoriesProvider = ({ children }: { children: React.ReactNode }) => {
   const [categories, setCategories] = useState<Categories[]>([]);
