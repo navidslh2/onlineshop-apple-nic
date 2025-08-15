@@ -29,7 +29,9 @@ const TopBanner = ({ category }: Props) => {
               <Image
                 src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/${img}`}
                 alt="image"
-                fill
+                width={500}
+                height={350}
+                
                 className="object-contain "
               />
             )}

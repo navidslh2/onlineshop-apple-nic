@@ -6,14 +6,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Navigation } from "swiper/modules";
 import "swiper/css/navigation";
-import "./cards.scss";
+import "./SliderCard.scss";
 
 interface Props {
   product: Products[];
   category: Categories;
 }
-const Cards = ({ product, category }: Props) => {
-
+const SliderCards = ({ product, category }: Props) => {
   return (
     <div >
       <CardTitle category={category} />
@@ -38,4 +37,4 @@ const Cards = ({ product, category }: Props) => {
   );
 };
 
-export default Cards;
+export default SliderCards;

@@ -1,5 +1,6 @@
 "use client";
-import Cards from "@/components/card/Cards";
+
+import SliderCards from "@/components/card/SliderCards";
 import Loading from "@/components/loading/Loading";
 import TopBanner from "@/components/topBanner/TopBanner";
 import Container from "@/components/ui/Container";
@@ -28,7 +29,7 @@ const page = () => {
           {categoriesTitle &&
           categoriesTitle.map((ca) => (
             <div key={ca.id}>
-              <Cards product={products.filter(pr=> pr.category_id === ca.id)} category={ca} />
+              <SliderCards product={products.filter(pr=> pr.category_id === ca.id)} category={ca}  />
             </div>
           ))}
         </Container>

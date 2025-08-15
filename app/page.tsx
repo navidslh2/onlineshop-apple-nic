@@ -1,6 +1,4 @@
 "use client";
-
-import Cards from "@/components/card/Cards";
 import Container from "@/components/ui/Container";
 import Introduce from "@/components/introduce/Introduce";
 import Loading from "@/components/loading/Loading";
@@ -8,6 +6,7 @@ import ProductsList from "@/components/productsList/ProductsList";
 import { CategoriesContext } from "@/context/catgoriesContext";
 import React, { useContext } from "react";
 import { ProductsContext } from "@/context/productsContext";
+import SliderCards from "@/components/card/SliderCards";
 
 const Home = () => {
   const categoriesContext = useContext(CategoriesContext)
@@ -35,8 +34,8 @@ const Home = () => {
         <Loading />
       ) : (
         <div>
-          <Cards product={iphone} category={categoryIphone} />
-          <Cards product={ipad} category={categoriesIpad} />
+          <SliderCards product={iphone} category={categoryIphone} />
+          <SliderCards product={ipad} category={categoriesIpad} />
         </div>
       )}
     </Container>

@@ -4,7 +4,6 @@ import TextTitle from "../ui/TextTitle";
 import Text from "../ui/Text";
 import Colors from "./Colors";
 import Link from "next/link";
-import "./cards.scss";
 import Image from "next/image";
 
 interface Props {
