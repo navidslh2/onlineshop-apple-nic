@@ -5,7 +5,6 @@ import { CategoriesContext } from "@/context/catgoriesContext";
 import { ProductsContext } from "@/context/productsContext";
 import Container from "@mui/material/Container";
 import { useParams } from "next/navigation";
-import { useRouter } from "next/router";
 import React, { useContext } from "react";
 interface Props {
   params: {
