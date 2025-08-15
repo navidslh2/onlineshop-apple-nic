@@ -6,9 +6,7 @@ import Introduce from "@/components/introduce/Introduce";
 import Loading from "@/components/loading/Loading";
 import ProductsList from "@/components/productsList/ProductsList";
 import { CategoriesContext } from "@/context/catgoriesContext";
-import { fetchProducts } from "@/lib/api";
-import type { Products } from "@/lib/types";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { ProductsContext } from "@/context/productsContext";
 
 const Home = () => {
