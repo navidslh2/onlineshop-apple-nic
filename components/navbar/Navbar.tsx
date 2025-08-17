@@ -9,6 +9,9 @@ import MobileMenuIcon from "../ui/MobileMenuIcon";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const closeDropDown =()=>{
+    setIsMobileMenuOpen(false)
+  }
   return (
     <header>
       <div className="w-full relative h-[60px] bg-black flex items-center lg:justify-center justify-between px-5 z-50 xl:gap-10 gap-5">
@@ -24,7 +27,7 @@ const Navbar = () => {
           <SearchBar />
         </div>
       </div>
-      <DropDownMenu isOpen={isMobileMenuOpen} />
+      <DropDownMenu isOpen={isMobileMenuOpen} closeDropDown={closeDropDown}/>
     </header>
   );
 };

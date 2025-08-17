@@ -32,6 +32,7 @@ const Card = ({ product }: Props) => {
                 alt="image"
                 fill
                 className="object-contain "
+                sizes="(min-width: 1280px) 75vw, 100vw"
               />
             </div>
             <Colors colors={colors} />
