@@ -26,8 +26,10 @@ const page = () => {
   if (loading) {
     return <Loading />;
   }
+
   const englishName = (params.eName as string).replace(/-/g, " ");
   const category = categories.find((ca) => ca.eName === englishName);
+  const filtredProducts = products.filter((pr)=> pr.eName === englishName)
 
   return (
     <div>
@@ -35,7 +37,7 @@ const page = () => {
         <TopBanner category={category} imageClassName={"h-[370px]"} />
       )}
       <Container>
-        {products && category &&  <Cards product={products} category={category} />}
+        {products && category &&  <Cards product={filtredProducts}/>}
        
       </Container>
     </div>

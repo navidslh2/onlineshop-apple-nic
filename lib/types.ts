@@ -3,6 +3,7 @@ import type { Icon } from "next/dist/lib/metadata/types/metadata-types";
 export interface Products {
   category_id: number;
   product_name: string;
+  eName:string
   capacity?: string;
   img: string;
   minPrice: number;
