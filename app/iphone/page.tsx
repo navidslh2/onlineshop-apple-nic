@@ -11,16 +11,13 @@ import React, { useContext } from "react";
 const page = () => {
   const categoriesContext = useContext(CategoriesContext)
     const prouductsContext = useContext(ProductsContext)
-  if (!categoriesContext || !prouductsContext) {
-    return <Loading />;
-  }
+  if (!categoriesContext || !prouductsContext) return <Loading />;
+  
   const { categories } = categoriesContext;
    const {products, loading } = prouductsContext
 
-  if(loading){
-    return <Loading />;
-  }
-  const category = categories.find((ca) => ca.id === 1);
+  if(loading) return <Loading />;
+    const category = categories.find((ca) => ca.id === 1);
   const categoriesTitle = categories.filter((ca) => ca.parent_id === 1);
   return (
     <div>

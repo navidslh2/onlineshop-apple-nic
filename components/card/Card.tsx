@@ -20,10 +20,14 @@ const Card = ({ product }: Props) => {
     img,
     colors,
     stock,
+    slug,
+    categoryEName,
+    capacityEName
   } = product;
+  const catEName = categoryEName?.replace(/\s+/g ,'-')
   return (
     <div>
-      <Link href="/">
+      <Link href={`${slug}/${catEName}/${catEName}-${capacityEName}`}>
         <div className="bg-white h-[200px] max-w-[500px] rounded-xl px-2 pb-5 grid grid-cols-2 md:flex md:flex-col md:px-4 md:h-[300px]  lg:h-[350px]  lg:px-4 lg:pb-3 lg:max-w-[250px] 2xl:max-w-[300px] gap-4">
           <div className="flex flex-col gap-1">
             <div className="mx-auto w-full h-full md:aspect-[1/1] relative xl:w-[75%]">

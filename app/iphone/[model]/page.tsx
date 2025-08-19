@@ -7,29 +7,19 @@ import { CategoriesContext } from "@/context/catgoriesContext";
 import { ProductsContext } from "@/context/productsContext";
 import { useParams } from "next/navigation";
 import React, { useContext } from "react";
-interface Props {
-  params: {
-    eName: string;
-  };
-}
 
 const page = () => {
   const params = useParams();
   const categoriesContext = useContext(CategoriesContext);
   const productsContext = useContext(ProductsContext);
-  if (!categoriesContext || !productsContext) {
-    return <Loading />;
-  }
+  if (!categoriesContext || !productsContext) return <Loading />;
   const { categories } = categoriesContext;
   const { products, loading } = productsContext;
 
-  if (loading) {
-    return <Loading />;
-  }
-
-  const englishName = (params.eName as string).replace(/-/g, " ");
+  if (loading) return <Loading />;
+  const englishName = (params.model as string).replace(/-/g, " ");
   const category = categories.find((ca) => ca.eName === englishName);
-  const filtredProducts = products.filter((pr)=> pr.eName === englishName)
+  const filtredProducts = products.filter((pr) => pr.eName === englishName);
 
   return (
     <div>
@@ -37,8 +27,7 @@ const page = () => {
         <TopBanner category={category} imageClassName={"h-[370px]"} />
       )}
       <Container>
-        {products && category &&  <Cards product={filtredProducts}/>}
-       
+        {products && category && <Cards product={filtredProducts} />}
       </Container>
     </div>
   );
