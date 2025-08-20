@@ -1,3 +1,4 @@
+
 import { fetchProducts } from "@/lib/api";
 import type { Products } from "@/lib/types";
 import { createContext, useEffect, useState } from "react";

@@ -5,6 +5,7 @@ import TopBanner from "@/components/topBanner/TopBanner";
 import Container from "@/components/ui/Container";
 import { CategoriesContext } from "@/context/catgoriesContext";
 import { ProductsContext } from "@/context/productsContext";
+import { Smartphone } from "lucide-react";
 import { useParams } from "next/navigation";
 import React, { useContext } from "react";
 
