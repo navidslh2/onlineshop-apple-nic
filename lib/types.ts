@@ -41,4 +41,5 @@ export interface ProductsItem {
 export interface Rating {
   productItemId: number;
   avgRating: number;
+  count: number;
 }
