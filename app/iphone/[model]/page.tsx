@@ -3,6 +3,7 @@ import Cards from "@/components/card/Cards";
 import Loading from "@/components/loading/Loading";
 import TopBanner from "@/components/topBanner/TopBanner";
 import Container from "@/components/ui/Container";
+import Text from "@/components/ui/Text";
 import { CategoriesContext } from "@/context/catgoriesContext";
 import { ProductsContext } from "@/context/productsContext";
 import { Smartphone } from "lucide-react";
@@ -29,6 +30,9 @@ const page = () => {
       )}
       <Container>
         {products && category && <Cards product={filtredProducts} />}
+        <div className="flex justify-center my-3">
+          <Text>تعداد کل: {filtredProducts.length}</Text>
+        </div>
       </Container>
     </div>
   );

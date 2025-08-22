@@ -28,3 +28,10 @@ export interface Categories {
   img?: string;
   description?: string;
 }
+
+export interface ProductsItem {
+  id: number;
+  productName: string;
+  capacity?: string;
+  monitorSize?: string;
+}
