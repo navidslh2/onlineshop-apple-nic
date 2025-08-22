@@ -6,6 +6,7 @@ import Container from "@/components/ui/Container";
 import Text from "@/components/ui/Text";
 import { CategoriesContext } from "@/context/catgoriesContext";
 import { ProductsContext } from "@/context/productsContext";
+import { RatingContext } from "@/context/ratingContext";
 import { Smartphone } from "lucide-react";
 import { useParams } from "next/navigation";
 import React, { useContext } from "react";
@@ -14,7 +15,7 @@ const page = () => {
   const params = useParams();
   const categoriesContext = useContext(CategoriesContext);
   const productsContext = useContext(ProductsContext);
-  if (!categoriesContext || !productsContext) return <Loading />;
+  if (!categoriesContext || !productsContext ) return <Loading />;
   const { categories } = categoriesContext;
   const { products, loading } = productsContext;
 

@@ -19,8 +19,6 @@ const BreadCrumb = ({ product }: Props) => {
     );
     setBreadcrumb([category, product.product_name]);
   }, [product]);
-
-  console.log(breadcrumb);
   return (
     <Breadcrumbs aria-label="breadcrumb" separator={<Typography sx={{fontSize:"30px"}}>›</Typography>}>
       <Link underline="hover" color="inherit" href="/" >

@@ -1,4 +1,4 @@
-import type { Categories, Products, ProductsItem } from "./types";
+import type { Categories, Products, ProductsItem, Rating } from "./types";
 
 export async function fetchProducts(): Promise<Products[]> {
   try {
@@ -35,3 +35,14 @@ export async function fetchProductsItem(): Promise<ProductsItem[]> {
     throw error;
   }
 }
+
+export async function fetchRating ():Promise<Rating[]> {
+  try{
+    const res = await fetch("/api/rating")
+    if(!res.ok) throw new Error("fail to fetch rating");
+    const data = await res.json()
+    return data
+  }catch (error) {
+    console.error("fail to fetch rating", error);
+    throw error;
+}}

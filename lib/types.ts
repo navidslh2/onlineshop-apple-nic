@@ -1,6 +1,7 @@
 import type { Icon } from "next/dist/lib/metadata/types/metadata-types";
 
 export interface Products {
+  id: number;
   category_id: number;
   product_name: string;
   eName: string;
@@ -34,4 +35,10 @@ export interface ProductsItem {
   productName: string;
   capacity?: string;
   monitorSize?: string;
+  stock: number;
+}
+
+export interface Rating {
+  productItemId: number;
+  avgRating: number;
 }
