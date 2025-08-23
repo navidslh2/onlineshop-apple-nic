@@ -8,8 +8,10 @@ interface Props {
 }
 const Rating = ({ rating }: Props) => {
   const ratingNumber = Math.ceil(rating[0]?.avgRating ?? 0);
+  const count = rating[0]?.count ?? 0
   return (
     <div className="flex gap-3">
+      <Text className="font-bold">امتیاز:</Text>
       <div className="flex">
         {[...Array(5)].map((_, index) => (
           <Star
@@ -24,7 +26,7 @@ const Rating = ({ rating }: Props) => {
         ))}
       </div>
       <div>
-        <Text className="text-xs" >{Number(Number(rating[0]?.avgRating ?? 0).toFixed(1)).toLocaleString("fa-IR")} از  {Number(rating[0].count).toLocaleString("fa-IR")}</Text>
+        <Text className="text-xs" >{Number(Number(rating[0]?.avgRating ?? 0).toFixed(1)).toLocaleString("fa-IR")} از  {Number(count).toLocaleString("fa-IR")}</Text>
       </div>
     </div>
   );

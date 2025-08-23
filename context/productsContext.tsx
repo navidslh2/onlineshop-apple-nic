@@ -15,9 +15,7 @@ const ProductProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    
-    const loadProducts = async () => {
-        
+    const loadProducts = async () => { 
       try {
         setLoading(true);
         const data = await fetchProducts();

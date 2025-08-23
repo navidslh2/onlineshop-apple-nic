@@ -7,7 +7,7 @@ interface Props {
 }
 
 const Text = ({ children, className }: Props) => {
-  return <div className={cn("text-black/70 text-sm ", className)}>{children}</div>;
+  return <h3 className={cn("text-black/60 text-sm ", className)}>{children}</h3>;
 };
 
 export default Text;

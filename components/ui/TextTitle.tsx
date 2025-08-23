@@ -8,7 +8,7 @@ interface Props {
 
 const TextTitle = ({ children, className }: Props) => {
   return (
-  <div className={cn("text-black/80 text-sm font-bold ", className)}>{children}</div>
+  <h1 className={cn("text-black/80 text-sm font-bold ", className)}>{children}</h1>
   )
 }
 

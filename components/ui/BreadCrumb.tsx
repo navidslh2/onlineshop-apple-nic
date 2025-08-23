@@ -30,7 +30,7 @@ const BreadCrumb = ({ product }: Props) => {
         </Link>
       
       {breadcrumb.map((item, index) => (
-        <Link underline="hover" color="inherit" href={item.en} key={index} sx={{fontFamily:"vazir","&:hover": {color: "black"}}}>
+        <Link underline="hover" color="inherit" href={`/${item.en}`} key={index} sx={{fontFamily:"vazir","&:hover": {color: "black"}}}>
           {item.fa}
         </Link>
       ))}
