@@ -1,11 +1,73 @@
-import React from 'react'
+import type { ProductsItem } from "@/lib/types";
+import Image from "next/image";
+import React from "react";
+import Text from "../ui/Text";
+import Price from "../ui/Price";
 
-const PriceCard = () => {
-  return (
-    <div>
-      card
-    </div>
-  )
+interface Props {
+  productItem: ProductsItem;
+  activeCard: number | null
+  activeCardHandler:(id: number) => void
 }
+const PriceCard = ({ productItem, activeCard, activeCardHandler}: Props) => {
+  console.log(productItem);
+  const {
+    id,
+    url,
+    productName,
+    stock,
+    price,
+    color,
+    warranty,
+    partNumber,
+    activeStatuse,
+  } = productItem;
+  return (
+    <div className={`grid grid-cols-[1fr_3fr] h-[120px] border rounded-2xl border-gray-400 group  ${stock? " hover:border-blue-500" : "" } ${stock === 0 ? "opacity-70 cursor-not-allowed" : "" }${id === activeCard ? "!border-2 !border-blue-900 !opacity-100" : ""}`} onClick={()=> activeCardHandler(id)}>
+      <div className="flex items-center justify-center">
+        <Image
+          src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/${url}`}
+          alt={productName}
+          width={100}
+          height={150}
+          style={{ objectFit: "cover" }}
+        />
+      </div>
+      <div className={`flex flex-col gap-1 justify-center opacity-70 ${stock === 0 ? "" : "group-hover:opacity-100 " } ${id === activeCard ? " !opacity-100" : ""}`}>
+        {color && (
+          <div className="flex ">
+            <Text className="text-xs">رنگ:</Text>
+            <Text className="text-xs text-black/70">{color}</Text>
+          </div>
+        )}
+        {warranty && (
+          <div className="flex">
+            <Text className="text-xs">گارانتی:</Text>
+            <Text className="text-xs">{warranty}</Text>
+          </div>
+        )}
+        {partNumber && (
+          <div className="flex">
+            <Text className="text-xs">پارت نامبر:</Text>
+            <Text className="text-xs">{partNumber}</Text>
+          </div>
+        )}
+        {activeStatuse && (
+          <div className="flex">
+            <Text className="text-xs">وضعیت اکتیو:</Text>
+            <Text className="text-xs">{activeStatuse}</Text>
+          </div>
+        )}
+        <div className="ml-3">
+          <Price
+            stock={stock}
+            price={price}
+            className="text-md text-black font-bold"
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
 
-export default PriceCard
+export default PriceCard;

@@ -5,6 +5,7 @@ import Text from "../ui/Text";
 import Colors from "./Colors";
 import Link from "next/link";
 import Image from "next/image";
+import Price from "../ui/Price";
 
 interface Props {
   product: Products;
@@ -48,16 +49,7 @@ const Card = ({ product }: Props) => {
             <TextTitle className="md:line-clamp-2">
               {`${product_name + capacity}`} - {simcard}
             </TextTitle>
-            {stock > 0 ? (
-              <div className="flex justify-end textColor text-[13px]">
-                <span>{minPrice?.toLocaleString("fa-IR")}</span>
-                <span className="mr-1">تومان</span>
-              </div>
-            ) : (
-              <div className="flex justify-end text-blue-800 text-[15px]">
-                <span>ناموجود</span>
-              </div>
-            )}
+            <Price stock={stock} price={minPrice} />
           </div>
         </div>
       </Link>

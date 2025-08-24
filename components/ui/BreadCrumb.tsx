@@ -14,7 +14,6 @@ interface Props {
   product: Products;
 }
 const BreadCrumb = ({ product }: Props) => {
-  console.log(product)
   const [breadcrumb, setBreadcrumb] = useState<BreadCrumbItem[]>([]);
   useEffect(() => {
     const category = product.product_name.slice(

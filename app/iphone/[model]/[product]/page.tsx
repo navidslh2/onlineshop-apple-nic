@@ -29,8 +29,10 @@ const page = () => {
   const pathCapacity = pathName.product?.slice(
     pathName.product.lastIndexOf("-") + 1
   );
-  const product = products.find((pr) => pr.capacityEName === pathCapacity);
-  
+
+  const pathModel = (pathName?.model as string)?.replace(/-/g, " ")
+  const product = products.find((pr) => pr.capacityEName === pathCapacity && pr.categoryEName === pathModel);
+  const productItem = productsItem.filter( pr => pr.capacityEName === pathCapacity && pr.categoryEName === pathModel)
 
   useEffect(() => {
     if (product?.id && rating.length > 0)
@@ -38,7 +40,7 @@ const page = () => {
   }, [product?.id, dispatch]);
   return (
     <Container className="mt-7">
-      <div className="grid grid-cols-2">
+      <div className="grid grid-cols-[7fr_5fr]">
         <div className="flex flex-col gap-5">
           {product && <BreadCrumb product={product} />}
           <div className="flex gap-5">
@@ -66,7 +68,7 @@ const page = () => {
               <Text>{product?.categoriesName}</Text>
             </div>
           </div>
-          <PriceCards />
+          <PriceCards productItem={productItem} />
         </div>
         <div></div>
       </div>

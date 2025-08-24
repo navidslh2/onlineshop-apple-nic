@@ -32,10 +32,19 @@ export interface Categories {
 
 export interface ProductsItem {
   id: number;
+  categoryId: number;
+  categoryEName: string;
+  capacityEName: string;
   productName: string;
   capacity?: string;
   monitorSize?: string;
   stock: number;
+  url: string;
+  price: number;
+  color: string;
+  warranty?: string;
+  partNumber?: string;
+  activeStatuse?: string;
 }
 
 export interface Rating {
