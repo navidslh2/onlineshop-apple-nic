@@ -23,7 +23,7 @@ const PriceCard = ({ productItem, activeCard, activeCardHandler}: Props) => {
     activeStatuse,
   } = productItem;
   return (
-    <div className={`grid grid-cols-[1fr_3fr] h-[120px] border rounded-2xl border-gray-400 group  ${stock? " hover:border-blue-500" : "" } ${stock === 0 ? "opacity-70 cursor-not-allowed" : "" }${id === activeCard ? "!border-2 !border-blue-900 !opacity-100" : ""}`} onClick={()=> activeCardHandler(id)}>
+    <div className={`grid grid-cols-[1fr_3fr] h-[120px] border rounded-2xl border-gray-400 group  ${stock === 0 ? "opacity-70 cursor-not-allowed" : " hover:border-blue-500" }${id === activeCard  && stock !==0 ? "!border-2 !border-blue-900 !opacity-100" : ""}`}  onClick={()=> activeCardHandler(id)}>
       <div className="flex items-center justify-center">
         <Image
           src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/${url}`}
@@ -33,7 +33,7 @@ const PriceCard = ({ productItem, activeCard, activeCardHandler}: Props) => {
           style={{ objectFit: "cover" }}
         />
       </div>
-      <div className={`flex flex-col gap-1 justify-center opacity-70 ${stock === 0 ? "" : "group-hover:opacity-100 " } ${id === activeCard ? " !opacity-100" : ""}`}>
+      <div className={`flex flex-col gap-1 justify-center opacity-70 ${stock === 0 ? "" : "group-hover:opacity-100 " } ${id === activeCard && stock !==0 ? " !opacity-100" : ""}`}>
         {color && (
           <div className="flex ">
             <Text className="text-xs">رنگ:</Text>

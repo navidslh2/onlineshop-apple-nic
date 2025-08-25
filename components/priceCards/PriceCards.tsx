@@ -12,7 +12,7 @@ const PriceCards = ({ productItem }: Props) => {
     setActiveCard(id)
   }
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="flex flex-col md:grid md:grid-cols-2 gap-3">
       {productItem.map( item => (
         <PriceCard productItem={item} key={item.id} activeCard={activeCard} activeCardHandler={activeCardHandler} />
       ))}

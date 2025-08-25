@@ -1,6 +1,7 @@
 "use client";
 import Loading from "@/components/loading/Loading";
 import PriceCards from "@/components/priceCards/PriceCards";
+import ProductImageSlider from "@/components/priceCards/ProductImageSlider";
 import BreadCrumb from "@/components/ui/BreadCrumb";
 import Container from "@/components/ui/Container";
 import Rating from "@/components/ui/Rating";
@@ -30,9 +31,13 @@ const page = () => {
     pathName.product.lastIndexOf("-") + 1
   );
 
-  const pathModel = (pathName?.model as string)?.replace(/-/g, " ")
-  const product = products.find((pr) => pr.capacityEName === pathCapacity && pr.categoryEName === pathModel);
-  const productItem = productsItem.filter( pr => pr.capacityEName === pathCapacity && pr.categoryEName === pathModel)
+  const pathModel = (pathName?.model as string)?.replace(/-/g, " ");
+  const product = products.find(
+    (pr) => pr.capacityEName === pathCapacity && pr.categoryEName === pathModel
+  );
+  const productItem = productsItem.filter(
+    (pr) => pr.capacityEName === pathCapacity && pr.categoryEName === pathModel
+  );
 
   useEffect(() => {
     if (product?.id && rating.length > 0)
@@ -40,9 +45,12 @@ const page = () => {
   }, [product?.id, dispatch]);
   return (
     <Container className="mt-7">
-      <div className="grid grid-cols-[7fr_5fr]">
-        <div className="flex flex-col gap-5">
-          {product && <BreadCrumb product={product} />}
+      <div>
+        
+      </div>
+      {product && <BreadCrumb product={product} />}
+      <div className="flex flex-col-reverse xl:grid xl:grid-cols-12 gap-5 ">
+        <div className="flex flex-col gap-5 col-span-7">
           <div className="flex gap-5">
             <div className="flex items-center justify-center">
               <Image
@@ -70,7 +78,9 @@ const page = () => {
           </div>
           <PriceCards productItem={productItem} />
         </div>
-        <div></div>
+        <div className="col-span-5">
+          <ProductImageSlider productItem={productItem} />
+        </div>
       </div>
     </Container>
   );
