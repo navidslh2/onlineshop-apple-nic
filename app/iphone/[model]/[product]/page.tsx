@@ -12,13 +12,14 @@ import { ProductsItemContext } from "@/context/productsItemContext";
 import { RatingContext } from "@/context/ratingContext";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 const page = () => {
   const contextProducts = useContext(ProductsContext);
   const contextProductsItem = useContext(ProductsItemContext);
   const contextRating = useContext(RatingContext);
   const pathName = useParams();
+
   if (!contextProducts || !contextProductsItem || !contextRating)
     return <Loading />;
   const { products, loading: productsLoading } = contextProducts;
@@ -43,11 +44,16 @@ const page = () => {
     if (product?.id && rating.length > 0)
       dispatch({ type: "FILTER", payload: product?.id });
   }, [product?.id, dispatch]);
+
+  const [activeCard, setActiveCard] = useState<number | null>(
+    productItem?.length ? productItem[0].id : null
+  );
+  const activeCardHandler = (id: number) => {
+    setActiveCard(id);
+  };
   return (
     <Container className="mt-7">
-      <div>
-        
-      </div>
+      <div></div>
       {product && <BreadCrumb product={product} />}
       <div className="flex flex-col-reverse xl:grid xl:grid-cols-12 gap-5 ">
         <div className="flex flex-col gap-5 col-span-7">
@@ -76,10 +82,10 @@ const page = () => {
               <Text>{product?.categoriesName}</Text>
             </div>
           </div>
-          <PriceCards productItem={productItem} />
+          <PriceCards productItem={productItem}  activeCard={activeCard} activeCardHandler={activeCardHandler}/>
         </div>
         <div className="col-span-5">
-          <ProductImageSlider productItem={productItem} />
+          <ProductImageSlider productItem={productItem} activeCard={activeCard} />
         </div>
       </div>
     </Container>

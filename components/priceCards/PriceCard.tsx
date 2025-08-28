@@ -10,7 +10,6 @@ interface Props {
   activeCardHandler:(id: number) => void
 }
 const PriceCard = ({ productItem, activeCard, activeCardHandler}: Props) => {
-  console.log(productItem);
   const {
     id,
     url,
@@ -23,7 +22,7 @@ const PriceCard = ({ productItem, activeCard, activeCardHandler}: Props) => {
     activeStatuse,
   } = productItem;
   return (
-    <div className={`grid grid-cols-[1fr_3fr] h-[120px] border rounded-2xl border-gray-400 group  ${stock === 0 ? "opacity-70 cursor-not-allowed" : " hover:border-blue-500" }${id === activeCard  && stock !==0 ? "!border-2 !border-blue-900 !opacity-100" : ""}`}  onClick={()=> activeCardHandler(id)}>
+    <div className={`grid grid-cols-[1fr_3fr] h-[120px] border rounded-2xl border-gray-400 group  ${stock === 0 ? "opacity-70 cursor-not-allowed" : " hover:border-blue-500" }${id === activeCard  && stock !==0 ? " border-2 !border-blue-900 opacity-100" : ""}`}  onClick={ stock ===0 ? undefined :()=> activeCardHandler(id)}>
       <div className="flex items-center justify-center">
         <Image
           src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/${url}`}

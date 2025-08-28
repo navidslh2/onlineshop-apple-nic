@@ -4,13 +4,13 @@ import type { ProductsItem } from "@/lib/types";
 
 interface Props {
   productItem: ProductsItem[];
+  activeCard:number | null
+  activeCardHandler: (id : number)=> void
+
 }
 
-const PriceCards = ({ productItem }: Props) => {
-  const [activeCard, setActiveCard] = useState<number | null>(productItem?.length ? productItem[0].id : null)
-  const activeCardHandler = (id: number) =>{
-    setActiveCard(id)
-  }
+const PriceCards = ({ productItem, activeCard, activeCardHandler }: Props) => {
+
   return (
     <div className="flex flex-col md:grid md:grid-cols-2 gap-3">
       {productItem.map( item => (
