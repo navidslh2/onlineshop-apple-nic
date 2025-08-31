@@ -2,6 +2,7 @@
 import Loading from "@/components/loading/Loading";
 import PriceCards from "@/components/priceCards/PriceCards";
 import ProductImageSlider from "@/components/priceCards/ProductImageSlider";
+import VarientSelectors from "@/components/priceCards/VarientSelectors";
 import BreadCrumb from "@/components/ui/BreadCrumb";
 import Container from "@/components/ui/Container";
 import Rating from "@/components/ui/Rating";
@@ -10,12 +11,13 @@ import TextTitle from "@/components/ui/TextTitle";
 import { ProductsContext } from "@/context/productsContext";
 import { ProductsItemContext } from "@/context/productsItemContext";
 import { RatingContext } from "@/context/ratingContext";
+import type { Products } from "@/lib/types";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 
 const page = () => {
-  const contextProducts = useContext(ProductsContext);
+const contextProducts = useContext(ProductsContext);
   const contextProductsItem = useContext(ProductsItemContext);
   const contextRating = useContext(RatingContext);
   const pathName = useParams();
@@ -50,12 +52,16 @@ const page = () => {
   );
   const activeCardHandler = (id: number) => {
     setActiveCard(id);
-  };
+  }
+  const [filter, setFilter] = useState({})
+  const changeVarientHandler = (name:string, value:string) =>{
+    const newFilter ={name: value} 
+    
+  }
   return (
-    <Container className="mt-7">
-      <div></div>
+    <Container className="my-7">
       {product && <BreadCrumb product={product} />}
-      <div className="flex flex-col-reverse xl:grid xl:grid-cols-12 gap-5 ">
+      <div className="flex flex-col-reverse xl:grid xl:grid-cols-12 gap-5 mt-7 ">
         <div className="flex flex-col gap-5 col-span-7">
           <div className="flex gap-5">
             <div className="flex items-center justify-center">
@@ -82,10 +88,25 @@ const page = () => {
               <Text>{product?.categoriesName}</Text>
             </div>
           </div>
-          <PriceCards productItem={productItem}  activeCard={activeCard} activeCardHandler={activeCardHandler}/>
+          {product && (
+            <VarientSelectors
+              product={product}
+              changeVarientHandler={changeVarientHandler}
+              filter={filter}
+            />
+          )}
+
+          <PriceCards
+            productItem={productItem}
+            activeCard={activeCard}
+            activeCardHandler={activeCardHandler}
+          />
         </div>
         <div className="col-span-5">
-          <ProductImageSlider productItem={productItem} activeCard={activeCard} />
+          <ProductImageSlider
+            productItem={productItem}
+            activeCard={activeCard}
+          />
         </div>
       </div>
     </Container>

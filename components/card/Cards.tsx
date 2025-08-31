@@ -32,6 +32,7 @@ const Cards = ({ product }: Props) => {
     setSelectedFilter(filter);
     setFilterProduct(sortProduct(product,filter))
   };
+  console.log(filterProduct)
   return (
     <div className="flex flex-col gap-10 mt-12">
       <Filter

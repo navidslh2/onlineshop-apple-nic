@@ -11,7 +11,7 @@ import { Smartphone } from "lucide-react";
 import { useParams } from "next/navigation";
 import React, { useContext } from "react";
 
-const page = () => {
+const Page = () => {
   const params = useParams();
   const categoriesContext = useContext(CategoriesContext);
   const productsContext = useContext(ProductsContext);
@@ -23,7 +23,6 @@ const page = () => {
   const englishName = (params.model as string).replace(/-/g, " ");
   const category = categories.find((ca) => ca.eName === englishName);
   const filtredProducts = products.filter((pr) => pr.eName === englishName);
-  
   return (
     <div>
       {category && (
@@ -39,4 +38,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

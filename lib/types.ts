@@ -17,6 +17,8 @@ export interface Products {
   slug?: string;
   categoryEName: string;
   stock: number;
+  warranty?: string
+  partpartNumber?: string
 }
 
 export interface Categories {

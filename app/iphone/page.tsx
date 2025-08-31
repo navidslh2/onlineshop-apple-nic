@@ -8,7 +8,7 @@ import { CategoriesContext } from "@/context/catgoriesContext";
 import { ProductsContext } from "@/context/productsContext";
 import React, { useContext } from "react";
 
-const page = () => {
+const Page = () => {
   const categoriesContext = useContext(CategoriesContext)
     const prouductsContext = useContext(ProductsContext)
   if (!categoriesContext || !prouductsContext) return <Loading />;
@@ -36,4 +36,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
