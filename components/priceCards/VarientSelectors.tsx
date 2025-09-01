@@ -11,11 +11,9 @@ const VarientSelectors = ({
   product,
   changeVarientHandler , filterVarient
 }: Props) => {
-  // const { colors, warranty } = product;
-  // const colorArray = colors.split(",")
-
+  console.log(product)
   return (
-    <div className="border-b pb-8">
+    <div className="flex flex-col  border-b pb-8 gap-2">
       {/* {colors && (
         <div>
           <label htmlFor="color">رنگ :</label>
@@ -32,7 +30,7 @@ const VarientSelectors = ({
       )} */}
       {Object.entries(product) &&
         Object.entries(product)?.map((item, index) => {
-          if (item[0] === "warranty" || item[0] === "partNumber"){
+          if (item[0] === "warranty" || item[0] === "partNumber" || item[0] === "activeStatus" || item[0] === "color"){
             return <VarientSelector key={index} information={item} changeVarientHandler={changeVarientHandler} filterVarient={filterVarient}/>;
           }
           return null

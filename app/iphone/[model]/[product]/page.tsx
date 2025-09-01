@@ -24,7 +24,7 @@ const productItemFilter = (
   const filterVarientArray = Object.entries(filterVarient).filter(
     (item) => item[1] != "all"
   );
-
+  console.log(productItem)
   return productItem.filter((pr) =>
     filterVarientArray.every(
       ([key, value]) => pr[key as keyof ProductsItem] === value
@@ -69,18 +69,17 @@ const page = () => {
   const [filterVarient, setFilterVarient] = useState({
     warranty: "all",
     partNumber: "all",
+    active: "all",
+    color: "all"
   });
 
   const changeVarientHandler = (name: string, value: string) => {
-    console.log(filterVarient,'1')
     setFilterVarient((prev) => ({ ...prev, [name]: value }));
     setProductItem(productsItemFiltered)
   };
 
   useEffect(() => {
-    console.log(productItem, "1");
     const newProductItem = productItemFilter(productItem, filterVarient);
-    console.log(newProductItem, "2");
     setProductItem(newProductItem);
   }, [filterVarient]);
 
@@ -90,7 +89,6 @@ const page = () => {
   const activeCardHandler = (id: number) => {
     setActiveCard(id);
   };
-  console.log(filterVarient,'2')
   return (
     <Container className="my-7">
       {product && <BreadCrumb product={product} />}

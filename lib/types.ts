@@ -18,7 +18,9 @@ export interface Products {
   categoryEName: string;
   stock: number;
   warranty?: string
-  partpartNumber?: string
+  partNumber?: string
+  activeStatus? : string
+  color?: string
 }
 
 export interface Categories {
@@ -46,7 +48,7 @@ export interface ProductsItem {
   color: string;
   warranty?: string;
   partNumber?: string;
-  activeStatuse?: string;
+  activeStatus?: string;
 }
 
 export interface Rating {
