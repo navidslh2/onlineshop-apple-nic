@@ -11,13 +11,29 @@ import TextTitle from "@/components/ui/TextTitle";
 import { ProductsContext } from "@/context/productsContext";
 import { ProductsItemContext } from "@/context/productsItemContext";
 import { RatingContext } from "@/context/ratingContext";
-import type { Products } from "@/lib/types";
+import type { Products, ProductsItem } from "@/lib/types";
+import { Filter } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 
+const productItemFilter = (
+  productItem: ProductsItem[],
+  filterVarient: { [key: string]: string }
+) => {
+  const filterVarientArray = Object.entries(filterVarient).filter(
+    (item) => item[1] != "all"
+  );
+
+  return productItem.filter((pr) =>
+    filterVarientArray.every(
+      ([key, value]) => pr[key as keyof ProductsItem] === value
+    )
+  );
+};
+
 const page = () => {
-const contextProducts = useContext(ProductsContext);
+  const contextProducts = useContext(ProductsContext);
   const contextProductsItem = useContext(ProductsItemContext);
   const contextRating = useContext(RatingContext);
   const pathName = useParams();
@@ -38,26 +54,43 @@ const contextProducts = useContext(ProductsContext);
   const product = products.find(
     (pr) => pr.capacityEName === pathCapacity && pr.categoryEName === pathModel
   );
-  const productItem = productsItem.filter(
-    (pr) => pr.capacityEName === pathCapacity && pr.categoryEName === pathModel
-  );
 
   useEffect(() => {
     if (product?.id && rating.length > 0)
       dispatch({ type: "FILTER", payload: product?.id });
   }, [product?.id, dispatch]);
 
+  const productsItemFiltered = productsItem.filter(
+        (pr) =>
+          pr.capacityEName === pathCapacity && pr.categoryEName === pathModel
+      )
+  const [productItem, setProductItem] = useState<ProductsItem[]>(productsItemFiltered);
+
+  const [filterVarient, setFilterVarient] = useState({
+    warranty: "all",
+    partNumber: "all",
+  });
+
+  const changeVarientHandler = (name: string, value: string) => {
+    console.log(filterVarient,'1')
+    setFilterVarient((prev) => ({ ...prev, [name]: value }));
+    setProductItem(productsItemFiltered)
+  };
+
+  useEffect(() => {
+    console.log(productItem, "1");
+    const newProductItem = productItemFilter(productItem, filterVarient);
+    console.log(newProductItem, "2");
+    setProductItem(newProductItem);
+  }, [filterVarient]);
+
   const [activeCard, setActiveCard] = useState<number | null>(
     productItem?.length ? productItem[0].id : null
   );
   const activeCardHandler = (id: number) => {
     setActiveCard(id);
-  }
-  const [filter, setFilter] = useState({})
-  const changeVarientHandler = (name:string, value:string) =>{
-    const newFilter ={name: value} 
-    
-  }
+  };
+  console.log(filterVarient,'2')
   return (
     <Container className="my-7">
       {product && <BreadCrumb product={product} />}
@@ -92,7 +125,7 @@ const contextProducts = useContext(ProductsContext);
             <VarientSelectors
               product={product}
               changeVarientHandler={changeVarientHandler}
-              filter={filter}
+              filterVarient={filterVarient}
             />
           )}
 
@@ -113,4 +146,4 @@ const contextProducts = useContext(ProductsContext);
   );
 };
 
-export default page;
+export default React.memo(page);

@@ -5,11 +5,11 @@ import VarientSelector from "./Varientselector";
 interface Props {
   product: Products;
   changeVarientHandler:(name:string , value:string)=> void
-  filter: { [key:string]: string}
+  filterVarient: { [key:string]: string}
 }
 const VarientSelectors = ({
   product,
-  changeVarientHandler , filter
+  changeVarientHandler , filterVarient
 }: Props) => {
   // const { colors, warranty } = product;
   // const colorArray = colors.split(",")
@@ -33,7 +33,7 @@ const VarientSelectors = ({
       {Object.entries(product) &&
         Object.entries(product)?.map((item, index) => {
           if (item[0] === "warranty" || item[0] === "partNumber"){
-            return <VarientSelector key={index} information={item} changeVarientHandler={changeVarientHandler} filter={filter}/>;
+            return <VarientSelector key={index} information={item} changeVarientHandler={changeVarientHandler} filterVarient={filterVarient}/>;
           }
           return null
             

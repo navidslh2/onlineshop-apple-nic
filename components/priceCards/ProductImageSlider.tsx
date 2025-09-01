@@ -50,7 +50,7 @@ const ProductImageSlider = ({ productItem,activeCard }: Props) => {
             <div className="relative w-full h-[500px] bg-transparent">
               <Image
                 src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/${item}`}
-                alt={item}
+                alt={item || "product"}
                 fill
                 className="object-contain"
                 sizes="(max-width: 768px) 100vw, 600px"
@@ -77,7 +77,7 @@ const ProductImageSlider = ({ productItem,activeCard }: Props) => {
             <div className="relative h-20 w-20 bg-transparent">
               <Image
                 src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/${item}`}
-                alt={item}
+                alt={item || "product"}
                 fill
                 className="object-contain rounded-md border border-gray-200"
                 sizes="80px"
