@@ -24,7 +24,7 @@ const productItemFilter = (
   const filterVarientArray = Object.entries(filterVarient).filter(
     (item) => item[1] != "all"
   );
-  console.log(productItem)
+
   return productItem.filter((pr) =>
     filterVarientArray.every(
       ([key, value]) => pr[key as keyof ProductsItem] === value
@@ -69,7 +69,7 @@ const page = () => {
   const [filterVarient, setFilterVarient] = useState({
     warranty: "all",
     partNumber: "all",
-    active: "all",
+    activeStatus: "all",
     color: "all"
   });
 
