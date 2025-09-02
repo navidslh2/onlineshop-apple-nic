@@ -1,22 +1,47 @@
 import React, { useState } from "react";
 import PriceCard from "./PriceCard";
 import type { ProductsItem } from "@/lib/types";
+import { AnimatePresence, motion, scale, stagger } from "framer-motion";
 
 interface Props {
   productItem: ProductsItem[];
-  activeCard:number | null
-  activeCardHandler: (id : number)=> void
-
+  activeCard: number | null;
+  activeCardHandler: (id: number) => void;
 }
 
 const PriceCards = ({ productItem, activeCard, activeCardHandler }: Props) => {
+  const container = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { staggerChildren: 0.2 } },
+  };
 
+  const cardItem = {
+    hidden: { scale: 0 },
+    show: { scale: 1 },
+  };
   return (
-    <div className="flex flex-col md:grid md:grid-cols-2 gap-3">
-      {productItem.map( item => (
-        <PriceCard productItem={item} key={item.id} activeCard={activeCard} activeCardHandler={activeCardHandler} />
-      ))}
-    </div>
+    <AnimatePresence>
+      <motion.div
+        className="flex flex-col md:grid md:grid-cols-2 gap-3"
+        variants={container}
+        initial="hidden"
+        animate="show"
+      >
+        {productItem.map((item) => (
+          <motion.div
+            key={item.id}
+            variants={cardItem}
+            transition={{ duration: 0.7, ease: "easeInOut" }}
+          >
+            <PriceCard
+              productItem={item}
+              activeCard={activeCard}
+              activeCardHandler={activeCardHandler}
+            />
+          </motion.div>
+        ))}
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

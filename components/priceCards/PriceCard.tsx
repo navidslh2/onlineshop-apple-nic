@@ -6,10 +6,11 @@ import Price from "../ui/Price";
 
 interface Props {
   productItem: ProductsItem;
-  activeCard: number | null
-  activeCardHandler:(id: number) => void
+  activeCard: number | null;
+  activeCardHandler: (id: number) => void;
 }
-const PriceCard = ({ productItem, activeCard, activeCardHandler}: Props) => {
+
+const PriceCard = ({ productItem, activeCard, activeCardHandler }: Props) => {
   const {
     id,
     url,
@@ -19,10 +20,19 @@ const PriceCard = ({ productItem, activeCard, activeCardHandler}: Props) => {
     color,
     warranty,
     partNumber,
-    activeStatuse,
+    activeStatus,
   } = productItem;
   return (
-    <div className={`grid grid-cols-[1fr_3fr] h-[120px] border rounded-2xl border-gray-400 group  ${stock === 0 ? "opacity-70 cursor-not-allowed" : " hover:border-blue-500" }${id === activeCard  && stock !==0 ? " border-2 !border-blue-900 opacity-100" : ""}`}  onClick={ stock ===0 ? undefined :()=> activeCardHandler(id)}>
+    <div
+      className={`grid grid-cols-[1fr_3fr] h-[120px] border rounded-2xl border-gray-400 group  ${
+        stock === 0 ? "opacity-70 cursor-not-allowed" : " hover:border-blue-500"
+      }${
+        id === activeCard && stock !== 0
+          ? " border-2 !border-blue-900 opacity-100"
+          : ""
+      }`}
+      onClick={stock === 0 ? undefined : () => activeCardHandler(id)}
+    >
       <div className="flex items-center justify-center">
         <Image
           src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/${url}`}
@@ -32,7 +42,11 @@ const PriceCard = ({ productItem, activeCard, activeCardHandler}: Props) => {
           style={{ objectFit: "cover" }}
         />
       </div>
-      <div className={`flex flex-col gap-1 justify-center opacity-70 ${stock === 0 ? "" : "group-hover:opacity-100 " } ${id === activeCard && stock !==0 ? " !opacity-100" : ""}`}>
+      <div
+        className={`flex flex-col gap-1 justify-center opacity-70 ${
+          stock === 0 ? "" : "group-hover:opacity-100 "
+        } ${id === activeCard && stock !== 0 ? " !opacity-100" : ""}`}
+      >
         {color && (
           <div className="flex ">
             <Text className="text-xs">رنگ:</Text>
@@ -51,10 +65,10 @@ const PriceCard = ({ productItem, activeCard, activeCardHandler}: Props) => {
             <Text className="text-xs">{partNumber}</Text>
           </div>
         )}
-        {activeStatuse && (
+        {activeStatus && (
           <div className="flex">
             <Text className="text-xs">وضعیت اکتیو:</Text>
-            <Text className="text-xs">{activeStatuse}</Text>
+            <Text className="text-xs">{activeStatus}</Text>
           </div>
         )}
         <div className="ml-3">
