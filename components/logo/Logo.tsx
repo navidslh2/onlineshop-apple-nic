@@ -1,10 +1,13 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 const Logo = () => {
   return (
     <Link className="group flex items-center font-bold gap-3 relative" href={"/"}>
-      <img src="logo.png" alt="logo" className="w-10" />
+      <div>
+        <Image src={"/logo.png"}  alt="logo" width={30} height={30}/>
+      </div>
       <span className="bg-gradient-to-l from-[#818f30] via-[#7aa596] to-[#80858a] bg-clip-text text-transparent group-hover:text-[#818f30] hoverEffect">
         نوید صالحی
       </span>

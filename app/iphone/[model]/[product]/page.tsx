@@ -11,8 +11,7 @@ import TextTitle from "@/components/ui/TextTitle";
 import { ProductsContext } from "@/context/productsContext";
 import { ProductsItemContext } from "@/context/productsItemContext";
 import { RatingContext } from "@/context/ratingContext";
-import type { Products, ProductsItem } from "@/lib/types";
-import { Filter } from "lucide-react";
+import type {  ProductsItem } from "@/lib/types";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
@@ -76,7 +75,7 @@ const page = () => {
   const changeVarientHandler = (name: string, value: string) => {
     setFilterVarient((prev) => ({ ...prev, [name]: value }));
     setProductItem(productsItemFiltered)
-  };
+  }; 
 
   useEffect(() => {
     const newProductItem = productItemFilter(productItem, filterVarient);

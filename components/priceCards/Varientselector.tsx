@@ -15,6 +15,7 @@ const VarientSelector = ({
 }: Props) => {
   let label: string | null = null;
   let varient: string[] | null = null;
+  let colorVarient: {[key: string]: string} = ({});
   switch (information[0]) {
     case "warranty":
       label = "گارانتی :";
@@ -30,13 +31,43 @@ const VarientSelector = ({
       break;
     case "color":
       label = "رنگ :";
-      varient = information[1].split(",");
+      information[1].split(",").forEach(item => {
+        const [name,code] = item.split(":")
+       colorVarient[name]= code
+      } )
+      varient = Object.keys(colorVarient) 
       break;
   }
-  console.log(filterVarient);
-  console.log(information[0]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropdownaRef = useRef<HTMLDivElement>(null);
+
+  const getButtonText = () => {
+    if (filterVarient[information[0]] === "all" && information[0] === 'color')
+      return (
+        <div className="pr-8">
+          <span
+            className="absolute right-1 w-6 h-6 rounded-full shadow-inner shadow-black/40"
+            style={{ backgroundColor: "white" }}
+          />
+          همه موارد
+        </div>
+      );
+    else if (filterVarient[information[0]] === "all") return " همه موارد";
+    else if (colorVarient && filterVarient[information[0]] !== "all")
+      return (
+        <div className="pr-8">
+          {colorVarient && (
+            <span
+              className="absolute right-1 w-6 h-6 rounded-full shadow-inner shadow-black/40"
+              style={{ backgroundColor: colorVarient[filterVarient[information[0]]] }}
+            />
+          )}
+
+          {filterVarient[information[0]]}
+        </div>
+      );
+    return filterVarient[information[0]];
+  };
 
   useEffect(() => {
     function handelClickOutside(event: MouseEvent) {
@@ -50,6 +81,7 @@ const VarientSelector = ({
     document.addEventListener("click", handelClickOutside);
     return () => document.removeEventListener("click", handelClickOutside);
   }, []);
+
   return (
     <div
       className=" flex items-center justify-start w-full xl:max-w-[200px]  whitespace-nowrap"
@@ -60,15 +92,11 @@ const VarientSelector = ({
         <button
           onClick={(e) => {
             setIsOpen(!isOpen);
-            e.stopPropagation();
           }}
           className="overflow-hidden xl:max-w-[150px] flex items-center justify-between text-black/50 text-sm "
         >
-          <span>
-            {filterVarient[information[0]] === "all"
-              ? "همه موارد"
-              : filterVarient[information[0]]}
-          </span>
+          {getButtonText()}
+
           <ChevronDown />
         </button>
         <AnimatePresence>
@@ -84,10 +112,17 @@ const VarientSelector = ({
                 onClick={(e) => {
                   changeVarientHandler(information[0], "all");
                   setIsOpen(false);
-                  e.stopPropagation();
                 }}
-                className="hover:bg-black/90 hover:text-white flex items-center p-3"
+                className={`hover:bg-black/90 hover:text-white flex items-center p-3 relative ${
+                  colorVarient && "pr-11"
+                }`}
               >
+                {!colorVarient && (
+                  <span
+                    className="absolute right-3 w-6 h-6 rounded-full shadow-inner shadow-black/40"
+                    style={{ backgroundColor: "white" }}
+                  />
+                )}
                 همه موارد
               </li>
               {varient?.map((item, index) => (
@@ -96,10 +131,18 @@ const VarientSelector = ({
                   onClick={(e) => {
                     changeVarientHandler(information[0], item);
                     setIsOpen(false);
-                    e.stopPropagation();
                   }}
-                  className="hover:bg-black/90 hover:text-white flex items-center p-3"
+                  className={`hover:bg-black/90 hover:text-white flex items-center p-3 ${
+                    colorVarient && "pr-11"
+                  }`}
                 >
+                  {colorVarient && (
+                    <span
+                      className="absolute right-3 w-6 h-6 rounded-full shadow-inner shadow-black/40"
+                      style={{ backgroundColor: colorVarient[item] }}
+                    />
+                  )}
+
                   {item}
                 </li>
               ))}
