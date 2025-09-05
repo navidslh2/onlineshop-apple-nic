@@ -15,7 +15,7 @@ interface Props {
 const SliderCards = ({ product, category }: Props) => {
   return (
     <div >
-      <CardTitle category={category} />
+      <CardTitle category={category}  />
       <Swiper
         
         modules={[Navigation]}

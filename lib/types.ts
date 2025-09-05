@@ -14,13 +14,14 @@ export interface Products {
   simcard?: string;
   parentId: number;
   categoriesName: string;
-  slug?: string;
+  slug: string;
   categoryEName: string;
   stock: number;
   warranty?: string
   partNumber?: string
   activeStatus? : string
   color?: string
+  productEName: string
 }
 
 export interface Categories {
@@ -49,6 +50,7 @@ export interface ProductsItem {
   warranty?: string;
   partNumber?: string;
   activeStatus?: string;
+  productEName: string 
 }
 
 export interface Rating {

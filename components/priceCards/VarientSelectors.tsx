@@ -12,16 +12,15 @@ const VarientSelectors = ({
   changeVarientHandler,
   filterVarient,
 }: Props) => {
-  const colorsCode = product.colors;
   return (
     <div className="flex flex-col items-center justify-center lg:flex-row border-b pb-8 gap-4 xl:gap-0 max-w-[800px]">
       {Object.entries(product) &&
         Object.entries(product)?.map((item, index) => {
           if (
-            item[0] === "warranty" ||
-            item[0] === "partNumber" ||
-            item[0] === "activeStatus" ||
-            item[0] === "color"
+            item[0] === "warranty"  && item[1] !== null ||
+            item[0] === "partNumber"  && item[1] !== null  ||
+            item[0] === "activeStatus"  && item[1] !== null  ||
+            item[0] === "color"  && item[1] !== null 
           ) {
             return (
               <VarientSelector

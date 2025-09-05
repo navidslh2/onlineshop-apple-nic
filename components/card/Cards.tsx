@@ -32,7 +32,6 @@ const Cards = ({ product }: Props) => {
     setSelectedFilter(filter);
     setFilterProduct(sortProduct(product,filter))
   };
-  console.log(filterProduct)
   return (
     <div className="flex flex-col gap-10 mt-12">
       <Filter
@@ -41,7 +40,7 @@ const Cards = ({ product }: Props) => {
       />
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-5">
         {filterProduct.map((item, index) => (
-          <Card product={item} key={index} />
+          <Card product={item} key={index}/>
         ))}
       </div>
     </div>

@@ -3,7 +3,6 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
-import Product from "../product/Product";
 
 interface BreadCrumbItem {
   fa:string
@@ -20,7 +19,8 @@ const BreadCrumb = ({ product }: Props) => {
       0,
       product.product_name.indexOf(" ")
     );
-    setBreadcrumb([{fa:category, en:product?.slug}, {fa:product?.product_name,en:product?.eName}]);
+    const slug = product?.eName.replace(/\s+/g, "-")
+    setBreadcrumb([{fa:category, en:product?.slug}, {fa:product?.product_name,en:`${product?.slug}/${slug}`}]);
   }, [product]);
   return (
     <Breadcrumbs aria-label="breadcrumb" separator={<Typography sx={{fontSize:"30px"}}>›</Typography>}>

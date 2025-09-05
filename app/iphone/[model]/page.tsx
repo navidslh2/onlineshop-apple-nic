@@ -6,13 +6,11 @@ import Container from "@/components/ui/Container";
 import Text from "@/components/ui/Text";
 import { CategoriesContext } from "@/context/catgoriesContext";
 import { ProductsContext } from "@/context/productsContext";
-import { RatingContext } from "@/context/ratingContext";
-import { Smartphone } from "lucide-react";
 import { useParams } from "next/navigation";
 import React, { useContext } from "react";
 
-const Page = () => {
-  const params = useParams();
+const Model = () => {
+  const params = useParams()
   const categoriesContext = useContext(CategoriesContext);
   const productsContext = useContext(ProductsContext);
   if (!categoriesContext || !productsContext ) return <Loading />;
@@ -38,4 +36,5 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Model
+;

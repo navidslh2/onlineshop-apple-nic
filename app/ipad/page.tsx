@@ -22,7 +22,7 @@ const page = () => {
   const categoriesTitle = categories.filter((ca) => ca.parent_id === 14);
   return (
     <div>
-      {category && <TopBanner category={category} />}
+      {category && <TopBanner category={category} imageClassName={"h-[370px]"}/>}
         <Container>
           {categoriesTitle &&
           categoriesTitle.map((ca) => (

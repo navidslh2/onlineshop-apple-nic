@@ -8,7 +8,7 @@ import { CategoriesContext } from "@/context/catgoriesContext";
 import { ProductsContext } from "@/context/productsContext";
 import React, { useContext } from "react";
 
-const Page = () => {
+const Category = () => {  
   const categoriesContext = useContext(CategoriesContext)
     const prouductsContext = useContext(ProductsContext)
   if (!categoriesContext || !prouductsContext) return <Loading />;
@@ -21,12 +21,12 @@ const Page = () => {
   const categoriesTitle = categories.filter((ca) => ca.parent_id === 1);
   return (
     <div>
-      {category && <TopBanner category={category} imageClassName={"h-[370px]"}/>}
+      {category && <TopBanner category={category} imageClassName={"h-[355px]"}/>}
         <Container>
           {categoriesTitle &&
           categoriesTitle.map((ca) => (
             <div key={ca.id}>
-              <SliderCards product={products.filter(pr=> pr.category_id === ca.id)} category={ca}  />
+              <SliderCards product={products.filter(pr=> pr.category_id === ca.id)} category={ca} />
             </div>
           ))}
         </Container>
@@ -36,4 +36,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Category;
