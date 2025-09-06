@@ -133,7 +133,7 @@ const Product = () => {
               />
             </div>
             <div>
-              <TextTitle className="text-2xl">{`${product?.product_name} ظرفیت ${product?.capacity} -${product?.simcard}`}</TextTitle>
+              <TextTitle className="text-2xl">{`${product?.product_name}  ${product?.capacity ?  ` ظرفیت ${product?.capacity}`: ""} ${product?.simcard ? ` - ${product?.simcard}` : ""}`}</TextTitle>
               <Text>{pathName.product}</Text>
             </div>
           </div>

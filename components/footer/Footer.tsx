@@ -10,6 +10,7 @@ import {
 } from "@/lib/data";
 import AboutUs from "./AboutUs";
 import Certificate from "./Certificate";
+import Logo from "../logo/Logo";
 
 const Footer = () => {
   return (

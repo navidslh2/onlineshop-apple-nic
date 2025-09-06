@@ -13,7 +13,7 @@ const VarientSelectors = ({
   filterVarient,
 }: Props) => {
   return (
-    <div className="flex flex-col items-center justify-center lg:flex-row border-b pb-8 gap-4 xl:gap-0 max-w-[800px]">
+    <div className="flex flex-col items-center justify-start lg:flex-row border-b pb-8 gap-4 xl:gap-0 max-w-[800px]">
       {Object.entries(product) &&
         Object.entries(product)?.map((item, index) => {
           if (
