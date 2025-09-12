@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, type FC } from "react";
+import React, { useEffect, useState, type FC } from "react";
 import Logo from "../logo/Logo";
 import HeaderMenu from "../headerMenu/HeaderMenu";
 import SearchBar from "../ui/SearchBar";
@@ -19,9 +19,9 @@ const Navbar = () => {
     setIsShowMenuBag(!isShowMenuBag)
   }
   return (
-    <header>
+    <header className="relative">
       <Backdrop isShow={isShowMenuBag}  showMenuBagHandler={showMenuBagHandler} />
-      <div className="w-full relative h-[60px] bg-black flex items-center lg:justify-center justify-between px-5 z-50 xl:gap-10 gap-5">
+      <div className="w-full fixed top-0 h-[60px] bg-black flex items-center lg:justify-center justify-between px-5 z-50 xl:gap-10 gap-5">
         <MobileMenuIcon
           onOpen={() => setIsMobileMenuOpen(true)}
           onClose={() => setIsMobileMenuOpen(false)}
@@ -30,9 +30,9 @@ const Navbar = () => {
         <Logo />
         <HeaderMenu />
         <div className="flex items-center xl:gap-10 gap-5 xl:w-[70px] w-[50px] justify-end">
-          <div className="relative">
+          <div className="sm:relative">
             {isMobileMenuOpen ? null : <CartIcon showMenuBagHandler={showMenuBagHandler}/>}
-            <MenuBag isShowMenuBag={isShowMenuBag}/>
+            <MenuBag isShowMenuBag={isShowMenuBag} showMenuBagHandler={showMenuBagHandler}/>
           </div>
           <SearchBar />
         </div>

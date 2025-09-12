@@ -9,6 +9,7 @@ import { ProductsContext } from "@/context/productsContext";
 import { useParams } from "next/navigation";
 import React, { useContext } from "react";
 
+
 const Model = () => {
   const params = useParams()
   const categoriesContext = useContext(CategoriesContext);

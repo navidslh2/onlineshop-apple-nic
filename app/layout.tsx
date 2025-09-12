@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.png",
   },
+  description:"Navid Salehi Project"
 };
 
 export default function RootLayout({
@@ -21,7 +22,7 @@ export default function RootLayout({
       <body className="antialiased  bg-gray-100">
         <Provider>
           <Navbar />
-          <main>{children}</main>
+          <main className="pt-[60px]">{children}</main>
           <Footer />
         </Provider>
       </body>

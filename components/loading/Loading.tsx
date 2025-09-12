@@ -3,7 +3,7 @@ import React from "react";
 
 const Loading = () => {
   return (
-    <div className="flex gap-5 m-auto justify-center text-xl">
+    <div className="flex gap-5 w-screen h-screen justify-center items-center text-xl">
       <Loader className="animate-spin" />
       <span>در حال بارگذاری محصولات...</span>
     </div>

@@ -7,18 +7,15 @@ import { CategoriesContext } from "@/context/catgoriesContext";
 import React, { useContext } from "react";
 import { ProductsContext } from "@/context/productsContext";
 import SliderCards from "@/components/card/SliderCards";
-import { useParams } from "next/navigation";
 
 const Home = () => {
   const categoriesContext = useContext(CategoriesContext)
-  if(!categoriesContext){
-    return <div>...loading</div>
+  const productsContext = useContext(ProductsContext)
+
+  if(!categoriesContext || !productsContext){
+    return <Loading />
   }
   const {categories} = categoriesContext
-  const productsContext = useContext(ProductsContext)
-  if(!productsContext) {
-    return <div>...loading</div>
-  }
   const {products, loading} = productsContext
  
   const iphone = products.filter((p) => p.parentId === 1);
