@@ -28,8 +28,7 @@ const SigninContent = ({page, email, password, inputValueHandler, error, handelL
               />
               <span
                 className={`absolute bg-gray-100 px-2 text-gray-500 z-50 top-3 right-3 peer-placeholder-shown:top-2 peer-focus:-top-3 hoverEffect ${
-                  email || password && "!-top-3"
-                }`}
+                  email || password ? "!-top-3" : "" }`}
               >
                 {page === "email"? "ایمیل" : "پسورد"}
               </span>

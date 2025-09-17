@@ -36,13 +36,26 @@ export async function fetchProductsItem(): Promise<ProductsItem[]> {
   }
 }
 
-export async function fetchRating ():Promise<Rating[]> {
-  try{
-    const res = await fetch("/api/rating")
-    if(!res.ok) throw new Error("fail to fetch rating");
-    const data = await res.json()
-    return data
-  }catch (error) {
+export async function fetchRating(): Promise<Rating[]> {
+  try {
+    const res = await fetch("/api/rating");
+    if (!res.ok) throw new Error("fail to fetch rating");
+    const data = await res.json();
+    return data;
+  } catch (error) {
     console.error("fail to fetch rating", error);
     throw error;
-}}
+  }
+}
+
+export async function fetchEmailCheck(email: string): Promise<any> {
+  try {
+    const res = await fetch("/api/emailCheck", {method: "POST", headers:{"Content-type": "Application/json"},body:JSON.stringify(email) });
+    if (!res.ok) throw new Error("fail to fetch emailCheck");
+    const data = await res.json();
+    return data
+  } catch (error) {
+    console.error("fail to fetch emailCheck", error);
+    throw error;
+  }
+}

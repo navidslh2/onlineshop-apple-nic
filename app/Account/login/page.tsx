@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import SigninContent from "@/components/signinContent/SigninContent";
+import Credentials from "next-auth/providers/credentials";
+import { fetchEmailCheck } from "@/lib/api";
 
 const Login = () => {
   const [page, setPage] = useState("email");
@@ -13,6 +15,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+
+  
 
   const inputValueHandler = (e)=>{
     if (page === "email") {
@@ -26,15 +30,33 @@ const Login = () => {
     );
   };
 
-  const handelLogin = async (e: React.FormEvent) => {
+  const handelemail = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     if (!validateEmail(email)) {
       setError("فرمت ایمیل صحیح نیست");
       return;
     }
-
+    const res = await fetchEmailCheck(email)
+    if(res) setPage("password")
+    if(!res) router.push("/Account/register")
   };
+
+  const handelPassword = async (e: React.FormEvent) =>{
+    e.preventDefault()
+    setError(null )
+    if (password.trim().length < 6){
+      setError("رمز عبور باید حداقل 6 کارکتر باشد")
+      return
+    }
+    const res = await signIn("credentials", {redirect:false, email, password})
+    if(res?.error){
+      setError("ایمیل یا رمز عبور نادرست است")
+      setPassword("")
+    }else{
+      router.push("/")
+    }
+  }
   return (
     <div className="mt-15 flex flex-col gap-8">
       <div className="flex items-center justify-center relative">
@@ -184,7 +206,9 @@ const Login = () => {
           className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2"
         />
       </div>
-      {page === "email" && <SigninContent page={page} email={email} password={password} inputValueHandler={inputValueHandler} error={error} handelLogin={handelLogin}/>}
+      {page === "email" && <SigninContent page={page} email={email} password={password} inputValueHandler={inputValueHandler} error={error} handelLogin={handelemail}/>}
+      {page === "password" && <SigninContent page={page} email={email} password={password} inputValueHandler={inputValueHandler} error={error} handelLogin={handelPassword}/>}
+
     </div>
   );
 };
