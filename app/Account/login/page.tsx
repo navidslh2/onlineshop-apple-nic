@@ -1,12 +1,9 @@
 "use client";
-import TextTitle from "@/components/ui/TextTitle";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import SigninContent from "@/components/signinContent/SigninContent";
-import Credentials from "next-auth/providers/credentials";
 import { fetchEmailCheck } from "@/lib/api";
 
 const Login = () => {
@@ -38,8 +35,9 @@ const Login = () => {
       return;
     }
     const res = await fetchEmailCheck(email)
-    if(res) setPage("password")
-    if(!res) router.push("/Account/register")
+    if(res.length >0) setPage("password")
+    localStorage.setItem("registerEmail", email)
+    if(res.length === 0) router.push("/Account/register")
   };
 
   const handelPassword = async (e: React.FormEvent) =>{

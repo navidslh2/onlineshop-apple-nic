@@ -59,3 +59,15 @@ export async function fetchEmailCheck(email: string): Promise<any> {
     throw error;
   }
 }
+
+export async function fetchRegister(email:string, password:string):Promise<any> {
+  try{
+    const res = await fetch("/api/register", {method: "POST", headers:{"Content-type":"Application/json"}, body:JSON.stringify({email, password})})
+    if (!res.ok) throw new Error("fail to fetchRegister");
+    const data = await res.json();
+    return data
+  }catch (error) {
+    console.error("fail to fetch fetchRegister", error);
+    throw error;
+  }
+}

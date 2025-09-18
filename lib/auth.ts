@@ -14,7 +14,6 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials):Promise<any> {
-        console.log("ok",'56')
         if (!credentials?.email || !credentials.password) return null;
         const [rows] = await pool.query(
           "SELECT id, name, email, password FROM users WHERE email = ?",
