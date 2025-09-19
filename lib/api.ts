@@ -84,18 +84,18 @@ export async function fetchRegister(
   }
 }
 
-export async function fechCart(id: number): Promise<any> {
+export async function fetchCart(email: string): Promise<any> {
   try {
     const res = await fetch("/api/cart", {
-      method: "GET",
+      method: "POST",
       headers: { "Content-type": "Application/json" },
-      body: JSON.stringify(id),
+      body: JSON.stringify({email}),
     });
     if (!res.ok) throw new Error("fail to fetchCart");
-    const data = await res.json();
-    return data;
+    const data = await res.json()
+    return data
   } catch (error) {
-    console.error("fail to fetch fetchRegister", error);
+    console.error("fail to fetchCart", error);
     throw error;
   }
 }

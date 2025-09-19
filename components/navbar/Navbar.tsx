@@ -11,17 +11,20 @@ import Backdrop from "../ui/Backdrop";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isShowMenuBag, setIsShowMenuBag] = useState<boolean>(false)
+  const [isShowMenuBag, setIsShowMenuBag] = useState<boolean>(false);
   const closeDropDown = () => {
     setIsMobileMenuOpen(false);
   };
-  const showMenuBagHandler = ()=>{
-    setIsShowMenuBag(!isShowMenuBag)
-  }
+  const showMenuBagHandler = () => {
+    setIsShowMenuBag(!isShowMenuBag);
+  };
   return (
     <header className="relative">
-      <Backdrop isShow={isShowMenuBag}  showMenuBagHandler={showMenuBagHandler} />
-      <div className="w-full fixed top-0 h-[60px] bg-black flex items-center lg:justify-center justify-between px-5 z-50 xl:gap-10 gap-5">
+      <Backdrop
+        isShow={isShowMenuBag}
+        showMenuBagHandler={showMenuBagHandler}
+      />
+      <div className="w-full fixed top-0 h-[60px] bg-black flex items-center lg:justify-center justify-between px-5 z-30 xl:gap-10 gap-5">
         <MobileMenuIcon
           onOpen={() => setIsMobileMenuOpen(true)}
           onClose={() => setIsMobileMenuOpen(false)}
@@ -31,13 +34,20 @@ const Navbar = () => {
         <HeaderMenu />
         <div className="flex items-center xl:gap-10 gap-5 xl:w-[70px] w-[50px] justify-end">
           <div className="sm:relative">
-            {isMobileMenuOpen ? null : <CartIcon showMenuBagHandler={showMenuBagHandler}/>}
-            <MenuBag isShowMenuBag={isShowMenuBag} showMenuBagHandler={showMenuBagHandler}/>
+            {isMobileMenuOpen ? null : (
+              <CartIcon showMenuBagHandler={showMenuBagHandler} />
+            )}
+            <MenuBag
+              isShowMenuBag={isShowMenuBag}
+              showMenuBagHandler={showMenuBagHandler}
+            />
           </div>
           <SearchBar />
         </div>
       </div>
-      <DropDownMenu isOpen={isMobileMenuOpen} closeDropDown={closeDropDown} />
+      <div className="relative">
+        <DropDownMenu isOpen={isMobileMenuOpen} closeDropDown={closeDropDown} />
+      </div>
     </header>
   );
 };

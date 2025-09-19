@@ -42,7 +42,6 @@ const varientFilter = (
   const filterVarientArray = Object.entries(filterVarient).filter(
     (item) => item[1] != "all"
   );
-
   return productItem.filter((pr) =>
     filterVarientArray.every(
       ([key, value]) => pr[key as keyof ProductsItem] === value
@@ -117,7 +116,6 @@ const Product = () => {
   const activeCardHandler = (id: number) => {
     setActiveCard(id);
   };
-  console.log(product,'1')
   return (
     <Container className="my-7">
       {product && <BreadCrumb product={product} />}
@@ -133,7 +131,7 @@ const Product = () => {
               />
             </div>
             <div>
-              <TextTitle className="text-2xl">{`${product?.product_name}  ${product?.capacity ?  ` ظرفیت ${product?.capacity}`: ""} ${product?.simcard ? ` - ${product?.simcard}` : ""}`}</TextTitle>
+              <TextTitle className="text-2xl">{`${product?.product_name}  ${product?.capacity &&  ` ظرفیت ${product?.capacity}`} ${product?.simcard && ` - ${product?.simcard}`}`}</TextTitle>
               <Text>{pathName.product}</Text>
             </div>
           </div>

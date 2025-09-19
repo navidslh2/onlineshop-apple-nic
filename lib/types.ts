@@ -17,11 +17,11 @@ export interface Products {
   slug: string;
   categoryEName: string;
   stock: number;
-  warranty?: string
-  partNumber?: string
-  activeStatus? : string
-  color?: string
-  productEName: string
+  warranty?: string;
+  partNumber?: string;
+  activeStatus?: string;
+  color?: string;
+  productEName: string;
 }
 
 export interface Categories {
@@ -50,7 +50,9 @@ export interface ProductsItem {
   warranty?: string;
   partNumber?: string;
   activeStatus?: string;
-  productEName: string 
+  productEName: string;
+  brand:string
+  quantity?: number
 }
 
 export interface Rating {
@@ -58,3 +60,9 @@ export interface Rating {
   avgRating: number;
   count: number;
 }
+
+export interface cart {
+  quantity: number
+  productId: number
+}
+

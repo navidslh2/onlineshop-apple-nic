@@ -1,5 +1,6 @@
 "use client";
 
+import CartProvider from "@/context/cartContext";
 import CategoriesProvider from "@/context/catgoriesContext";
 import ProductProvider from "@/context/productsContext";
 import ProductsItemProvider from "@/context/productsItemContext";
@@ -13,7 +14,7 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
       <ProductProvider>
         <ProductsItemProvider>
           <RatingProvider>
-            <SessionProvider>{children}</SessionProvider>
+            <SessionProvider><CartProvider>{children}</CartProvider></SessionProvider>
           </RatingProvider>
         </ProductsItemProvider>
       </ProductProvider>

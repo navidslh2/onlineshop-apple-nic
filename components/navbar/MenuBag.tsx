@@ -9,8 +9,7 @@ interface Props {
   showMenuBagHandler: () => void;
 }
 const MenuBag = ({ isShowMenuBag, showMenuBagHandler }: Props) => {
-  const { status } = useSession();
-  console.log(status, "5");
+  const  {status}  = useSession();
   return (
     <AnimatePresence>
       {isShowMenuBag && (
