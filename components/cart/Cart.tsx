@@ -20,7 +20,8 @@ const Cart = ({ cartProductItem }: Props) => {
     capacityEName,
     price,
     stock,
-    quantity
+    quantity,
+    id,
   } = cartProductItem;
   console.log(cartProductItem);
   return (
@@ -45,7 +46,8 @@ const Cart = ({ cartProductItem }: Props) => {
             <Price price={price} stock={stock} className="text-md"/>
           </div>
           <div>
-            <QuantitySelector quantity={quantity}/>
+            
+            {quantity && <QuantitySelector quantity={quantity} id={id} stock={stock}/>}
           </div>
         </div>
       ):""}

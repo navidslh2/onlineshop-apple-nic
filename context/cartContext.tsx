@@ -9,17 +9,19 @@ interface CartContextType {
   dispatch: React.Dispatch<Action>;
 }
 
-interface Action {
-  type: string;
-  payload: cart[];
-}
+type Action = {type:'fetch', payload: cart[] } | {type:'increasequantity', payload: number } | {type:'reducequantity', payload: number }
+
 
 export const CartContext = createContext<CartContextType | null>(null);
 
 const cartItemsReducer = (state: cart[], action: Action) => {
   switch (action.type) {
     case "fetch":
-      state = [...action.payload];
+     return  [...action.payload];
+    case "increasequantity":
+     return state.map(item => item.productId === action.payload ? {...item,quantity: item.quantity+1}: item)
+    case "reducequantity":
+      return state.map(item => item.productId === action.payload ? {...item, quantity: item.quantity-1}: item)
     default:
       return state;
   }
