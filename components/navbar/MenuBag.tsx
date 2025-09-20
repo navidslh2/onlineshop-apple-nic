@@ -7,8 +7,9 @@ import { signOut, useSession } from "next-auth/react";
 interface Props {
   isShowMenuBag: boolean;
   showMenuBagHandler: () => void;
+  cartItemCount:number
 }
-const MenuBag = ({ isShowMenuBag, showMenuBagHandler }: Props) => {
+const MenuBag = ({ isShowMenuBag, showMenuBagHandler, cartItemCount }: Props) => {
   const  {status}  = useSession();
   return (
     <AnimatePresence>
@@ -28,7 +29,7 @@ const MenuBag = ({ isShowMenuBag, showMenuBagHandler }: Props) => {
               <ShoppingBag size={20} strokeWidth={1} />
               <Link href="/payment/index" className="hover:underline" onClick={showMenuBagHandler}>
                 <span className="/payment/index">سبد خرید</span>
-                <span>(0)</span>
+                <span>{`(${cartItemCount})`}</span>
               </Link>
             </li>
             <li className="flex items-center justify-start gap-2 font-thin text-sm text-blue-900">

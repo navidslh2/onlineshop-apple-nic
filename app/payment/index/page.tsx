@@ -11,9 +11,8 @@ import React, { useContext, useEffect, useState } from "react";
 const IndexPayment = () => {
   const cartContext = useContext(CartContext);
   const productItemContext = useContext(ProductsItemContext);
-  if (!cartContext || !productItemContext) return <Loading />;
-  const { cartItems } = cartContext;
-  const { productsItem, loading } = productItemContext;
+  const cartItems  = cartContext?.cartItems ?? []
+  const productsItem = productItemContext?.productsItem ?? []
   const [cartProductsItem, setCartProductsItem] = useState<ProductsItem[]>([])
   useEffect(() => {
     const ProductItem = productsItem.filter((pr) =>
