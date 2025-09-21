@@ -9,7 +9,7 @@ interface Props {
 
 const Carts = ({cartProductsItem}:Props) => {
   return (
-    <div className='py-6 flex flex-col gap-2'>
+    <div className='py-6 flex flex-col  gap-3'>
       <TextTitle className='text-black/60'>محصولات</TextTitle>
       {cartProductsItem.map(pr=>
         <Cart  cartProductItem={pr} key={pr.id}/>

@@ -1,5 +1,6 @@
 import { afterEach } from "node:test";
 import type { Categories, Products, ProductsItem, Rating } from "./types";
+import { DELETE } from "@/app/api/deleteCartProduct/route";
 
 export async function fetchProducts(): Promise<Products[]> {
   try {
@@ -97,5 +98,23 @@ export async function fetchCart(email: string): Promise<any> {
   } catch (error) {
     console.error("fail to fetchCart", error);
     throw error;
+  }
+}
+
+export async function fetchChangeQuentity(action:number, email:string, productId:number ) {
+  try{
+    fetch('/api/changeQuentity',{method:'POST', headers: { "Content-type": "Application/json" }, body: JSON.stringify({action, email, productId })})
+  }catch(error){
+    console.log('fail to fetchChange', error)
+    throw error
+  }
+}
+
+export async function fetchDeletecartProduct(email:string, productId:number) {
+  try{
+    fetch("/api/deleteCartProduct",{method:'DELETE', headers:{"Content-type": "Application/json"},body:JSON.stringify({email, productId})})
+  }catch(error){
+    console.log('fail to deletecartProduct', error)
+    throw error
   }
 }

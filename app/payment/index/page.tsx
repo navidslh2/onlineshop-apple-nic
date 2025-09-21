@@ -29,11 +29,11 @@ const IndexPayment = () => {
       <TextTitle className="border-b text-xl font-medium flex justify-center py-5 mt-8">
         سبد خرید
       </TextTitle>
-      <div className="grid grid-cols-12">
-        <div className="col-span-8">
-          <Carts cartProductsItem={cartProductsItem} />
+      <div className="flex flex-col gap-3 md:grid md:grid-cols-12">
+        <div className="md:col-span-8">
+          <Carts cartProductsItem={cartProductsItem}/>
         </div>
-        <div className="col-span-4"></div>
+        <div className="md:col-span-4"></div>
       </div>
     </Container>
   );

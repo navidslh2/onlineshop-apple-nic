@@ -8,7 +8,7 @@ interface Props {
 const Price = ({ price, stock, className }: Props) => {
   const priceNmber = price.toLocaleString("fa-IR");
   return (
-    <div>
+    <div >
       {stock ? (
         <div className={cn("flex justify-end textColor text-[13px] gap-1 font-bold", className)}>
           <span>{priceNmber}</span>

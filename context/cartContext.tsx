@@ -9,7 +9,7 @@ interface CartContextType {
   dispatch: React.Dispatch<Action>;
 }
 
-type Action = {type:'fetch', payload: cart[] } | {type:'increasequantity', payload: number } | {type:'reducequantity', payload: number }
+type Action = {type:'fetch', payload: cart[] } | {type:'increasequantity', payload: number } | {type:'reducequantity', payload: number } | {type:'delete', payload: number }
 
 
 export const CartContext = createContext<CartContextType | null>(null);
@@ -22,7 +22,9 @@ const cartItemsReducer = (state: cart[], action: Action) => {
      return state.map(item => item.productId === action.payload ? {...item,quantity: item.quantity+1}: item)
     case "reducequantity":
       return state.map(item => item.productId === action.payload ? {...item, quantity: item.quantity-1}: item)
-    default:
+    case "delete":
+      return state.filter(item => item.productId !== action.payload)
+    default: 
       return state;
   }
 };
