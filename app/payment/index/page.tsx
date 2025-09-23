@@ -1,5 +1,6 @@
 "use client";
 import Carts from "@/components/cart/Carts";
+import Invoice from "@/components/cart/Invoice";
 import Loading from "@/components/loading/Loading";
 import Container from "@/components/ui/Container";
 import TextTitle from "@/components/ui/TextTitle";
@@ -18,22 +19,24 @@ const IndexPayment = () => {
     const ProductItem = productsItem.filter((pr) =>
       cartItems.some((item) => item.productId === pr.id)
     );
-    const hjhj = (ProductItem.map((pr) => {
+    const cartProducts = (ProductItem.map((pr) => {
       const cartItem = cartItems.find((item) => item.productId === pr.id);
       return { ...pr, quantity: cartItem?.quantity };
     }));
-    setCartProductsItem(hjhj)
+    setCartProductsItem(cartProducts)
   }, [cartItems]);
   return (
     <Container>
       <TextTitle className="border-b text-xl font-medium flex justify-center py-5 mt-8">
         سبد خرید
       </TextTitle>
-      <div className="flex flex-col gap-3 md:grid md:grid-cols-12">
+      <div className="flex flex-col gap-4 md:grid md:grid-cols-12 md:gap-10">
         <div className="md:col-span-8">
           <Carts cartProductsItem={cartProductsItem}/>
         </div>
-        <div className="md:col-span-4"></div>
+        <div className="md:col-span-4">
+          <Invoice cartProductsItem={cartProductsItem} />
+        </div>
       </div>
     </Container>
   );

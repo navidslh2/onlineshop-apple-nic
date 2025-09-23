@@ -39,9 +39,9 @@ const Cart = ({ cartProductItem }: Props) => {
 
   return (
       
-        <div className="w-full h-[230px] pb-5 flex flex-col md:flex-row xl:h-[150px] bg-white  justify-between gap-2 rounded-md p-2">
-          <div className="flex w-[380px] md:w-[220px] items-center gap-2">
-            <div className="relative  w-full md:w-[200px] h-[130px]">
+        <div className="w-full h-[230px] pb-5 flex flex-col md:flex-row md:h-[150px] bg-white  justify-between gap-2 rounded-md p-2 shadow-md">
+          <div className="flex w-[380px] md:w-[240px] md:gap-0 lg:w-[320px] items-center gap-2">
+            <div className="relative  w-full md:w-[120px] h-[130px]">
               <Image
                 src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/${url}`}
                 fill
@@ -49,17 +49,17 @@ const Cart = ({ cartProductItem }: Props) => {
                 className="object-contain"
               />
             </div>
-            <div className="flex flex-col">
-              <TextTitle className="truncate md:line-clamp-2" >{`${productName}  ${
+            <div className="flex flex-col md:w-[130px] lg:w-[200px]">
+              <TextTitle className="max-md:truncate md:line-clamp-4" >{`${productName}  ${
                 capacity ? ` ظرفیت ${capacity}` : ""
               }`}</TextTitle>
-              <Text className="md:line-clamp-2">{`${productEName} ${capacityEName && capacityEName}`}</Text>
+              <Text className="line-clamp-3">{`${productEName} ${capacityEName && capacityEName}`}</Text>
             </div>
           </div>
           <div className="flex items-center justify-end">
-            <Price price={price} stock={stock} className="text-md md:flex-col" />
+            <Price price={price} stock={stock} className="text-md md:flex-col lg:flex-row " />
           </div>
-          <div className="flex gap-10 md:gap-1 items-center justify-center">
+          <div className="flex gap-10 md:gap-2 lg:pl-5 lg:gap-8 xl:gap-10 items-center justify-center">
             {quantity && (
               <QuantitySelector
                 quantity={quantity}

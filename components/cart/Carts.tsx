@@ -1,6 +1,6 @@
 import React from 'react'
 import Cart from './Cart'
-import type { cart, ProductsItem } from '@/lib/types'
+import type {  ProductsItem } from '@/lib/types'
 import TextTitle from '../ui/TextTitle'
 
 interface Props {
