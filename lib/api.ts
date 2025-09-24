@@ -118,3 +118,23 @@ export async function fetchDeletecartProduct(email:string, productId:number) {
     throw error
   }
 }
+
+export async function fetchPayment(cartId:number) {
+  try{
+    fetch("/api/payment",{method:"POST", headers:{ "Content-type": "Application/json"},body:JSON.stringify({cartId})})
+  }catch(error){
+    console.log("fail to payment", error)
+    throw error
+  }
+}
+
+export async function fetchAddToCart(email:string, productItemId:number) {
+  try{
+    const res = await fetch ("/api/addtocart",{method:"POST",headers:{ "Content-type": "Application/json"},body:JSON.stringify({email, productItemId})})
+    const data =await res.json()
+    return data
+  }catch (error) {
+    console.error("fail to add to cart", error);
+    throw error;
+  }
+}

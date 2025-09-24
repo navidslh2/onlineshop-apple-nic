@@ -64,5 +64,6 @@ export interface Rating {
 export interface cart {
   quantity: number
   productId: number
+  cartId: number
 }
 

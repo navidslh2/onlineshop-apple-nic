@@ -7,7 +7,6 @@ import Container from "@/components/ui/Container";
 import { CategoriesContext } from "@/context/catgoriesContext";
 import { ProductsContext } from "@/context/productsContext";
 import Head from "next/head";
-import { useParams } from "next/navigation";
 import React, { useContext } from "react";
 
 

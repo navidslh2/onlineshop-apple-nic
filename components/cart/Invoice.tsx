@@ -3,6 +3,7 @@ import TextTitle from "../ui/TextTitle";
 import Text from "../ui/Text";
 import type { Products, ProductsItem } from "@/lib/types";
 import Price from "../ui/Price";
+import Link from "next/link";
 
 interface Props {
   cartProductsItem: ProductsItem[];
@@ -27,7 +28,7 @@ const Invoice = ({ cartProductsItem }: Props) => {
         <TextTitle className="font-bold text-lg">جمع سبد خرید:</TextTitle>
         <Price price={totalprice} stock={1} className="text-lg text-black/80" />
       </div>
-      <button className="bg-blue-800  hover:bg-blue-600 hoverEffect p-2 flex items-center justify-center rounded-md text-white">تایید و ثبت سفارش</button>
+      <Link href="/payment/index/pay" className="bg-blue-800  hover:bg-blue-600 hoverEffect p-2 flex items-center justify-center rounded-md text-white">تایید و ثبت سفارش</Link>
     </div>
   );
 };

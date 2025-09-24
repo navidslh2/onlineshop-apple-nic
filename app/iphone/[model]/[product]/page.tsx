@@ -11,7 +11,9 @@ import TextTitle from "@/components/ui/TextTitle";
 import { ProductsContext } from "@/context/productsContext";
 import { ProductsItemContext } from "@/context/productsItemContext";
 import { RatingContext } from "@/context/ratingContext";
+import { fetchAddToCart } from "@/lib/api";
 import type { ProductsItem } from "@/lib/types";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
@@ -54,6 +56,8 @@ const Product = () => {
   const contextProductsItem = useContext(ProductsItemContext);
   const contextRating = useContext(RatingContext);
   const pathName = useParams();
+  const user = useSession()
+  const email = user?.data?.user?.email ?? ""
 
   if (!contextProducts || !contextProductsItem || !contextRating)
     return <Loading />;
@@ -110,12 +114,16 @@ const Product = () => {
     setProductItem(newProductItem);
   }, [filterVarient]);
 
-  const [activeCard, setActiveCard] = useState<number | null>(
-    productItem?.length ? productItem[0].id : null
+  const [activeCard, setActiveCard] = useState<number>(
+    productItem[0].id
   );
   const activeCardHandler = (id: number) => {
     setActiveCard(id);
   };
+  const addToCartHandler =async()=>{
+    const add = await fetchAddToCart(email, activeCard)
+    console.log(add)
+  }
   return (
     <Container className="my-7">
       {product && <BreadCrumb product={product} />}
@@ -159,6 +167,7 @@ const Product = () => {
             activeCard={activeCard}
             activeCardHandler={activeCardHandler}
           />
+          <button className="bg-blue-800  hover:bg-blue-600 hoverEffect p-2 flex items-center justify-center rounded-md text-white" onClick={addToCartHandler}>افزودن به سبد خرید</button>
         </div>
         <div className="col-span-5">
           <ProductImageSlider

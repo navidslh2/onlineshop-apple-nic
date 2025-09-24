@@ -27,7 +27,6 @@ const Card = ({ product }: Props) => {
     productEName
   } = product;
   const catEName = categoryEName?.replace(/\s+/g ,'-')
-  // const prEName = productEName.replace(/\s+/g,'-')
   return (
     <div>
       <Link href={`/${slug}/${catEName}/${productEName}${capacityEName ? `-${capacityEName}`: ""}`}>
