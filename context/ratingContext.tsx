@@ -9,7 +9,6 @@ type RatingAction =
 interface RatingContextType {
   rating: Rating[];
   dispatch: React.Dispatch<RatingAction>;
-  loading:boolean
 }
 
 export const RatingContext = createContext<RatingContextType | null>(null);
@@ -27,24 +26,22 @@ function ratingreducer(state: Rating[], action: RatingAction): Rating[] {
 
 const RatingProvider = ({ children }: { children: React.ReactNode }) => {
   const [rating, dispatch] = useReducer(ratingreducer, []);
-  const [loading, setLoading] = useState<boolean>(false);
+ 
   useEffect(() => {
     const loadRating = async () => {
       try {
-        setLoading(true)
         const data = await fetchRating();
         dispatch({ type: "FETCH", payload: data });
       } catch (error) {
         console.log(error);
       }finally{
-        setLoading(false)
       }
     };
     loadRating();
   }, []);
 
   return (
-    <RatingContext.Provider value={{ rating, dispatch, loading }}>
+    <RatingContext.Provider value={{ rating, dispatch }}>
       {children}
     </RatingContext.Provider>
   );

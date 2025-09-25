@@ -16,9 +16,15 @@ export async function POST(req:Request) {
         }else{
             cartId= rows[0].id
         }
-        await connection.query("INSERT INTO cart_item (cart_id,product_item_id,quantity) VALUES(?,?,quantity +1)",[cartId,productItemId])
+        const [result] = await connection.query<RowDataPacket[]>("SELECT cart_item.id AS cartItemId FROM cart_item WHERE cart_item.cart_id = ? AND cart_item.product_item_id =  ?",[cartId,productItemId])
+        if( result.length ===0 ){
+            await connection.query("INSERT INTO cart_item (cart_id,product_item_id,quantity) VALUES(?,?,1)",[cartId,productItemId])
+        }else{
+            await connection.query("UPDATE cart_item SET quantity = quantity+1  WHERE id = ?",[result[0]?.cartItemId])
+ 
+        }
         await connection.commit()
-        return NextResponse.json({success: true, message:"add to cart successfully"})
+        return NextResponse.json({success: true, cartId:cartId, message:"add to cart successfully"})
     }catch(error:any){
         await connection.rollback()
         console.log(error)

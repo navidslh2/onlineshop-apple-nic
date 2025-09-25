@@ -52,7 +52,6 @@ export interface ProductsItem {
   activeStatus?: string;
   productEName: string;
   brand:string
-  quantity?: number
 }
 
 export interface Rating {
@@ -65,5 +64,11 @@ export interface cart {
   quantity: number
   productId: number
   cartId: number
+}
+
+export interface ModalProperty {
+  isOpen?: boolean;
+  text?: string;
+  color?: string;
 }
 

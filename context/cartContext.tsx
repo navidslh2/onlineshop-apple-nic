@@ -1,15 +1,16 @@
 "use client";
 import { fetchCart } from "@/lib/api";
-import type { cart } from "@/lib/types";
+import type { cart, ProductsItem } from "@/lib/types";
 import { useSession } from "next-auth/react";
 import { createContext, useEffect, useReducer } from "react";
+import { start } from "repl";
 
 interface CartContextType {
   cartItems: cart[];
   dispatch: React.Dispatch<Action>;
 }
 
-type Action = {type:'fetch', payload: cart[] } | {type:'increasequantity', payload: number } | {type:'reducequantity', payload: number } | {type:'delete', payload: number }
+type Action = {type:'fetch', payload: cart[] } | {type:'increasequantity', payload: number } | {type:'reducequantity', payload: number } | {type:'delete', payload: number } |{type:'addToCart', payload: cart }
 
 
 export const CartContext = createContext<CartContextType | null>(null);
@@ -24,6 +25,8 @@ const cartItemsReducer = (state: cart[], action: Action) => {
       return state.map(item => item.productId === action.payload ? {...item, quantity: item.quantity-1}: item)
     case "delete":
       return state.filter(item => item.productId !== action.payload)
+    case "addToCart":
+      return [...state,action.payload]
     default: 
       return state;
   }

@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import Modal from "./Modal";
 import { fetchChangeQuentity } from "@/lib/api";
 import { useSession } from "next-auth/react";
+import type { ModalProperty } from "@/lib/types";
 
 interface Props {
   quantity: number;
@@ -10,11 +11,6 @@ interface Props {
   stock: number;
 }
 
-interface ModalProperty {
-  isOpen?: boolean;
-  text?: string;
-  color?: string;
-}
 
 const QuantitySelector = ({ quantity, productId, stock }: Props) => {
   const cartContext = useContext(CartContext);

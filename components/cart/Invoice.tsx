@@ -1,22 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import TextTitle from "../ui/TextTitle";
 import Text from "../ui/Text";
-import type { Products, ProductsItem } from "@/lib/types";
+import type { ModalProperty, Products, ProductsItem } from "@/lib/types";
 import Price from "../ui/Price";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+import Modal from "../ui/Modal";
+
+interface cartProductsItem extends ProductsItem{
+  quantity:number
+}
 
 interface Props {
-  cartProductsItem: ProductsItem[];
+  cartProductsItem: cartProductsItem[];
 }
 
 const Invoice = ({ cartProductsItem }: Props) => {
+    const [modalProperty, setModalProperty] = useState<ModalProperty>({});
+  
+  const router = useRouter()
   let totalprice = 0;
-  console.log(cartProductsItem);
   cartProductsItem?.forEach(
     (item) =>
       (totalprice =
         totalprice + (item.stock ? item.price * (item.quantity ?? 0) : 0))
   );
+
+  const paymentOrderHandler =()=>{
+    console.log(cartProductsItem,'889')
+
+    const isinStock = cartProductsItem.every(item => item.quantity <= item.stock)
+    if(isinStock) router.push("/payment/index/pay")
+    setModalProperty({isOpen:true,text:"در سبد خرید کالایی وجد دارد که در انبار موحود نیست",color:"red"})
+  }
+
   return (
     <div className="flex flex-col gap-4 py-6 ">
       <Text className="border-b pb-5">صورتحساب</Text>
@@ -28,7 +44,11 @@ const Invoice = ({ cartProductsItem }: Props) => {
         <TextTitle className="font-bold text-lg">جمع سبد خرید:</TextTitle>
         <Price price={totalprice} stock={1} className="text-lg text-black/80" />
       </div>
-      <Link href="/payment/index/pay" className="bg-blue-800  hover:bg-blue-600 hoverEffect p-2 flex items-center justify-center rounded-md text-white">تایید و ثبت سفارش</Link>
+      <button className="bg-blue-800  hover:bg-blue-600 hoverEffect p-2 flex items-center justify-center rounded-md text-white" onClick={paymentOrderHandler}>تایید و ثبت سفارش</button>
+     <Modal
+        modalProperty={modalProperty}
+        onClose={() => setModalProperty({})}
+      />
     </div>
   );
 };

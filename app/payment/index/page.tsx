@@ -3,6 +3,7 @@ import Carts from "@/components/cart/Carts";
 import Invoice from "@/components/cart/Invoice";
 import Loading from "@/components/loading/Loading";
 import Container from "@/components/ui/Container";
+import Text from "@/components/ui/Text";
 import TextTitle from "@/components/ui/TextTitle";
 import { CartContext } from "@/context/cartContext";
 import { ProductsItemContext } from "@/context/productsItemContext";
@@ -30,14 +31,14 @@ const IndexPayment = () => {
       <TextTitle className="border-b text-xl font-medium flex justify-center py-5 mt-8">
         سبد خرید
       </TextTitle>
-      <div className="flex flex-col gap-4 md:grid md:grid-cols-12 md:gap-10">
-        <div className="md:col-span-8">
-          <Carts cartProductsItem={cartProductsItem}/>
-        </div>
-        <div className="md:col-span-4">
-          <Invoice cartProductsItem={cartProductsItem} />
-        </div>
+    <div className="flex flex-col gap-4 md:grid md:grid-cols-12 md:gap-10">
+      <div className="md:col-span-8">
+        {cartContext?.cartItems.length ? <Carts cartProductsItem={cartProductsItem}/> : <Text className="flex items-center justify-center h-full">سبد خرید شما خالی است</Text>}
       </div>
+      <div className="md:col-span-4">
+        <Invoice cartProductsItem={cartProductsItem} />
+      </div>
+    </div>
     </Container>
   );
 };

@@ -5,9 +5,11 @@ import ProductImageSlider from "@/components/priceCards/ProductImageSlider";
 import VarientSelectors from "@/components/priceCards/VarientSelectors";
 import BreadCrumb from "@/components/ui/BreadCrumb";
 import Container from "@/components/ui/Container";
+import Modal from "@/components/ui/Modal";
 import Rating from "@/components/ui/Rating";
 import Text from "@/components/ui/Text";
 import TextTitle from "@/components/ui/TextTitle";
+import { CartContext } from "@/context/cartContext";
 import { ProductsContext } from "@/context/productsContext";
 import { ProductsItemContext } from "@/context/productsItemContext";
 import { RatingContext } from "@/context/ratingContext";
@@ -18,6 +20,11 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 
+interface ModalProperty {
+  isOpen?: boolean;
+  text?: string;
+  color?: string;
+}
 const sortProduct = (
   productsItem: ProductsItem[],
   capacityPath: string | string[] | undefined,
@@ -55,17 +62,20 @@ const Product = () => {
   const contextProducts = useContext(ProductsContext);
   const contextProductsItem = useContext(ProductsItemContext);
   const contextRating = useContext(RatingContext);
+  const { rating= [], dispatch = ()=>{}} = contextRating ?? {}
   const pathName = useParams();
   const user = useSession()
   const email = user?.data?.user?.email ?? ""
+  const [modalProperty, setModalProperty] = useState<ModalProperty>({});
+  const cartContext = useContext(CartContext)
+  const dispatchCart = cartContext?.dispatch ?? (()=>{})
 
-  if (!contextProducts || !contextProductsItem || !contextRating)
+  if (!contextProducts || !contextProductsItem )
     return <Loading />;
   const { products, loading: productsLoading } = contextProducts;
   const { productsItem, loading: productsItemLoading } = contextProductsItem;
-  const { rating, dispatch, loading: ratingLoading } = contextRating;
 
-  if (productsLoading || productsItemLoading || ratingLoading)
+  if (productsLoading || productsItemLoading)
     return <Loading />;
   const capacityPath = pathName.product?.slice(
     pathName.product.lastIndexOf("-") + 1
@@ -85,7 +95,7 @@ const Product = () => {
   });
   
   useEffect(() => {
-    if (product?.id && rating.length > 0)
+    if (product?.id && rating?.length > 0)
       dispatch({ type: "FILTER", payload: product?.id });
   }, [product?.id, dispatch]);
 
@@ -115,14 +125,27 @@ const Product = () => {
   }, [filterVarient]);
 
   const [activeCard, setActiveCard] = useState<number>(
-    productItem[0].id
+     productItem?.length && productItem[0].id
   );
   const activeCardHandler = (id: number) => {
     setActiveCard(id);
   };
   const addToCartHandler =async()=>{
-    const add = await fetchAddToCart(email, activeCard)
-    console.log(add)
+    console.log(productItem)
+    console.log(activeCard)
+
+    const isInStock = productItem.some(pr => pr.id === activeCard && pr.stock !== 0)
+    
+    if(isInStock){
+    const res = await fetchAddToCart(email, activeCard)    
+    if(res?.success){
+       setModalProperty({isOpen:true, text:"کالا با موفقیت به سبد خرید اضافه شد", color:"green"})
+        dispatchCart({type:"addToCart", payload: {productId:activeCard, quantity:1, cartId:res.cartId}})
+    }else{
+      setModalProperty({isOpen:true, text:"کالا به سبد خرید اضافه نشد", color:"red"})
+    }}else{
+      setModalProperty({isOpen:true, text:"این کالا در انبار موجود نمی باشد", color:"red"})
+    }
   }
   return (
     <Container className="my-7">
@@ -175,6 +198,7 @@ const Product = () => {
             activeCard={activeCard}
           />
         </div>
+        <Modal modalProperty={modalProperty} onClose={() => setModalProperty({})}/>
       </div>
     </Container>
   );

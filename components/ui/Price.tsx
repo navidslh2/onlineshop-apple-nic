@@ -4,12 +4,20 @@ interface Props {
   price: number;
   stock: number;
   className?: string
+  quantity?: number
 }
-const Price = ({ price, stock, className }: Props) => {
+const Price = ({ price, stock, className, quantity }: Props) => {
   const priceNmber = price.toLocaleString("fa-IR");
+  let isInStock
+  if (quantity){
+    isInStock = quantity <= stock
+  }else{
+    isInStock = true
+  } 
+
   return (
     <div >
-      {stock ? (
+      {stock && isInStock ? (
         <div className={cn("flex justify-end textColor text-[13px] gap-1 font-bold", className)}>
           <span>{priceNmber}</span>
           <span>تومان</span>
