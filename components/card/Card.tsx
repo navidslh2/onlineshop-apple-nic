@@ -24,7 +24,8 @@ const Card = ({ product }: Props) => {
     slug,
     categoryEName,
     capacityEName,
-    productEName
+    productEName,
+    discount
   } = product;
   const catEName = categoryEName?.replace(/\s+/g ,'-')
   return (
@@ -50,7 +51,7 @@ const Card = ({ product }: Props) => {
             <TextTitle className="md:line-clamp-2">
               {`${product_name + capacity}`} - {simcard}
             </TextTitle>
-            <Price stock={stock} price={minPrice} />
+            <Price stock={stock} price={minPrice} discount={discount}/>
           </div>
         </div>
       </Link>

@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 
 interface Props {
-  category: Categories;
+  category: {name: string, eName:string ,description:string, img: string}
   imageClassName?:string
 }
 const TopBanner = ({ category ,imageClassName}: Props) => {

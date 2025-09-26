@@ -2,12 +2,13 @@
 import { fetchCart } from "@/lib/api";
 import type { cart, ProductsItem } from "@/lib/types";
 import { useSession } from "next-auth/react";
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, use, useEffect, useReducer, useState } from "react";
 import { start } from "repl";
 
 interface CartContextType {
   cartItems: cart[];
   dispatch: React.Dispatch<Action>;
+  loading:boolean
 }
 
 type Action = {type:'fetch', payload: cart[] } | {type:'increasequantity', payload: number } | {type:'reducequantity', payload: number } | {type:'delete', payload: number } |{type:'addToCart', payload: cart }
@@ -34,22 +35,26 @@ const cartItemsReducer = (state: cart[], action: Action) => {
 
 const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [cartItems, dispatch] = useReducer(cartItemsReducer, []);
+  const [loading, setLoading] = useState(false)
   const { data } = useSession();
   const userEmail = data?.user?.email;
   useEffect(() => {
     if (!userEmail) return;
     const loadCart = async () => {
       try {
+        setLoading(true)
         const data = await fetchCart(userEmail);
         dispatch({ type: "fetch", payload: data });
       } catch (error) {
         console.log(error);
+      }finally{
+        setLoading(false)
       }
     };
     loadCart();
   }, [userEmail]);
   return (
-    <CartContext.Provider value={{ cartItems, dispatch }}>
+    <CartContext.Provider value={{ cartItems, dispatch, loading }}>
       {children}
     </CartContext.Provider>
   );

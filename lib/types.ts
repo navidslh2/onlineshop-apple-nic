@@ -22,6 +22,7 @@ export interface Products {
   activeStatus?: string;
   color?: string;
   productEName: string;
+  discount: number
 }
 
 export interface Categories {
@@ -52,6 +53,8 @@ export interface ProductsItem {
   activeStatus?: string;
   productEName: string;
   brand:string
+  slug:string
+  discount:number
 }
 
 export interface Rating {

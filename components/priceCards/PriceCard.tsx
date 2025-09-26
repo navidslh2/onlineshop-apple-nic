@@ -21,6 +21,7 @@ const PriceCard = ({ productItem, activeCard, activeCardHandler }: Props) => {
     warranty,
     partNumber,
     activeStatus,
+    discount
   } = productItem;
   return (
     <div
@@ -75,7 +76,8 @@ const PriceCard = ({ productItem, activeCard, activeCardHandler }: Props) => {
           <Price
             stock={stock}
             price={price}
-            className="text-md text-black font-bold"
+            className="text-md  font-bold"
+            discount={discount}
           />
         </div>
       </div>

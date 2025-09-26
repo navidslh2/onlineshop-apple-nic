@@ -10,22 +10,27 @@ import { ProductsItemContext } from "@/context/productsItemContext";
 import type { ProductsItem } from "@/lib/types";
 import React, { useContext, useEffect, useState } from "react";
 
+interface CartProductItem extends ProductsItem {
+  quantity: number;
+}
+
 const IndexPayment = () => {
   const cartContext = useContext(CartContext);
   const productItemContext = useContext(ProductsItemContext);
   const cartItems  = cartContext?.cartItems ?? []
   const productsItem = productItemContext?.productsItem ?? []
-  const [cartProductsItem, setCartProductsItem] = useState<ProductsItem[]>([])
+  const [cartProductsItem, setCartProductsItem] = useState<CartProductItem[]>([])
   useEffect(() => {
     const ProductItem = productsItem.filter((pr) =>
       cartItems.some((item) => item.productId === pr.id)
     );
     const cartProducts = (ProductItem.map((pr) => {
       const cartItem = cartItems.find((item) => item.productId === pr.id);
-      return { ...pr, quantity: cartItem?.quantity };
+      return { ...pr, quantity: cartItem?.quantity ?? 0 };
     }));
     setCartProductsItem(cartProducts)
   }, [cartItems]);
+  if(cartContext?.loading) return <Loading />
   return (
     <Container>
       <TextTitle className="border-b text-xl font-medium flex justify-center py-5 mt-8">

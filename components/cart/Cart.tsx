@@ -30,13 +30,15 @@ const Cart = ({ cartProductItem }: Props) => {
     price,
     stock,
     id,
-    quantity
+    quantity,
+    slug,
+    discount
   } = cartProductItem;
   const cartContext = useContext(CartContext);
   const dispatch = cartContext?.dispatch ?? (() => {});
   const { data } = useSession();
   const email = data?.user?.email ?? "";
-  console.log(cartProductItem)
+
   const deleteProductHandler = () => {
     dispatch({ type: "delete", payload: id });
     fetchDeletecartProduct(email, id);
@@ -44,8 +46,8 @@ const Cart = ({ cartProductItem }: Props) => {
 
   return (
       
-        <Link href={``} className="w-full h-[230px] pb-5 flex flex-col md:flex-row md:h-[150px] bg-white  justify-between gap-2 rounded-md p-2 shadow-md">
-          <div className="flex w-[380px] md:w-[240px] md:gap-0 lg:w-[320px] items-center gap-2">
+        <div  className="w-full h-[230px] pb-5 flex flex-col md:flex-row md:h-[150px] bg-white  justify-between gap-2 rounded-md p-2 shadow-md">
+          <Link href={`/${slug}/${productEName}/${productEName}${capacityEName ? `-${capacityEName}`: ""}`} className="flex w-[380px] md:w-[240px] md:gap-0 lg:w-[320px] items-center gap-2">
             <div className="relative  w-full md:w-[120px] h-[130px]">
               <Image
                 src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/${url}`}
@@ -60,9 +62,9 @@ const Cart = ({ cartProductItem }: Props) => {
               }`}</TextTitle>
               <Text className="line-clamp-3">{`${productEName} ${capacityEName && capacityEName}`}</Text>
             </div>
-          </div>
+          </Link>
           <div className="flex items-center justify-end">
-            <Price price={price} stock={stock} quantity={quantity} className="text-md md:flex-col lg:flex-row " />
+            <Price price={price} stock={stock} quantity={quantity} discount={discount} className="text-md md:flex-col lg:flex-row " />
           </div>
           <div className="flex gap-10 md:gap-2 lg:pl-5 lg:gap-8 xl:gap-10 items-center justify-center">
             {quantity && (
@@ -76,7 +78,7 @@ const Cart = ({ cartProductItem }: Props) => {
               <Trash2 size={15} className="text-red-800" onClick={deleteProductHandler} />
             </div>
           </div>
-        </Link>
+        </div>
      );
 };
 

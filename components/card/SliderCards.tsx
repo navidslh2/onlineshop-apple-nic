@@ -10,7 +10,7 @@ import "./SliderCard.scss";
 
 interface Props {
   product: Products[];
-  category: Categories;
+  category?: Categories;
 }
 const SliderCards = ({ product, category }: Props) => {
   return (

@@ -131,11 +131,7 @@ const Product = () => {
     setActiveCard(id);
   };
   const addToCartHandler =async()=>{
-    console.log(productItem)
-    console.log(activeCard)
-
     const isInStock = productItem.some(pr => pr.id === activeCard && pr.stock !== 0)
-    
     if(isInStock){
     const res = await fetchAddToCart(email, activeCard)    
     if(res?.success){
