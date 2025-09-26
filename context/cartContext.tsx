@@ -11,7 +11,7 @@ interface CartContextType {
   loading:boolean
 }
 
-type Action = {type:'fetch', payload: cart[] } | {type:'increasequantity', payload: number } | {type:'reducequantity', payload: number } | {type:'delete', payload: number } |{type:'addToCart', payload: cart }
+type Action = {type:'fetch', payload: cart[] } | {type:'increasequantity', payload: number } | {type:'reducequantity', payload: number } | {type:'delete', payload: number } |{type:'addToCart', payload: cart } | {type:'payment'}
 
 
 export const CartContext = createContext<CartContextType | null>(null);
@@ -28,6 +28,8 @@ const cartItemsReducer = (state: cart[], action: Action) => {
       return state.filter(item => item.productId !== action.payload)
     case "addToCart":
       return [...state,action.payload]
+    case "payment":
+      return []
     default: 
       return state;
   }

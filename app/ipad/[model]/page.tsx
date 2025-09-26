@@ -26,7 +26,7 @@ const Model = () => {
   return (
     <div>
       {category && (
-        <TopBanner category={category} imageClassName={"h-[370px]"} />
+        <TopBanner category={category} imageClassName={"h-[355px]"} />
       )}
       <Container>
         {products && category && <Cards product={filtredProducts} />}
@@ -39,4 +39,3 @@ const Model = () => {
 };
 
 export default Model
-;

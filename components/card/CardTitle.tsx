@@ -17,10 +17,10 @@ const CardTitle = ({ category }: Props) => {
         {category?.icon ? (
           <DynamicIcon icon={category.icon} className="text-black/60" />
         ) : <BadgePercent /> }
-        <p className="text-sm">
-          <span>{category?.name ? category?.name : "فروش ویژه"}</span>{" "}
-       
-          <span>| {category?.eName ? category.eName : "special sale"}</span>
+        <p className="text-sm flex" >
+          <span> {category?.name ? category?.name : "فروش ویژه"} </span>{" "}
+          <span className="mx-2">|</span>
+          <span> {category?.eName ? category.eName : "special sale"} </span>
           
         </p>
       </div>

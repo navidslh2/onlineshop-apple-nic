@@ -13,6 +13,7 @@ const Pay = () => {
     console.log(cartContext)
     const successPaymentHandler= async()=>{
       await fetchPayment(cartId)
+      
       route.push("/")
     }
   return (

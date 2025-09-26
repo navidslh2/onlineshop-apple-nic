@@ -23,9 +23,10 @@ const PriceCard = ({ productItem, activeCard, activeCardHandler }: Props) => {
     activeStatus,
     discount
   } = productItem;
+  console.log(id,'productItem')
   return (
     <div
-      className={`grid grid-cols-[1fr_3fr] h-[120px] border rounded-2xl border-gray-400 group  ${
+      className={`relative grid grid-cols-[1fr_3fr] h-[120px] border rounded-2xl border-gray-400 group overflow-hidden ${
         stock === 0 ? "opacity-70 cursor-not-allowed" : " hover:border-blue-500"
       }${
         id === activeCard && stock !== 0
@@ -34,6 +35,9 @@ const PriceCard = ({ productItem, activeCard, activeCardHandler }: Props) => {
       }`}
       onClick={stock === 0 ? undefined : () => activeCardHandler(id)}
     >
+      {discount && discount > 0 && stock ? <div className="absolute bg-red-500 text-white text-xs py-1 px-5 rotate-45 top-3 -right-6">
+        فروش ویژه
+      </div> : ""}
       <div className="flex items-center justify-center">
         <Image
           src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/${url}`}

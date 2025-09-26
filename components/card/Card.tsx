@@ -25,7 +25,8 @@ const Card = ({ product }: Props) => {
     categoryEName,
     capacityEName,
     productEName,
-    discount
+    discount,
+    monitorSize
   } = product;
   const catEName = categoryEName?.replace(/\s+/g ,'-')
   return (
@@ -44,12 +45,12 @@ const Card = ({ product }: Props) => {
             </div>
             <Colors colors={colors} />
           </div>
-          <div className="flex flex-col gap-4 justify-center">
+          <div className="flex flex-col gap-2 justify-center">
             <Text className="md:truncate ">
               {product_name} | {brand}
             </Text>
             <TextTitle className="md:line-clamp-2">
-              {`${product_name + capacity}`} - {simcard}
+              {`${product_name} ${monitorSize? monitorSize:""} ${capacity? capacity:""} ${simcard? simcard: ""}`} 
             </TextTitle>
             <Price stock={stock} price={minPrice} discount={discount}/>
           </div>

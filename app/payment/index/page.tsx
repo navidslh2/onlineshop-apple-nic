@@ -28,7 +28,7 @@ const IndexPayment = () => {
       const cartItem = cartItems.find((item) => item.productId === pr.id);
       return { ...pr, quantity: cartItem?.quantity ?? 0 };
     }));
-    setCartProductsItem(cartProducts)
+    setCartProductsItem(cartProducts) 
   }, [cartItems]);
   if(cartContext?.loading) return <Loading />
   return (

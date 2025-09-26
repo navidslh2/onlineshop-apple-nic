@@ -23,6 +23,7 @@ export interface Products {
   color?: string;
   productEName: string;
   discount: number
+  monitorSize: string
 }
 
 export interface Categories {

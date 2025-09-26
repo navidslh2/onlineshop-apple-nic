@@ -2,8 +2,8 @@ export const headerData = [
   {
     id: 2,
     title: "فروش ویژه",
-    href: "/onsale",
-    tooltip: "onsale",
+    href: "/onsales",
+    tooltip: "onsales",
     logo: "/sale-free-4-svgrepo-com.svg",
   },
   {
@@ -49,7 +49,7 @@ export const headerData = [
   {
     id: 8,
     title: "لوازم جانبی",
-    href: "/C",
+    href: "/accessories",
     tooltip: "accessories",
     logo: "/wristwatch-outline-svgrepo-com.svg",
     img:"/accesorynew.webp"
@@ -94,12 +94,12 @@ export interface StoreItem {
 
 export const store: StoreItem[] = [
   { id: 1, title: "فروشگاه", className: "font-bold" },
-  { id: 2, title: "مک", href:"/" },
-  { id: 3, title: "آیپد", href:"/"  },
-  { id: 4, title: "آیفون", href:"/" },
-  { id: 5, title: "اپل واچ", href:"/" },
-  { id: 6, title: "اپل تی وی", href:"/" },
-  { id: 7, title: "ایرپاد اپل", href:"/" },
+  { id: 2, title: "مک", href:"/mac" },
+  { id: 3, title: "آیپد", href:"/ipad"  },
+  { id: 4, title: "آیفون", href:"/iphone" },
+  { id: 5, title: "اپل واچ", href:"/apple-watch" },
+  { id: 6, title: "اپل تی وی", href:"/apple-tv" },
+  { id: 7, title: "ایرپاد اپل", href:"/airpod" },
 ];
 export interface AccessoriesItem {
   id: number;

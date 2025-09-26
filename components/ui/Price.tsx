@@ -17,17 +17,17 @@ const Price = ({ price, stock, className, quantity, discount }: Props) => {
     isInStock = true
   } 
   return (
-    <div >
+    <div className="pb-2">
       {stock && isInStock ? (
         <div>
           <div className={cn(`flex justify-end textColor text-[13px] gap-1 ${discount && discount >0 && "line-through"} font-bold`, className)}>
             <span>{priceNmber}</span>
             <span>تومان</span>
           </div>
-          {discount && discount > 0 && <div className={cn("flex justify-end text-red-600 text-[14px] gap-1 font-bold", className)}>
+          {discount && discount > 0 ? <div className={cn("flex justify-end text-red-600 text-[14px] gap-1 font-bold", className)}>
             <span>{discountPrice}</span>
             <span>تومان</span>
-          </div>}
+          </div> : ""}
         </div>
 
         
