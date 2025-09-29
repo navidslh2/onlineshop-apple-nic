@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, type memo } from "react";
 import PriceCard from "./PriceCard";
 import type { ProductsItem } from "@/lib/types";
 import { AnimatePresence, motion, scale, stagger } from "framer-motion";
@@ -10,6 +10,7 @@ interface Props {
 }
 
 const PriceCards = ({ productItem, activeCard, activeCardHandler }: Props) => {
+  console.log(productItem,'4')
   const container = {
     hidden: { opacity: 0 },
     show: { opacity: 1, transition: { staggerChildren: 0.2 } },
@@ -19,7 +20,7 @@ const PriceCards = ({ productItem, activeCard, activeCardHandler }: Props) => {
     hidden: { scale: 0 },
     show: { scale: 1 },
   };
-  if (productItem.length === 0 ) return <div className="m-auto">کالای مورد نظر یافت نشد</div>
+  // if (productItem.length === 0 ) return <div className="m-auto">کالای مورد نظر یافت نشد</div>
   return (
     <AnimatePresence>
       <motion.div
@@ -46,4 +47,4 @@ const PriceCards = ({ productItem, activeCard, activeCardHandler }: Props) => {
   );
 };
 
-export default PriceCards;
+export default PriceCards  ;

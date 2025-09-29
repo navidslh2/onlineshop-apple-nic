@@ -23,7 +23,6 @@ const PriceCard = ({ productItem, activeCard, activeCardHandler }: Props) => {
     activeStatus,
     discount
   } = productItem;
-  console.log(id,'productItem')
   return (
     <div
       className={`relative grid grid-cols-[1fr_3fr] h-[120px] border rounded-2xl border-gray-400 group overflow-hidden ${

@@ -18,7 +18,7 @@ import type { ProductsItem } from "@/lib/types";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 
 interface ModalProperty {
   isOpen?: boolean;
@@ -31,6 +31,7 @@ const sortProduct = (
   productPath: string  | string[] | undefined,
   pathNameProduct?: string[] | string
 ) => {
+  console.log(productsItem,'5')
   const stockSort = [...productsItem].sort((a, b) => {
     if (a.stock === 0 && b.stock > 0) return 1;
     if (b.stock === 0 && a.stock > 0) return -1;
@@ -74,8 +75,6 @@ const Product = () => {
   const productsItem = contextProductsItem?.productsItem ?? []
   const productsItemLoading = contextProducts?.loading ?? true
 
-
-
   const capacityPath = pathName.product?.slice(
     pathName.product.lastIndexOf("-") + 1
   );
@@ -92,20 +91,15 @@ const Product = () => {
     return pr.capacityEName === capacityPath && pr.productEName.trim() === productPath;
 
   });
-  
+
   useEffect(() => {
     if (product?.id && rating?.length > 0)
       dispatch({ type: "FILTER", payload: product?.id });
   }, [product?.id, dispatch]);
 
-  const productsItemFiltered = sortProduct(
-    productsItem,
-    capacityPath,
-    productPath,
-    pathNameProduct
-  );
-  const [productItem, setProductItem] =
-    useState<ProductsItem[]>(productsItemFiltered);
+  const productsItemFiltered:ProductsItem[] = useMemo(()=> sortProduct(productsItem,capacityPath,productPath,pathNameProduct),[productsItem])
+
+
   const [filterVarient, setFilterVarient] = useState({
     warranty: "all",
     partNumber: "all",
@@ -115,22 +109,19 @@ const Product = () => {
 
   const changeVarientHandler = (name: string, value: string) => {
     setFilterVarient((prev) => ({ ...prev, [name]: value }));
-    setProductItem(productsItemFiltered);
   };
 
-  useEffect(() => {
-    const newProductItem = varientFilter(productItem, filterVarient);
-    setProductItem(newProductItem);
-  }, [filterVarient]);
+ const filteredProductItem:ProductsItem[]  = useMemo (()=> varientFilter(productsItemFiltered, filterVarient),[productsItemFiltered,filterVarient] ) 
+
 
   const [activeCard, setActiveCard] = useState<number>(
-     productItem?.length && productItem[0].id
+     filteredProductItem?.length && filteredProductItem[0].id
   );
   const activeCardHandler = (id: number) => {
     setActiveCard(id);
   };
   const addToCartHandler =async()=>{
-    const isInStock = productItem.some(pr => pr.id === activeCard && pr.stock !== 0)
+    const isInStock = filteredProductItem.some(pr => pr.id === activeCard && pr.stock !== 0)
     if(isInStock){
     const res = await fetchAddToCart(email, activeCard)    
     if(res?.success){
@@ -143,8 +134,10 @@ const Product = () => {
     }
   }
 
-    if (!contextProducts || !contextProductsItem || productsLoading || productsItemLoading)
+    if (!contextProducts || !contextProductsItem || productsLoading || productsItemLoading )
     return <Loading />;
+
+
   return (
     <Container className="my-7">
       {product && <BreadCrumb product={product} />}
@@ -184,7 +177,7 @@ const Product = () => {
           )}
 
           <PriceCards
-            productItem={productItem}
+            productItem={filteredProductItem}
             activeCard={activeCard}
             activeCardHandler={activeCardHandler}
           />
@@ -192,7 +185,7 @@ const Product = () => {
         </div>
         <div className="col-span-5">
           <ProductImageSlider
-            productItem={productItem}
+            productItem={filteredProductItem}
             activeCard={activeCard}
           />
         </div>
