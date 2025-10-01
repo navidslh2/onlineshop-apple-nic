@@ -67,7 +67,7 @@ export interface Rating {
 export interface cart {
   quantity: number
   productId: number
-  cartId: number
+  cartId?: number
 }
 
 export interface ModalProperty {

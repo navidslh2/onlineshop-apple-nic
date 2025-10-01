@@ -1,9 +1,9 @@
 "use client";
 import { fetchCart } from "@/lib/api";
-import type { cart, ProductsItem } from "@/lib/types";
+import type { cart } from "@/lib/types";
 import { useSession } from "next-auth/react";
-import { createContext, use, useEffect, useReducer, useState } from "react";
-import { start } from "repl";
+import { createContext, useEffect, useReducer, useState } from "react";
+
 
 interface CartContextType {
   cartItems: cart[];

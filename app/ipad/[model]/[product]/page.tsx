@@ -28,10 +28,10 @@ interface ModalProperty {
 const sortProduct = (
   productsItem: ProductsItem[],
   capacityPath: string | string[] | undefined,
-  productPath: string  | string[] | undefined,
+  productPath: string | string[] | undefined,
   pathNameProduct?: string[] | string
 ) => {
-  console.log(productsItem,'5')
+  console.log(productsItem, "5");
   const stockSort = [...productsItem].sort((a, b) => {
     if (a.stock === 0 && b.stock > 0) return 1;
     if (b.stock === 0 && a.stock > 0) return -1;
@@ -41,7 +41,10 @@ const sortProduct = (
     if (!pr.capacity) {
       return pr.productEName.trim() === pathNameProduct;
     }
-    return pr.capacityEName === capacityPath && pr.productEName.trim() === productPath;
+    return (
+      pr.capacityEName === capacityPath &&
+      pr.productEName.trim() === productPath
+    );
   });
 };
 
@@ -63,17 +66,17 @@ const Product = () => {
   const contextProducts = useContext(ProductsContext);
   const contextProductsItem = useContext(ProductsItemContext);
   const contextRating = useContext(RatingContext);
-  const { rating= [], dispatch = ()=>{}} = contextRating ?? {}
+  const { rating = [], dispatch = () => {} } = contextRating ?? {};
   const pathName = useParams();
-  const user = useSession()
-  const email = user?.data?.user?.email ?? ""
+  const user = useSession();
+  const email = user?.data?.user?.email ?? "";
   const [modalProperty, setModalProperty] = useState<ModalProperty>({});
-  const cartContext = useContext(CartContext)
-  const dispatchCart = cartContext?.dispatch ?? (()=>{})
-  const products = contextProducts?.products ?? []
-  const productsLoading = contextProducts?.loading ?? true
-  const productsItem = contextProductsItem?.productsItem ?? []
-  const productsItemLoading = contextProducts?.loading ?? true
+  const cartContext = useContext(CartContext);
+  const dispatchCart = cartContext?.dispatch ?? (() => {});
+  const products = contextProducts?.products ?? [];
+  const productsLoading = contextProducts?.loading ?? true;
+  const productsItem = contextProductsItem?.productsItem ?? [];
+  const productsItemLoading = contextProducts?.loading ?? true;
 
   const capacityPath = pathName.product?.slice(
     pathName.product.lastIndexOf("-") + 1
@@ -82,14 +85,16 @@ const Product = () => {
     0,
     pathName.product?.lastIndexOf("-")
   );
-  const pathNameProduct = pathName.product
+  const pathNameProduct = pathName.product;
 
   const product = products.find((pr) => {
     if (!pr.capacity) {
       return pr.productEName.trim() === pathName.product;
     }
-    return pr.capacityEName === capacityPath && pr.productEName.trim() === productPath;
-
+    return (
+      pr.capacityEName === capacityPath &&
+      pr.productEName.trim() === productPath
+    );
   });
 
   useEffect(() => {
@@ -97,8 +102,10 @@ const Product = () => {
       dispatch({ type: "FILTER", payload: product?.id });
   }, [product?.id, dispatch]);
 
-  const productsItemFiltered:ProductsItem[] = useMemo(()=> sortProduct(productsItem,capacityPath,productPath,pathNameProduct),[productsItem])
-
+  const productsItemFiltered: ProductsItem[] = useMemo(
+    () => sortProduct(productsItem, capacityPath, productPath, pathNameProduct),
+    [productsItem]
+  );
 
   const [filterVarient, setFilterVarient] = useState({
     warranty: "all",
@@ -111,33 +118,83 @@ const Product = () => {
     setFilterVarient((prev) => ({ ...prev, [name]: value }));
   };
 
- const filteredProductItem:ProductsItem[]  = useMemo (()=> varientFilter(productsItemFiltered, filterVarient),[productsItemFiltered,filterVarient] ) 
-
+  const productsItemVarientFiltered: ProductsItem[] = useMemo(
+    () => varientFilter(productsItemFiltered, filterVarient),
+    [productsItemFiltered, filterVarient]
+  );
 
   const [activeCard, setActiveCard] = useState<number>(
-     filteredProductItem?.length && filteredProductItem[0].id
+    productsItemVarientFiltered?.length && productsItemVarientFiltered[0].id
   );
   const activeCardHandler = (id: number) => {
     setActiveCard(id);
   };
-  const addToCartHandler =async()=>{
-    const isInStock = filteredProductItem.some(pr => pr.id === activeCard && pr.stock !== 0)
-    if(isInStock){
-    const res = await fetchAddToCart(email, activeCard)    
-    if(res?.success){
-       setModalProperty({isOpen:true, text:"کالا با موفقیت به سبد خرید اضافه شد", color:"green"})
-        dispatchCart({type:"addToCart", payload: {productId:activeCard, quantity:1, cartId:res.cartId}})
-    }else{
-      setModalProperty({isOpen:true, text:"کالا به سبد خرید اضافه نشد", color:"red"})
-    }}else{
-      setModalProperty({isOpen:true, text:"این کالا در انبار موجود نمی باشد", color:"red"})
+  const addToCartHandler = async () => {
+    // localStorage.clear()
+    console.log(cartContext,'1')
+    const isInStock = productsItemVarientFiltered.some(
+      (pr) => pr.id === activeCard && pr.stock !== 0
+    );
+    if (isInStock && email) {
+      const res = await fetchAddToCart(email, activeCard);
+      if (res?.success) {
+        setModalProperty({
+          isOpen: true,
+          text: "کالا با موفقیت به سبد خرید اضافه شد",
+          color: "green",
+        });
+        dispatchCart({
+          type: "addToCart",
+          payload: { productId: activeCard, quantity: 1, cartId: res.cartId },
+        });
+      }
+    } else if (isInStock && !email) {
+      const stored = localStorage.getItem("user");
+      if (stored) {
+        const user: { productId: number; quantity: number }[] =
+          JSON.parse(stored);
+        const exist = user.find((item) => item.productId === activeCard);
+        if (exist) {
+          const updateUser:{ productId: number; quantity: number }[] = user.map((item) =>
+            item.productId === activeCard
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          );
+          localStorage.setItem("user", JSON.stringify(updateUser));
+          dispatchCart({type:'addToCart',payload:{productId:activeCard, quantity:exist.quantity+1}})
+        } else {
+          console.log(user);
+          const userUpdate = [
+            ...user,
+            { productId: activeCard, quantity: 1 },
+          ];
+          console.log(userUpdate);
+          localStorage.setItem("user", JSON.stringify(userUpdate));
+          dispatchCart({type:'addToCart',payload:{productId:activeCard, quantity:1}})
+        }
+      } else {
+        const user = [{ productId: activeCard, quantity: 1 }];
+        localStorage.setItem("user", JSON.stringify(user));
+        dispatchCart({type:'addToCart',payload:{productId:activeCard, quantity:1}})
+      }
+    } else {
+      setModalProperty({
+        isOpen: true,
+        text: "این کالا در انبار موجود نمی باشد",
+        color: "red",
+      });
     }
-  }
+    console.log(cartContext,'2')
 
-    if (!contextProducts || !contextProductsItem || productsLoading || productsItemLoading )
+  };
+
+  if (
+    !contextProducts ||
+    !contextProductsItem ||
+    productsLoading ||
+    productsItemLoading
+  )
     return <Loading />;
-
-
   return (
     <Container className="my-7">
       {product && <BreadCrumb product={product} />}
@@ -153,7 +210,11 @@ const Product = () => {
               />
             </div>
             <div>
-              <TextTitle className="text-2xl">{`${product?.product_name}  ${product?.capacity ?  ` ظرفیت ${product?.capacity}`: ''} ${product?.simcard ? ` - ${product?.simcard}`: ''}`}</TextTitle>
+              <TextTitle className="text-2xl">{`${product?.product_name}  ${
+                product?.capacity ? ` ظرفیت ${product?.capacity}` : ""
+              } ${
+                product?.simcard ? ` - ${product?.simcard}` : ""
+              }`}</TextTitle>
               <Text>{pathName.product}</Text>
             </div>
           </div>
@@ -177,19 +238,27 @@ const Product = () => {
           )}
 
           <PriceCards
-            productItem={filteredProductItem}
+            productItem={productsItemVarientFiltered}
             activeCard={activeCard}
             activeCardHandler={activeCardHandler}
           />
-          <button className="bg-blue-800  hover:bg-blue-600 hoverEffect p-2 flex items-center justify-center rounded-md text-white cursor-pointer" onClick={addToCartHandler}>افزودن به سبد خرید</button>
+          <button
+            className="bg-blue-800  hover:bg-blue-600 hoverEffect p-2 flex items-center justify-center rounded-md text-white cursor-pointer"
+            onClick={addToCartHandler}
+          >
+            افزودن به سبد خرید
+          </button>
         </div>
         <div className="col-span-5">
           <ProductImageSlider
-            productItem={filteredProductItem}
+            productItem={productsItemVarientFiltered}
             activeCard={activeCard}
           />
         </div>
-        <Modal modalProperty={modalProperty} onClose={() => setModalProperty({})}/>
+        <Modal
+          modalProperty={modalProperty}
+          onClose={() => setModalProperty({})}
+        />
       </div>
     </Container>
   );

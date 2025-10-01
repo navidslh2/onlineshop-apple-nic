@@ -46,7 +46,7 @@ const Cart = ({ cartProductItem }: Props) => {
 
   return (
       
-        <div  className="w-full h-[230px] pb-5 flex flex-col md:flex-row md:h-[150px] bg-white  justify-between gap-2 rounded-md p-2 shadow-md">
+        <div  className="w-full h-[230px] pb-5 flex flex-col md:flex-row md:h-[150px] bg-white  justify-between gap-1 rounded-md p-2 shadow-md">
           <Link href={`/${slug}/${productEName}/${productEName}${capacityEName ? `-${capacityEName}`: ""}`} className="flex w-[380px] md:w-[240px] md:gap-0 lg:w-[320px] items-center gap-2">
             <div className="relative  w-full md:w-[120px] h-[130px]">
               <Image
