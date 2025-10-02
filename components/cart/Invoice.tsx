@@ -5,6 +5,7 @@ import type { ModalProperty, Products, ProductsItem } from "@/lib/types";
 import Price from "../ui/Price";
 import { useRouter } from "next/navigation";
 import Modal from "../ui/Modal";
+import { useSession } from "next-auth/react";
 
 interface cartProductsItem extends ProductsItem{
   quantity:number
@@ -16,6 +17,8 @@ interface Props {
 
 const Invoice = ({ cartProductsItem }: Props) => {
     const [modalProperty, setModalProperty] = useState<ModalProperty>({});
+    const {data} = useSession()
+    const userEmail = data?.user?.email
   
   const router = useRouter()
   let totalprice = 0;
@@ -28,10 +31,13 @@ const Invoice = ({ cartProductsItem }: Props) => {
 
   const paymentOrderHandler =()=>{
     const isinStock = cartProductsItem.every(item => item.quantity <= item.stock)
-    if(isinStock){
+  if(!isinStock) {
+    return setModalProperty({isOpen:true,text:"در سبد خرید کالایی وجد دارد که در انبار موحود نیست",color:"red"})
+  }
+    if(userEmail){
       router.push("/payment/index/pay")
     }else{
-      setModalProperty({isOpen:true,text:"در سبد خرید کالایی وجد دارد که در انبار موحود نیست",color:"red"})
+      router.push("/Account/login")
     }}
 
   return (
@@ -60,5 +66,4 @@ const Invoice = ({ cartProductsItem }: Props) => {
     </div>
   );
 };
-
 export default Invoice;

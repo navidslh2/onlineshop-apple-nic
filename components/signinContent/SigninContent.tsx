@@ -5,9 +5,9 @@ interface Props{
   page:string
   email: string
   password: string
-  inputValueHandler: (e:React.FormEvent)=> void
+  inputValueHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
   error: string | null
-  handelLogin:(e:React.FormEvent)=>void
+  handelLogin: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
 const SigninContent = ({page, email, password, inputValueHandler, error, handelLogin}:Props) => {

@@ -2,9 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const Logo = () => {
+interface Props{
+  mobileMenuHandler?:()=> void
+}
+
+const Logo = ({mobileMenuHandler}:Props) => {
   return (
-    <Link className="group flex items-center font-bold gap-3 relative" href={"/"}>
+    <Link className="group flex items-center font-bold gap-3 relative" href={"/"} onClick={mobileMenuHandler}>
       <div>
         <Image src={"/logo.png"}  alt="logo" width={30} height={30}/>
       </div>

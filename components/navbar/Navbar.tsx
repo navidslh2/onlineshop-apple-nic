@@ -34,7 +34,7 @@ const Navbar = () => {
           onClose={() => setIsMobileMenuOpen(false)}
           isOpen={isMobileMenuOpen}
         />
-        <Logo />
+        <Logo mobileMenuHandler={()=>setIsMobileMenuOpen(false)}/>
         <HeaderMenu />
         <div className="flex items-center xl:gap-10 gap-5 xl:w-[70px] w-[50px] justify-end">
           <div className="sm:relative">

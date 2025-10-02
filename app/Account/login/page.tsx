@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import SigninContent from "@/components/signinContent/SigninContent";
-import { fetchEmailCheck } from "@/lib/api";
+import { fetchAddToCart, fetchEmailCheck } from "@/lib/api";
 
 const Login = () => {
   const [page, setPage] = useState("email");
@@ -15,7 +15,7 @@ const Login = () => {
 
   
 
-  const inputValueHandler = (e)=>{
+  const inputValueHandler = (e:React.ChangeEvent<HTMLInputElement>)=>{
     if (page === "email") {
       setEmail(e.target.value)
     }else setPassword(e.target.value)
@@ -36,7 +36,7 @@ const Login = () => {
     }
     const res = await fetchEmailCheck(email)
     if(res.length >0) setPage("password")
-    localStorage.setItem("registerEmail", email)
+    // localStorage.setItem("registerEmail", email)
     if(res.length === 0) router.push("/Account/register")
   };
 
@@ -52,6 +52,13 @@ const Login = () => {
       setError("ایمیل یا رمز عبور نادرست است")
       setPassword("")
     }else{
+      const userGuest = localStorage.getItem('userCart')
+      if(userGuest) {
+        const cartProducts = JSON.parse(userGuest)
+        for (const item of cartProducts) { await fetchAddToCart(email, item.productId, item.quentity)}
+        localStorage.removeItem('userCart')
+        router.push('/iphone')
+      }
       router.push("/")
     }
   }

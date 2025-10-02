@@ -3,7 +3,7 @@ import type { ResultSetHeader, RowDataPacket } from "mysql2";
 import { NextResponse } from "next/server";
 
 export async function POST(req:Request) {
-    const {email, productItemId} = await req.json()
+    const {email, productItemId,quentity} = await req.json()
     const connection = await pool.getConnection()
     try{
         await connection.beginTransaction()
@@ -18,7 +18,7 @@ export async function POST(req:Request) {
         }
         const [result] = await connection.query<RowDataPacket[]>("SELECT cart_item.id AS cartItemId FROM cart_item WHERE cart_item.cart_id = ? AND cart_item.product_item_id =  ?",[cartId,productItemId])
         if( result.length ===0 ){
-            await connection.query("INSERT INTO cart_item (cart_id,product_item_id,quantity) VALUES(?,?,1)",[cartId,productItemId])
+            await connection.query("INSERT INTO cart_item (cart_id,product_item_id,quantity) VALUES(?,?,?)",[cartId,productItemId,quentity])
         }
         await connection.commit()
         return NextResponse.json({success: true, cartId:cartId, message:"add to cart successfully"})

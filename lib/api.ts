@@ -128,9 +128,9 @@ export async function fetchPayment(cartId:number) {
   }
 }
 
-export async function fetchAddToCart(email:string, productItemId:number) {
+export async function fetchAddToCart(email:string, productItemId:number,quentity:number) {
   try{
-    const res = await fetch ("/api/addtocart",{method:"POST",headers:{ "Content-type": "Application/json", "Accept": "Application/json"},body:JSON.stringify({email, productItemId})})
+    const res = await fetch ("/api/addtocart",{method:"POST",headers:{ "Content-type": "Application/json", "Accept": "Application/json"},body:JSON.stringify({email, productItemId,quentity})})
     const data =await res.json()
     return data
   }catch (error) {

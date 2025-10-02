@@ -31,7 +31,6 @@ const sortProduct = (
   productPath: string | string[] | undefined,
   pathNameProduct?: string[] | string
 ) => {
-  console.log(productsItem, "5");
   const stockSort = [...productsItem].sort((a, b) => {
     if (a.stock === 0 && b.stock > 0) return 1;
     if (b.stock === 0 && a.stock > 0) return -1;
@@ -130,13 +129,11 @@ const Product = () => {
     setActiveCard(id);
   };
   const addToCartHandler = async () => {
-    // localStorage.clear()
-    console.log(cartContext,'1')
     const isInStock = productsItemVarientFiltered.some(
       (pr) => pr.id === activeCard && pr.stock !== 0
     );
     if (isInStock && email) {
-      const res = await fetchAddToCart(email, activeCard);
+      const res = await fetchAddToCart(email, activeCard,1);
       if (res?.success) {
         setModalProperty({
           isOpen: true,
@@ -149,33 +146,41 @@ const Product = () => {
         });
       }
     } else if (isInStock && !email) {
-      const stored = localStorage.getItem("user");
+      const stored = localStorage.getItem("userCart");
       if (stored) {
-        const user: { productId: number; quantity: number }[] =
+        const userCart: { productId: number; quantity: number }[] =
           JSON.parse(stored);
-        const exist = user.find((item) => item.productId === activeCard);
+        const exist = userCart.find((item) => item.productId === activeCard);
         if (exist) {
-          const updateUser:{ productId: number; quantity: number }[] = user.map((item) =>
-            item.productId === activeCard
-              ? { ...item, quantity: item.quantity + 1 }
-              : item
-          );
-          localStorage.setItem("user", JSON.stringify(updateUser));
-          dispatchCart({type:'addToCart',payload:{productId:activeCard, quantity:exist.quantity+1}})
+          const updateUserCart: { productId: number; quantity: number }[] =
+            userCart.map((item) =>
+              item.productId === activeCard
+                ? { ...item, quantity: item.quantity + 1 }
+                : item
+            );
+          localStorage.setItem("userCart", JSON.stringify(updateUserCart));
+          dispatchCart({
+            type: "addToCart",
+            payload: { productId: activeCard, quantity: exist.quantity + 1 },
+          });
         } else {
-          console.log(user);
-          const userUpdate = [
-            ...user,
+          const userCartUpdate = [
+            ...userCart,
             { productId: activeCard, quantity: 1 },
           ];
-          console.log(userUpdate);
-          localStorage.setItem("user", JSON.stringify(userUpdate));
-          dispatchCart({type:'addToCart',payload:{productId:activeCard, quantity:1}})
+          localStorage.setItem("userCart", JSON.stringify(userCartUpdate));
+          dispatchCart({
+            type: "addToCart",
+            payload: { productId: activeCard, quantity: 1 },
+          });
         }
       } else {
-        const user = [{ productId: activeCard, quantity: 1 }];
-        localStorage.setItem("user", JSON.stringify(user));
-        dispatchCart({type:'addToCart',payload:{productId:activeCard, quantity:1}})
+        const userCart = [{ productId: activeCard, quantity: 1 }];
+        localStorage.setItem("userCart", JSON.stringify(userCart));
+        dispatchCart({
+          type: "addToCart",
+          payload: { productId: activeCard, quantity: 1 },
+        });
       }
     } else {
       setModalProperty({
@@ -184,8 +189,6 @@ const Product = () => {
         color: "red",
       });
     }
-    console.log(cartContext,'2')
-
   };
 
   if (

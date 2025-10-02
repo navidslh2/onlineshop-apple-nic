@@ -7,7 +7,6 @@ import { CategoriesContext } from "@/context/catgoriesContext";
 import React, { useContext } from "react";
 import { ProductsContext } from "@/context/productsContext";
 import SliderCards from "@/components/card/SliderCards";
-import { ProductsItemContext } from "@/context/productsItemContext";
 
 const Home = () => {
   const categoriesContext = useContext(CategoriesContext)
@@ -25,7 +24,6 @@ const Home = () => {
   const ipad = products.filter((p) => p.parentId === 14);
   const categoriesIpad = categories[1];
   const specialSale = products.filter((p) => p.discount !==0  )
-
   return (
     <Container>
       <Introduce />

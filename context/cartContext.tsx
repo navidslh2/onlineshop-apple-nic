@@ -2,7 +2,7 @@
 import { fetchCart } from "@/lib/api";
 import type { cart } from "@/lib/types";
 import { useSession } from "next-auth/react";
-import { createContext, useEffect, useReducer, useState } from "react";
+import { createContext, use, useEffect, useReducer, useState } from "react";
 
 
 interface CartContextType {
@@ -11,7 +11,7 @@ interface CartContextType {
   loading:boolean
 }
 
-type Action = {type:'fetch', payload: cart[] } | {type:'increasequantity', payload: number } | {type:'reducequantity', payload: number } | {type:'delete', payload: number } |{type:'addToCart', payload: cart } | {type:'payment'}
+type Action = {type:'fetch', payload: cart[] } | {type:'increasequantity', payload: number } | {type:'reducequantity', payload: number } | {type:'delete', payload: number } |{type:'addToCart', payload: cart } | {type:'payment'} | {type:'addToGuestCart', payload:cart[]}
 
 
 export const CartContext = createContext<CartContextType | null>(null);
@@ -28,6 +28,8 @@ const cartItemsReducer = (state: cart[], action: Action) => {
       return state.filter(item => item.productId !== action.payload)
     case "addToCart":
       return [...state,action.payload]
+    case "addToGuestCart":
+      return action.payload
     case "payment":
       return []
     default: 
@@ -55,6 +57,18 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
     };
     loadCart();
   }, [userEmail]);
+
+  useEffect(()=>{
+    if (userEmail) return
+    const guestCart = localStorage.getItem('userCart')
+    guestCart && dispatch({type:'fetch', payload:JSON.parse(guestCart)})
+  },[userEmail])
+
+  useEffect(()=>{
+    if(!userEmail){
+      localStorage.setItem('userCart',JSON.stringify(cartItems))
+    }
+  },[cartItems,userEmail])
   return (
     <CartContext.Provider value={{ cartItems, dispatch, loading }}>
       {children}
