@@ -10,6 +10,8 @@ import MenuBag from "./MenuBag";
 import Backdrop from "../ui/Backdrop";
 import { CartContext } from "@/context/cartContext";
 import SearchField from "../ui/SearchField";
+import SearchResults from "../ui/SearchResults";
+import { ProductsItemContext } from "@/context/productsItemContext";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -18,7 +20,12 @@ const Navbar = () => {
   const cartItemCount = cartContext?.cartItems?.length ?? 0;
   const [activeSearchbar, setActiveSearchbar] = useState(false);
   const [showBackdrop, setShowBackdrop] = useState(false);
-  const [searchValue, setSearchValue] = useState('')
+  const [searchValue, setSearchValue] = useState("");
+  const productItemsContext = useContext(ProductsItemContext)
+  const productsItem = productItemsContext?.productsItem ?? []
+  const productsearched = productsItem.filter(pr => pr.productName.indexOf(searchValue) >0 )
+
+
   const closeDropDown = () => {
     setIsMobileMenuOpen(false);
   };
@@ -37,7 +44,6 @@ const Navbar = () => {
     setActiveSearchbar(true);
     setShowBackdrop(true);
   };
-
 
   return (
     <header className="relative">
@@ -72,7 +78,17 @@ const Navbar = () => {
               <SearchBar activeSearchbarHandler={activeSearchbarHandler} />
             </div>
           </div>
-        ): <SearchField  searchValue={searchValue}/>}
+        ) : (
+          <div className="w-full md:w-[70%] h-[80%] flex items-center justify-center relative">
+            <SearchField
+              searchValue={searchValue}
+              inputValueHandler={(e) => setSearchValue(e.target.value)}
+            />
+            <div className="absolute right-0 left-0 top-[120%]">
+              <SearchResults productsearched={productsearched} />
+            </div>
+          </div>
+        )}
       </div>
       <div className="relative">
         <DropDownMenu isOpen={isMobileMenuOpen} closeDropDown={closeDropDown} />
