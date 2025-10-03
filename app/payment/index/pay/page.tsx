@@ -10,10 +10,12 @@ const Pay = () => {
     const route = useRouter()
     const cartContext = useContext(CartContext)
     const cartId = cartContext?.cartItems[0]?.cartId ?? 0
-    console.log(cartContext)
+    const dispatch = cartContext?.dispatch ?? (()=>{})
+  
+
     const successPaymentHandler= async()=>{
       await fetchPayment(cartId)
-      
+      dispatch({type:'payment'})
       route.push("/")
     }
   return (

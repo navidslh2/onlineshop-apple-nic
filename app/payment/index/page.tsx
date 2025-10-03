@@ -27,7 +27,7 @@ const IndexPayment = () => {
     })
   },[cartItems,productsItem])
   
-
+  
 
   if(cartContext?.loading) return <Loading />
   return (

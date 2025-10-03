@@ -1,6 +1,7 @@
 "use client";
 import TextTitle from "@/components/ui/TextTitle";
-import { fetchRegister } from "@/lib/api";
+import { fetchAddToCart, fetchRegister } from "@/lib/api";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -9,7 +10,7 @@ const Register = () => {
   const [password, setPassword] = useState<string>("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [error, setError] = useState("");
-  const router = useRouter()
+  const router = useRouter();
 
   const registerHandler = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,15 +29,33 @@ const Register = () => {
     }
 
     const email = localStorage.getItem("registerEmail");
-    
     if (email) {
-      try{
-        const res = await fetchRegister(email, password)
-        router.push("/")
-      }catch(error){
-        setError("لطفا مجدد تلاش کنید")
-      }}
-    localStorage.removeItem("registerEmail");
+      try {
+        await fetchRegister(email, password);
+        await signIn('credentials',{redirect:false,email,password})
+        router.push("/payment/index");
+      } catch (error) {
+        setError("لطفا مجدد تلاش کنید");
+      }
+      const userGuest = localStorage.getItem("userCart");
+      if (userGuest) {
+        const cartProducts = JSON.parse(userGuest);
+        try {
+          await Promise.all(
+            cartProducts.map((item: any) =>
+              fetchAddToCart(email, item.productId, item.quantity)
+            )
+          );
+          router.push("/payment/index");
+          localStorage.removeItem("userCart");
+        } catch (error) {
+          console.log("error in syncing guest cart");
+        }
+      } else {
+        router.push("/");
+      }
+      localStorage.removeItem("registerEmail");
+    }
   };
   return (
     <div className="mt-15 flex flex-col gap-8">
@@ -232,6 +251,6 @@ const Register = () => {
       </form>
     </div>
   );
-  }
+};
 
 export default Register;

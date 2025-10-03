@@ -38,8 +38,7 @@ const Cart = ({ cartProductItem }: Props) => {
   const dispatch = cartContext?.dispatch ?? (() => {});
   const { data } = useSession();
   const email = data?.user?.email ?? "";
-  // const guestCart = localStorage.getItem("userCart")
-  // guestCart && 
+
 
   const deleteProductHandler = () => {
     dispatch({ type: "delete", payload: id });

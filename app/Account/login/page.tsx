@@ -36,7 +36,7 @@ const Login = () => {
     }
     const res = await fetchEmailCheck(email)
     if(res.length >0) setPage("password")
-    // localStorage.setItem("registerEmail", email)
+    localStorage.setItem("registerEmail", email)
     if(res.length === 0) router.push("/Account/register")
   };
 
@@ -55,11 +55,16 @@ const Login = () => {
       const userGuest = localStorage.getItem('userCart')
       if(userGuest) {
         const cartProducts = JSON.parse(userGuest)
-        for (const item of cartProducts) { await fetchAddToCart(email, item.productId, item.quentity)}
-        localStorage.removeItem('userCart')
-        router.push('/iphone')
+        try{
+          await Promise.all(cartProducts.map((item:any)=> fetchAddToCart(email,item.productId, item.quantity)))
+          router.push('/payment/index')
+          localStorage.removeItem('userCart')
+        }catch(error){
+          console.log('error in syncing guest cart')
+        }
+      }else{
+        router.push("/")
       }
-      router.push("/")
     }
   }
   return (

@@ -128,68 +128,62 @@ const Product = () => {
   const activeCardHandler = (id: number) => {
     setActiveCard(id);
   };
-  const addToCartHandler = async () => {
-    const isInStock = productsItemVarientFiltered.some(
-      (pr) => pr.id === activeCard && pr.stock !== 0
-    );
-    if (isInStock && email) {
-      const res = await fetchAddToCart(email, activeCard,1);
-      if (res?.success) {
-        setModalProperty({
-          isOpen: true,
-          text: "کالا با موفقیت به سبد خرید اضافه شد",
-          color: "green",
-        });
-        dispatchCart({
-          type: "addToCart",
-          payload: { productId: activeCard, quantity: 1, cartId: res.cartId },
-        });
-      }
-    } else if (isInStock && !email) {
-      const stored = localStorage.getItem("userCart");
-      if (stored) {
-        const userCart: { productId: number; quantity: number }[] =
-          JSON.parse(stored);
-        const exist = userCart.find((item) => item.productId === activeCard);
-        if (exist) {
-          const updateUserCart: { productId: number; quantity: number }[] =
-            userCart.map((item) =>
-              item.productId === activeCard
-                ? { ...item, quantity: item.quantity + 1 }
-                : item
-            );
-          localStorage.setItem("userCart", JSON.stringify(updateUserCart));
+    const addToCartHandler = async () => {
+      const isInStock = productsItemVarientFiltered.some(
+        (pr) => pr.id === activeCard && pr.stock !== 0
+      );
+      if (isInStock && email) {
+        const res = await fetchAddToCart(email, activeCard,1);
+        if (res?.success) {
+          setModalProperty({
+            isOpen: true,
+            text: "کالا با موفقیت به سبد خرید اضافه شد",
+            color: "green",
+          });
           dispatchCart({
             type: "addToCart",
-            payload: { productId: activeCard, quantity: exist.quantity + 1 },
+            payload: { productId: activeCard, quantity: 1, cartId: res.cartId },
           });
+        }
+      } else if (isInStock && !email) {
+        const stored = localStorage.getItem("userCart");
+        if (stored) {
+          const userCart: { productId: number; quantity: number }[] =
+            JSON.parse(stored);
+          const exist = userCart.find((item) => item.productId === activeCard);
+          
+          if (exist) {
+            const updateUserCart =
+              userCart.map((item) =>
+                item.productId === activeCard
+                  ? { ...item, quantity: item.quantity + 1 }
+                  : item
+              );
+            dispatchCart({
+              type: "addToGuestCart",
+              payload: updateUserCart,
+            });
+          } else {
+  
+            dispatchCart({
+              type: "addToCart",
+              payload: { productId: activeCard, quantity: 1 },
+            });
+          }
         } else {
-          const userCartUpdate = [
-            ...userCart,
-            { productId: activeCard, quantity: 1 },
-          ];
-          localStorage.setItem("userCart", JSON.stringify(userCartUpdate));
           dispatchCart({
             type: "addToCart",
             payload: { productId: activeCard, quantity: 1 },
           });
         }
       } else {
-        const userCart = [{ productId: activeCard, quantity: 1 }];
-        localStorage.setItem("userCart", JSON.stringify(userCart));
-        dispatchCart({
-          type: "addToCart",
-          payload: { productId: activeCard, quantity: 1 },
+        setModalProperty({
+          isOpen: true,
+          text: "این کالا در انبار موجود نمی باشد",
+          color: "red",
         });
       }
-    } else {
-      setModalProperty({
-        isOpen: true,
-        text: "این کالا در انبار موجود نمی باشد",
-        color: "red",
-      });
-    }
-  };
+    };
 
   if (
     !contextProducts ||
