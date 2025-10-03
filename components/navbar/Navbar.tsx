@@ -9,46 +9,70 @@ import MobileMenuIcon from "../ui/MobileMenuIcon";
 import MenuBag from "./MenuBag";
 import Backdrop from "../ui/Backdrop";
 import { CartContext } from "@/context/cartContext";
+import SearchField from "../ui/SearchField";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isShowMenuBag, setIsShowMenuBag] = useState<boolean>(false);
-  const cartContext = useContext(CartContext)
-  const cartItemCount = cartContext?.cartItems?.length ?? 0
-
+  const cartContext = useContext(CartContext);
+  const cartItemCount = cartContext?.cartItems?.length ?? 0;
+  const [activeSearchbar, setActiveSearchbar] = useState(false);
+  const [showBackdrop, setShowBackdrop] = useState(false);
+  const [searchValue, setSearchValue] = useState('')
   const closeDropDown = () => {
     setIsMobileMenuOpen(false);
   };
   const showMenuBagHandler = () => {
     setIsShowMenuBag(!isShowMenuBag);
+    setShowBackdrop(!showBackdrop);
   };
+
+  const backdropHandler = () => {
+    setIsShowMenuBag(false);
+    setShowBackdrop(!showBackdrop);
+    setActiveSearchbar(false);
+  };
+
+  const activeSearchbarHandler = () => {
+    setActiveSearchbar(true);
+    setShowBackdrop(true);
+  };
+
+
   return (
     <header className="relative">
-      <Backdrop
-        isShow={isShowMenuBag}
-        showMenuBagHandler={showMenuBagHandler}
-      />
+      <Backdrop isShow={showBackdrop} backdropHandler={backdropHandler} />
       <div className="w-full fixed top-0 h-[60px] bg-black flex items-center lg:justify-center justify-between px-5 z-30 xl:gap-10 gap-5">
-        <MobileMenuIcon
-          onOpen={() => setIsMobileMenuOpen(true)}
-          onClose={() => setIsMobileMenuOpen(false)}
-          isOpen={isMobileMenuOpen}
-        />
-        <Logo mobileMenuHandler={()=>setIsMobileMenuOpen(false)}/>
-        <HeaderMenu />
-        <div className="flex items-center xl:gap-10 gap-5 xl:w-[70px] w-[50px] justify-end">
-          <div className="sm:relative">
-            {isMobileMenuOpen ? null : (
-              <CartIcon showMenuBagHandler={showMenuBagHandler} cartItemCount={cartItemCount}/>
-            )}
-            <MenuBag
-              isShowMenuBag={isShowMenuBag}
-              showMenuBagHandler={showMenuBagHandler}
-              cartItemCount={cartItemCount}
+        {!activeSearchbar ? (
+          <div className="w-full flex items-center lg:justify-center justify-between px-5 xl:gap-10 gap-5">
+            <MobileMenuIcon
+              onOpen={() => setIsMobileMenuOpen(true)}
+              onClose={() => setIsMobileMenuOpen(false)}
+              isOpen={isMobileMenuOpen}
             />
+
+            <Logo mobileMenuHandler={() => setIsMobileMenuOpen(false)} />
+
+            <HeaderMenu />
+
+            <div className="flex items-center xl:gap-10 gap-5 xl:w-[70px] w-[50px] justify-end">
+              <div className="sm:relative">
+                {isMobileMenuOpen ? null : (
+                  <CartIcon
+                    showMenuBagHandler={showMenuBagHandler}
+                    cartItemCount={cartItemCount}
+                  />
+                )}
+                <MenuBag
+                  isShowMenuBag={isShowMenuBag}
+                  showMenuBagHandler={showMenuBagHandler}
+                  cartItemCount={cartItemCount}
+                />
+              </div>
+              <SearchBar activeSearchbarHandler={activeSearchbarHandler} />
+            </div>
           </div>
-          <SearchBar />
-        </div>
+        ): <SearchField  searchValue={searchValue}/>}
       </div>
       <div className="relative">
         <DropDownMenu isOpen={isMobileMenuOpen} closeDropDown={closeDropDown} />

@@ -1,10 +1,14 @@
 import { Search } from 'lucide-react'
 import React from 'react'
 
-const SearchBar = () => {
+interface Props{
+  activeSearchbarHandler:()=>void
+}
+
+const SearchBar = ({activeSearchbarHandler}:Props) => {
   return (
     <div>
-      <Search className="w-5 text-gray-300 hover:text-white hoverEffect hover:cursor-pointer"/>
+      <Search  className="w-5 text-gray-300 hover:text-white hoverEffect hover:cursor-pointer" onClick={activeSearchbarHandler}/>
     </div>
   )
 }
