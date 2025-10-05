@@ -1,5 +1,11 @@
 "use client";
-import React, { useContext, useEffect, useState, type FC } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type FC,
+} from "react";
 import Logo from "../logo/Logo";
 import HeaderMenu from "../headerMenu/HeaderMenu";
 import SearchBar from "../ui/SearchBar";
@@ -9,9 +15,9 @@ import MobileMenuIcon from "../ui/MobileMenuIcon";
 import MenuBag from "./MenuBag";
 import Backdrop from "../ui/Backdrop";
 import { CartContext } from "@/context/cartContext";
-import SearchField from "../ui/SearchField";
-import SearchResults from "../ui/SearchResults";
-import { ProductsItemContext } from "@/context/productsItemContext";
+import SearchField from "../search/SearchField";
+import SearchResults from "../search/SearchResults";
+import { ProductsContext } from "@/context/productsContext";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -21,9 +27,10 @@ const Navbar = () => {
   const [activeSearchbar, setActiveSearchbar] = useState(false);
   const [showBackdrop, setShowBackdrop] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const productItemsContext = useContext(ProductsItemContext)
-  const productsItem = productItemsContext?.productsItem ?? []
-  const productsearched = productsItem.filter(pr => pr.productName.indexOf(searchValue) >0 )
+  const productsContext = useContext(ProductsContext);
+  const products = productsContext?.products ?? [];
+
+  const productsearched =  products.filter((pr) => pr.product_name.indexOf(searchValue) > -1) 
 
 
   const closeDropDown = () => {
@@ -38,9 +45,11 @@ const Navbar = () => {
     setIsShowMenuBag(false);
     setShowBackdrop(!showBackdrop);
     setActiveSearchbar(false);
+ 
   };
 
   const activeSearchbarHandler = () => {
+    setSearchValue("");
     setActiveSearchbar(true);
     setShowBackdrop(true);
   };
@@ -79,13 +88,15 @@ const Navbar = () => {
             </div>
           </div>
         ) : (
-          <div className="w-full md:w-[70%] h-[80%] flex items-center justify-center relative">
-            <SearchField
-              searchValue={searchValue}
-              inputValueHandler={(e) => setSearchValue(e.target.value)}
-            />
-            <div className="absolute right-0 left-0 top-[120%]">
-              <SearchResults productsearched={productsearched} />
+          <div className="w-full h-full flex flex-col items-center justify-center ">
+            <div className="relative md:w-[70%] h-[80%] ">
+              <SearchField
+                searchValue={searchValue}
+                inputValueHandler={(e) => setSearchValue(e.target.value.trim())}
+              />
+              {searchValue && <div className="absolute  right-0 left-0  top-[120%] ">
+                <SearchResults productsearched={productsearched} searchClickHandler={backdropHandler} />
+              </div>}
             </div>
           </div>
         )}
