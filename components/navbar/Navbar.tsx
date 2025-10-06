@@ -18,6 +18,7 @@ import { CartContext } from "@/context/cartContext";
 import SearchField from "../search/SearchField";
 import SearchResults from "../search/SearchResults";
 import { ProductsContext } from "@/context/productsContext";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -29,7 +30,7 @@ const Navbar = () => {
   const [searchValue, setSearchValue] = useState("");
   const productsContext = useContext(ProductsContext);
   const products = productsContext?.products ?? [];
-
+  const route = useRouter()
   const productsearched =  products.filter((pr) => pr.product_name.indexOf(searchValue) > -1) 
 
 
@@ -53,6 +54,15 @@ const Navbar = () => {
     setActiveSearchbar(true);
     setShowBackdrop(true);
   };
+
+  const searchEnter = (e:React.KeyboardEvent<HTMLInputElement>)=>{
+    if(e.key === "Enter"){
+      e.preventDefault()
+      route.push(`/search?query=${encodeURIComponent(searchValue)}`)
+      setShowBackdrop(false)
+      setActiveSearchbar(false)
+    }
+  }
 
   return (
     <header className="relative">
@@ -93,6 +103,7 @@ const Navbar = () => {
               <SearchField
                 searchValue={searchValue}
                 inputValueHandler={(e) => setSearchValue(e.target.value.trim())}
+                searchEnter={searchEnter}
               />
               {searchValue && <div className="absolute  right-0 left-0  top-[120%] ">
                 <SearchResults productsearched={productsearched} searchClickHandler={backdropHandler} />
