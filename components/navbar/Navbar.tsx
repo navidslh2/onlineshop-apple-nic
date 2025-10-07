@@ -58,7 +58,7 @@ const Navbar = () => {
   const searchEnter = (e:React.KeyboardEvent<HTMLInputElement>)=>{
     if(e.key === "Enter"){
       e.preventDefault()
-      route.push(`/search?query=${encodeURIComponent(searchValue)}`)
+      route.push(`/search?product=${encodeURIComponent(searchValue)}`)
       setShowBackdrop(false)
       setActiveSearchbar(false)
     }
@@ -99,7 +99,7 @@ const Navbar = () => {
           </div>
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center ">
-            <div className="relative md:w-[70%] h-[80%] ">
+            <div className="relative w-full md:w-[70%] h-[80%] ">
               <SearchField
                 searchValue={searchValue}
                 inputValueHandler={(e) => setSearchValue(e.target.value.trim())}
