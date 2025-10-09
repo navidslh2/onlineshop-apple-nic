@@ -1,4 +1,4 @@
-import { fetchRating } from "@/lib/api";
+import { fetchgetRating } from "@/lib/api";
 import type { Rating } from "@/lib/types";
 import React, { createContext, useEffect, useReducer, useState } from "react";
 
@@ -30,7 +30,7 @@ const RatingProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const loadRating = async () => {
       try {
-        const data = await fetchRating();
+        const data = await fetchgetRating();
         dispatch({ type: "FETCH", payload: data });
       } catch (error) {
         console.log(error);

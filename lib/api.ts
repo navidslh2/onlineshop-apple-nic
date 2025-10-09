@@ -38,9 +38,9 @@ export async function fetchProductsItem(): Promise<ProductsItem[]> {
   }
 }
 
-export async function fetchRating(): Promise<Rating[]> {
+export async function fetchgetRating(): Promise<Rating[]> {
   try {
-    const res = await fetch("/api/rating");
+    const res = await fetch("/api/getRating");
     if (!res.ok) throw new Error("fail to fetch rating");
     const data = await res.json();
     return data;
@@ -90,51 +90,100 @@ export async function fetchCart(email: string): Promise<any> {
     const res = await fetch("/api/cart", {
       method: "POST",
       headers: { "Content-type": "Application/json" },
-      body: JSON.stringify({email}),
+      body: JSON.stringify({ email }),
     });
     if (!res.ok) throw new Error("fail to fetchCart");
-    const data = await res.json()
-    return data
+    const data = await res.json();
+    return data;
   } catch (error) {
     console.error("fail to fetchCart", error);
     throw error;
   }
 }
 
-export async function fetchChangeQuentity(action:number, email:string, productId:number ) {
-  try{
-    fetch('/api/changeQuentity',{method:'POST', headers: { "Content-type": "Application/json" }, body: JSON.stringify({action, email, productId })})
-  }catch(error){
-    console.log('fail to fetchChange', error)
-    throw error
+export async function fetchChangeQuentity(
+  action: number,
+  email: string,
+  productId: number
+) {
+  try {
+    fetch("/api/changeQuentity", {
+      method: "POST",
+      headers: { "Content-type": "Application/json" },
+      body: JSON.stringify({ action, email, productId }),
+    });
+  } catch (error) {
+    console.log("fail to fetchChange", error);
+    throw error;
   }
 }
 
-export async function fetchDeletecartProduct(email:string, productId:number) {
-  try{
-    fetch("/api/deleteCartProduct",{method:'DELETE', headers:{"Content-type": "Application/json"},body:JSON.stringify({email, productId})})
-  }catch(error){
-    console.log('fail to deletecartProduct', error)
-    throw error
+export async function fetchDeletecartProduct(email: string, productId: number) {
+  try {
+    fetch("/api/deleteCartProduct", {
+      method: "DELETE",
+      headers: { "Content-type": "Application/json" },
+      body: JSON.stringify({ email, productId }),
+    });
+  } catch (error) {
+    console.log("fail to deletecartProduct", error);
+    throw error;
   }
 }
 
-export async function fetchPayment(cartId:number) {
-  try{
-    fetch("/api/payment",{method:"POST", headers:{ "Content-type": "Application/json"},body:JSON.stringify({cartId})})
-  }catch(error){
-    console.log("fail to payment", error)
-    throw error
+export async function fetchPayment(cartId: number) {
+  try {
+    fetch("/api/payment", {
+      method: "POST",
+      headers: { "Content-type": "Application/json" },
+      body: JSON.stringify({ cartId }),
+    });
+  } catch (error) {
+    console.log("fail to payment", error);
+    throw error;
   }
 }
 
-export async function fetchAddToCart(email:string, productItemId:number,quentity:number) {
-  try{
-    const res = await fetch ("/api/addtocart",{method:"POST",headers:{ "Content-type": "Application/json", "Accept": "Application/json"},body:JSON.stringify({email, productItemId,quentity})})
-    const data =await res.json()
-    return data
-  }catch (error) {
+export async function fetchAddToCart(
+  email: string,
+  productItemId: number,
+  quentity: number
+) {
+  try {
+    const res = await fetch("/api/addtocart", {
+      method: "POST",
+      headers: {
+        "Content-type": "Application/json",
+        Accept: "Application/json",
+      },
+      body: JSON.stringify({ email, productItemId, quentity }),
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
     console.error("fail to add to cart", error);
+    throw error;
+  }
+}
+
+export async function fetchRating(
+  userId: number,
+  productId: number,
+  rating: number
+) {
+  try {
+    const res = await fetch("/api/rating", {
+      method: "POST",
+      headers: {
+        "Content-type": "Application/json",
+        Accept: "Application/json",
+      },
+      body: JSON.stringify({ userId, productId, rating }),
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("fail to rating", error);
     throw error;
   }
 }
