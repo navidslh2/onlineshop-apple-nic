@@ -1,11 +1,13 @@
 "use client";
 import type { Categories, Products } from "@/lib/types";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Card from "./Card";
 import Filter from "../filter/Filter";
+import { cn } from "@/lib/utils";
 
 interface Props {
   product: Products[];
+  classNames: string
 }
 
 const sortProduct = (product:Products[],filter: string) =>{
@@ -21,24 +23,25 @@ const sortProduct = (product:Products[],filter: string) =>{
         return 0
     }
   })
-
 }
 
-const Cards = ({ product }: Props) => {
+
+const Cards = ({ product,classNames }: Props) => {
   const [selectedFilter, setSelectedFilter] = useState("default");
-  const [filterProduct, setFilterProduct] = useState<Products[]>(product);
 
   const filterSelectHandler = (filter: string) => {
     setSelectedFilter(filter);
-    setFilterProduct(sortProduct(product,filter))
   };
+
+  const filterProduct =useMemo(()=> sortProduct(product,selectedFilter),[product,selectedFilter])
+
   return (
     <div className="flex flex-col gap-10 mt-12">
       <Filter
         onFilterSelect={filterSelectHandler}
         selectedFilter={selectedFilter}
       />
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-5">
+      <div className={cn("grid grid-cols-1 md:grid-cols-4 gap-4 mb-5", classNames)}>
         {filterProduct.map((item, index) => (
           <Card product={item} key={index}/>
         ))}

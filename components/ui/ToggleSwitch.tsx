@@ -15,7 +15,8 @@ const ToggleSwitch = ({toggle, toggleHandler}:Props) => {
         onClick={toggleHandler}
       />
       <motion.span
-        className={`bg-gray-100 right-0 w-5 h-5 rounded-full absolute shadow ${toggle ? 'right-0': "right-5"} `}
+        className={`bg-gray-100 right-0 w-5 h-5 rounded-full absolute shadow cursor-pointer ${toggle ? 'right-0': "right-5"} `}
+        onClick={toggleHandler}
         layout
       />
     </div>
