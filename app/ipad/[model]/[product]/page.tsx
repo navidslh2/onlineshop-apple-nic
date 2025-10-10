@@ -14,7 +14,7 @@ import { ProductsContext } from "@/context/productsContext";
 import { ProductsItemContext } from "@/context/productsItemContext";
 import { RatingContext } from "@/context/ratingContext";
 import { fetchAddToCart } from "@/lib/api";
-import type { ProductsItem } from "@/lib/types";
+import type { Products, ProductsItem } from "@/lib/types";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
@@ -86,7 +86,7 @@ const Product = () => {
   );
   const pathNameProduct = pathName.product;
 
-  const product = products.find((pr) => {
+  function productFunction (products:Products[]):Products | undefined { return products.find((pr) => {
     if (!pr.capacity) {
       return pr.productEName.trim() === pathName.product;
     }
@@ -94,12 +94,16 @@ const Product = () => {
       pr.capacityEName === capacityPath &&
       pr.productEName.trim() === productPath
     );
-  });
+  })
+};
 
-  useEffect(() => {
-    if (product?.id && rating?.length > 0)
-      dispatch({ type: "FILTER", payload: product?.id });
-  }, [product?.id, dispatch]);
+  const product = useMemo(()=> productFunction(products),[products])
+  
+
+  // useEffect(() => {
+  //   if (product?.id && rating?.length > 0)
+  //     dispatch({ type: "FILTER", payload: product.category_id });
+  // }, [product?.id, dispatch]);
 
   const productsItemFiltered: ProductsItem[] = useMemo(
     () => sortProduct(productsItem, capacityPath, productPath, pathNameProduct),
@@ -184,7 +188,7 @@ const Product = () => {
         });
       }
     };
-
+      const ratingProduct = useMemo(()=>  rating.find(item => item.productItemId === product?.category_id),[rating])
   if (
     !contextProducts ||
     !contextProductsItem ||
@@ -192,6 +196,7 @@ const Product = () => {
     productsItemLoading
   )
     return <Loading />;
+
   return (
     <Container className="my-7">
       {product && <BreadCrumb product={product} />}
@@ -216,7 +221,7 @@ const Product = () => {
             </div>
           </div>
           <div className="flex justify-between border-b pb-8">
-            <Rating rating={rating} />
+            {product && <Rating rating={ratingProduct} product={product} />}
             <div className="flex">
               <Text className="font-bold">برند:</Text>
               <Text>{product?.brand}</Text>

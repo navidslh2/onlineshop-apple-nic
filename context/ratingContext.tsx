@@ -4,7 +4,7 @@ import React, { createContext, useEffect, useReducer, useState } from "react";
 
 type RatingAction =
   | { type: "FETCH"; payload: Rating[] }
-  | { type: "FILTER"; payload: number };
+  | { type: "FILTER"; payload: number }
 
 interface RatingContextType {
   rating: Rating[];

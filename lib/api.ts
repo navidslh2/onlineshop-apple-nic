@@ -167,8 +167,8 @@ export async function fetchAddToCart(
 }
 
 export async function fetchRating(
-  userId: number,
-  productId: number,
+  email: string,
+  categoryId: number,
   rating: number
 ) {
   try {
@@ -178,7 +178,7 @@ export async function fetchRating(
         "Content-type": "Application/json",
         Accept: "Application/json",
       },
-      body: JSON.stringify({ userId, productId, rating }),
+      body: JSON.stringify({ email, categoryId, rating }),
     });
     const data = await res.json();
     return data;

@@ -4,13 +4,13 @@ import { NextResponse } from "next/server";
 
 
 export async function POST (req:Request) {
-    const {userId, productId, rating} =await req.json()
+    const {email, categoryId, rating} =await req.json()
     const connection = await pool.getConnection()
     try{
         await connection.beginTransaction()
-        const [result] = await pool.query<RowDataPacket[]>("SELECT id FROM rating WHERE product_item_id =? AND user_id =?",[productId,userId])
+        const [result] = await pool.query<RowDataPacket[]>("SELECT rating.id FROM rating JOIN users ON rating.user_id = users.id WHERE rating.product_item_id =? AND users.email =?",[categoryId,email])
         if(result.length === 0){
-            await pool.query("INSERT INTO rating( user_id, product_item_id, rating) VALUES (?,?,?)",[userId,productId,rating])
+            await pool.query("INSERT INTO rating (user_id, product_item_id, rating) VALUES ((SELECT id FROM users WHERE email = ?), ?, ?)",[email,categoryId,rating])
             await connection.commit()
             return NextResponse.json({succes:true})
         }else{

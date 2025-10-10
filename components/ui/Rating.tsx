@@ -1,27 +1,35 @@
 'use client'
-import type { ModalProperty, Rating as RatingType } from "@/lib/types";
+import type { ModalProperty, Products, Rating as RatingType } from "@/lib/types";
 import { Star } from "lucide-react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Text from "./Text";
 import { useSession } from "next-auth/react";
 import Modal from "./Modal";
 import { fetchRating } from "@/lib/api";
-
 interface Props {
-  rating: RatingType[];
+  rating?: RatingType;
+  product: Products;
 }
-const Rating = ({ rating }: Props) => {
+const Rating = ({ rating, product }: Props) => {
+  const {category_id} = product
   const [modalProperty, setModalProperty] = useState<ModalProperty>({});
-  const ratingNumber = Math.ceil(rating[0]?.avgRating ?? 0);
-  const count = rating[0]?.count ?? 0
+  const ratingNumber = Math.ceil(rating?.avgRating ?? 0);
+  const count = rating?.count ?? 0
   const user = useSession()
-  console.log(user.data)
+  const email = user?.data?.user?.email ?? ''
+
+
 
   const  ratingHandler =async (index:number)=>{
+    const rating = index+1
     if(user.status === 'unauthenticated' ){
       setModalProperty({isOpen:true, text:'برای امتیاز دهی وارد حساب کاربری خود شوید', color:'red'})
-    }else{
-      // const res = await fetchRating()
+    }else{ 
+      const res = await fetchRating(email, category_id, rating)
+      console.log(res)
+      if(res.success) {
+          setModalProperty({isOpen:true, text:'امتیاز شما با موفقیت ثبت شد', color:'green'})
+      }
     }
   }
   return (
@@ -42,7 +50,7 @@ const Rating = ({ rating }: Props) => {
         ))}
       </div>
       <div>
-        <Text className="text-xs" >{Number(Number(rating[0]?.avgRating ?? 0).toFixed(1)).toLocaleString("fa-IR")} از  {Number(count).toLocaleString("fa-IR")}</Text>
+        <Text className="text-xs" >{Number(Number(rating?.avgRating ?? 0).toFixed(1)).toLocaleString("fa-IR")} از  {Number(count).toLocaleString("fa-IR")}</Text>
       </div>
       <Modal modalProperty={modalProperty} onClose={()=> setModalProperty({})}/>
     </div>
