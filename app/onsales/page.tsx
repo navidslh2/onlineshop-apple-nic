@@ -4,15 +4,11 @@ import Loading from "@/components/loading/Loading";
 import TopBanner from "@/components/topBanner/TopBanner";
 import Container from "@/components/ui/Container";
 import Text from "@/components/ui/Text";
-import { CategoriesContext } from "@/context/catgoriesContext";
 import { ProductsContext } from "@/context/productsContext";
-import { useParams } from "next/navigation";
 import React, { useContext } from "react";
 
 
 const OnSales = () => {
-  const params = useParams()
-
   const productsContext = useContext(ProductsContext);
   if (!productsContext ) return <Loading />;
   const { products, loading } = productsContext;

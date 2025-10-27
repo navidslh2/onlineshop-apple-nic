@@ -1,10 +1,10 @@
-import { afterEach } from "node:test";
-import type { Categories, Products, ProductsItem, Rating } from "./types";
-import { DELETE } from "@/app/api/deleteCartProduct/route";
+
+import type { cart, Categories, Products, ProductsItem, Rating } from "./types";
+
 
 export async function fetchProducts(): Promise<Products[]> {
   try {
-    const res = await fetch("/api/products");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`);
     if (!res.ok) throw new Error("fail to fetch products");
     const data: Products[] = await res.json();
     return data;
@@ -16,7 +16,7 @@ export async function fetchProducts(): Promise<Products[]> {
 
 export async function fetchCategories(): Promise<Categories[]> {
   try {
-    const res = await fetch("/api/categories");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/categories`);
     if (!res.ok) throw new Error("fail to fetch categories");
     const data: Categories[] = await res.json();
     return data;
@@ -28,7 +28,7 @@ export async function fetchCategories(): Promise<Categories[]> {
 
 export async function fetchProductsItem(): Promise<ProductsItem[]> {
   try {
-    const res = await fetch("/api/productsItem");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/productsItem`);
     if (!res.ok) throw new Error("fail to fetch productsItem");
     const data: ProductsItem[] = await res.json();
     return data;
@@ -40,7 +40,7 @@ export async function fetchProductsItem(): Promise<ProductsItem[]> {
 
 export async function fetchgetRating(): Promise<Rating[]> {
   try {
-    const res = await fetch("/api/getRating");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/getRating`);
     if (!res.ok) throw new Error("fail to fetch rating");
     const data = await res.json();
     return data;
@@ -50,11 +50,11 @@ export async function fetchgetRating(): Promise<Rating[]> {
   }
 }
 
-export async function fetchEmailCheck(email: string): Promise<any> {
+export async function fetchEmailCheck(email: string): Promise<{result:boolean, email:string}> {
   try {
-    const res = await fetch("/api/emailCheck", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/emailCheck`, {
       method: "POST",
-      headers: { "Content-type": "Application/json" },
+      headers: { "Content-type": "application/json" },
       body: JSON.stringify(email),
     });
     if (!res.ok) throw new Error("fail to fetch emailCheck");
@@ -69,11 +69,11 @@ export async function fetchEmailCheck(email: string): Promise<any> {
 export async function fetchRegister(
   email: string,
   password: string
-): Promise<any> {
+): Promise<{success: boolean}> {
   try {
-    const res = await fetch("/api/register", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/register`, {
       method: "POST",
-      headers: { "Content-type": "Application/json" },
+      headers: { "Content-type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
     if (!res.ok) throw new Error("fail to fetchRegister");
@@ -85,15 +85,16 @@ export async function fetchRegister(
   }
 }
 
-export async function fetchCart(email: string): Promise<any> {
+export async function fetchCart(email: string): Promise<cart[]> {
   try {
-    const res = await fetch("/api/cart", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart`, {
       method: "POST",
-      headers: { "Content-type": "Application/json" },
+      headers: { "Content-type": "application/json" },
       body: JSON.stringify({ email }),
     });
     if (!res.ok) throw new Error("fail to fetchCart");
     const data = await res.json();
+    console.log(data,'88888')
     return data;
   } catch (error) {
     console.error("fail to fetchCart", error);
@@ -107,9 +108,9 @@ export async function fetchChangeQuentity(
   productId: number
 ) {
   try {
-    fetch("/api/changeQuentity", {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/changeQuentity`, {
       method: "POST",
-      headers: { "Content-type": "Application/json" },
+      headers: { "Content-type": "application/json" },
       body: JSON.stringify({ action, email, productId }),
     });
   } catch (error) {
@@ -120,9 +121,9 @@ export async function fetchChangeQuentity(
 
 export async function fetchDeletecartProduct(email: string, productId: number) {
   try {
-    fetch("/api/deleteCartProduct", {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/deleteCartProduct`, {
       method: "DELETE",
-      headers: { "Content-type": "Application/json" },
+      headers: { "Content-type": "application/json" },
       body: JSON.stringify({ email, productId }),
     });
   } catch (error) {
@@ -133,9 +134,9 @@ export async function fetchDeletecartProduct(email: string, productId: number) {
 
 export async function fetchPayment(cartId: number) {
   try {
-    fetch("/api/payment", {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/payment`, {
       method: "POST",
-      headers: { "Content-type": "Application/json" },
+      headers: { "Content-type": "application/json" },
       body: JSON.stringify({ cartId }),
     });
   } catch (error) {
@@ -150,11 +151,11 @@ export async function fetchAddToCart(
   quentity: number
 ) {
   try {
-    const res = await fetch("/api/addtocart", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/addtocart`, {
       method: "POST",
       headers: {
-        "Content-type": "Application/json",
-        Accept: "Application/json",
+        "Content-type": "application/json",
+        Accept: "application/json",
       },
       body: JSON.stringify({ email, productItemId, quentity }),
     });
@@ -172,11 +173,11 @@ export async function fetchRating(
   rating: number
 ) {
   try {
-    const res = await fetch("/api/rating", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/rating`, {
       method: "POST",
       headers: {
-        "Content-type": "Application/json",
-        Accept: "Application/json",
+        "Content-type": "application/json",
+        Accept: "application/json",
       },
       body: JSON.stringify({ email, categoryId, rating }),
     });

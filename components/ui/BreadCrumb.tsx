@@ -3,6 +3,7 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
+import Image from "next/image";
 
 interface BreadCrumbItem {
   fa:string
@@ -25,7 +26,7 @@ const BreadCrumb = ({ product }: Props) => {
   return (
     <Breadcrumbs aria-label="breadcrumb" separator={<Typography sx={{fontSize:"30px"}}>›</Typography>}>
       <Link underline="hover" color="inherit" href="/" >
-          <img src="/logo.png" alt="logo" className="w-6" />
+          <Image src="/logo.png" alt="logo" width={30} height={30} className="rounded-full" />
         </Link>
       
       {breadcrumb.map((item, index) => (

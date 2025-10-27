@@ -15,7 +15,7 @@ const VarientSelector = ({
 }: Props) => {
   let label: string | null = null;
   let varient: string[] | null = null;
-  let colorVarient: {[key: string]: string} = ({});
+  const colorVarient: {[key: string]: string} = ({});
   switch (information[0]) {
     case "warranty":
       label = "گارانتی :";
@@ -90,7 +90,7 @@ const VarientSelector = ({
       <label>{label}</label>
       <div className="w-full relative">
         <button
-          onClick={(e) => {
+          onClick={() => {
             setIsOpen(!isOpen);
           }}
           className="overflow-hidden xl:max-w-[150px] flex items-center justify-between text-black/50 text-sm "
@@ -109,7 +109,7 @@ const VarientSelector = ({
               transition={{ duration: 0.2, ease: "easeOut" }}
             >
               <li
-                onClick={(e) => {
+                onClick={() => {
                   changeVarientHandler(information[0], "all");
                   setIsOpen(false);
                 }}
@@ -128,7 +128,7 @@ const VarientSelector = ({
               {varient?.map((item, index) => (
                 <li
                   key={index}
-                  onClick={(e) => {
+                  onClick={() => {
                     changeVarientHandler(information[0], item);
                     setIsOpen(false);
                   }}

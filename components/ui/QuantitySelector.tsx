@@ -23,18 +23,16 @@ const QuantitySelector = ({ quantity, productId, stock }: Props) => {
     if (quantity < stock) {
       dispatch({ type: "increasequantity", payload: productId });
       fetchChangeQuentity(quantity + 1, email, productId);
-    } else {
-      modalProperty.isOpen ? (setTimeout(()=>setModalProperty({
-        isOpen: true,
-        text: `تعداد ${stock}از این محصول موجود میباشد`,
-        color: "red",
-      })),3000) : (setModalProperty({
-        isOpen: true,
-        text: `تعداد ${stock}از این محصول موجود میباشد`,
-        color: "red",
-      }))
-      ;
+      return
     }
+    const newModal = {isOpen: true, text: `تعداد ${stock} از این محصول موجود میباشد`, color: "red" as const,
+  };
+
+  if (modalProperty.isOpen) {
+    setTimeout(() => setModalProperty(newModal), 300);
+  } else {
+    setModalProperty(newModal);
+  }
   };
 
   const removeProduct = () => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import type { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -19,7 +19,7 @@ const ProductImageSlider = ({ productItem,activeCard }: Props) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
   const [mainSwiper, setMainSwiper] = useState<SwiperType | null>(null);
   const images = productItem.map( item => item.url)
-  const uniqueImages = [...new Set(images) ]
+  const uniqueImages = useMemo(()=> [...new Set(images) ],[images]) 
   
 
   useEffect(()=>{
@@ -30,7 +30,7 @@ const ProductImageSlider = ({ productItem,activeCard }: Props) => {
         mainSwiper.slideTo(index)
       }
     }
-  },[activeCard,mainSwiper,productItem])
+  },[activeCard,mainSwiper,productItem,uniqueImages])
   return (
     <div className="w-full  bg-gray-100">
       <Swiper

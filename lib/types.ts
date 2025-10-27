@@ -1,4 +1,4 @@
-import type { Icon } from "next/dist/lib/metadata/types/metadata-types";
+
 
 export interface Products {
   id: number;

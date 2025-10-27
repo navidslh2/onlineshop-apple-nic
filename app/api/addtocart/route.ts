@@ -22,10 +22,10 @@ export async function POST(req:Request) {
         }
         await connection.commit()
         return NextResponse.json({success: true, cartId:cartId, message:"add to cart successfully"})
-    }catch(error:any){
+    }catch(error:unknown){
         await connection.rollback()
         console.log(error)
-        return NextResponse.json({success: false, message:"add to cart is not successful", error:error.message }),{status:500}
+        return NextResponse.json({success: false, message:"add to cart is not successful" })
     }finally{
         connection.release()
     }}

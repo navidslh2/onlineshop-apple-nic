@@ -1,4 +1,4 @@
-import Logo from "@/components/logo/Logo";
+
 import TextTitle from "@/components/ui/TextTitle";
 import { Smile } from "lucide-react";
 import Link from "next/link";

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import TextTitle from "../ui/TextTitle";
 import Text from "../ui/Text";
-import type { ModalProperty, Products, ProductsItem } from "@/lib/types";
+import type { ModalProperty, ProductsItem } from "@/lib/types";
 import Price from "../ui/Price";
 import { useRouter } from "next/navigation";
 import Modal from "../ui/Modal";

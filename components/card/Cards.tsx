@@ -1,5 +1,5 @@
 "use client";
-import type { Categories, Products } from "@/lib/types";
+import type { Products } from "@/lib/types";
 import React, { useMemo, useState } from "react";
 import Card from "./Card";
 import Filter from "../filter/Filter";
@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 interface Props {
   product: Products[];
-  classNames: string
+  classNames?: string
 }
 
 const sortProduct = (product:Products[],filter: string) =>{

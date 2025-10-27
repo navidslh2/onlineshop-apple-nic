@@ -12,7 +12,7 @@ const Modal = ({ modalProperty, onClose }: Props) => {
             onClose()
         },3000)
         return ()=> clearTimeout(timer)
-    },[modalProperty])
+    },[modalProperty,onClose])
   return (
     <AnimatePresence>
       {modalProperty.isOpen &&

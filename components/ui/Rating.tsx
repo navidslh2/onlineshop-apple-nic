@@ -1,7 +1,7 @@
 'use client'
 import type { ModalProperty, Products, Rating as RatingType } from "@/lib/types";
 import { Star } from "lucide-react";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Text from "./Text";
 import { useSession } from "next-auth/react";
 import Modal from "./Modal";

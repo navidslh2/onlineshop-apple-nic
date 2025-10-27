@@ -14,11 +14,11 @@ import { ProductsContext } from "@/context/productsContext";
 import { ProductsItemContext } from "@/context/productsItemContext";
 import { RatingContext } from "@/context/ratingContext";
 import { fetchAddToCart } from "@/lib/api";
-import type { Products, ProductsItem } from "@/lib/types";
+import type { ProductsItem } from "@/lib/types";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 
 interface ModalProperty {
   isOpen?: boolean;
@@ -65,16 +65,16 @@ const Product = () => {
   const contextProducts = useContext(ProductsContext);
   const contextProductsItem = useContext(ProductsItemContext);
   const contextRating = useContext(RatingContext);
-  const { rating = [], dispatch = () => {} } = contextRating ?? {};
+  const { rating = []} = contextRating ?? {};
   const pathName = useParams();
   const user = useSession();
   const email = user?.data?.user?.email ?? "";
   const [modalProperty, setModalProperty] = useState<ModalProperty>({});
   const cartContext = useContext(CartContext);
   const dispatchCart = cartContext?.dispatch ?? (() => {});
-  const products = contextProducts?.products ?? [];
+ const products = useMemo(()=>contextProducts?.products ?? [],[contextProducts?.products] ) ;
   const productsLoading = contextProducts?.loading ?? true;
-  const productsItem = contextProductsItem?.productsItem ?? [];
+  const productsItem = useMemo(()=> contextProductsItem?.productsItem ?? [],[contextProductsItem?.productsItem]) ;
   const productsItemLoading = contextProducts?.loading ?? true;
 
   const capacityPath = pathName.product?.slice(
@@ -86,7 +86,8 @@ const Product = () => {
   );
   const pathNameProduct = pathName.product;
 
-  function productFunction (products:Products[]):Products | undefined { return products.find((pr) => {
+const product = useMemo(() => {
+  return products.find((pr) => {
     if (!pr.capacity) {
       return pr.productEName.trim() === pathName.product;
     }
@@ -94,20 +95,13 @@ const Product = () => {
       pr.capacityEName === capacityPath &&
       pr.productEName.trim() === productPath
     );
-  })
-};
-
-  const product = useMemo(()=> productFunction(products),[products])
+  });
+}, [products, pathName.product, capacityPath, productPath]);
   
-
-  // useEffect(() => {
-  //   if (product?.id && rating?.length > 0)
-  //     dispatch({ type: "FILTER", payload: product.category_id });
-  // }, [product?.id, dispatch]);
 
   const productsItemFiltered: ProductsItem[] = useMemo(
     () => sortProduct(productsItem, capacityPath, productPath, pathNameProduct),
-    [productsItem]
+    [productsItem,capacityPath, productPath,pathNameProduct]
   );
 
   const [filterVarient, setFilterVarient] = useState({
@@ -188,7 +182,7 @@ const Product = () => {
         });
       }
     };
-      const ratingProduct = useMemo(()=>  rating.find(item => item.productItemId === product?.category_id),[rating])
+      const ratingProduct = useMemo(()=>  rating.find(item => item.productItemId === product?.category_id),[rating,product?.category_id])
   if (
     !contextProducts ||
     !contextProductsItem ||

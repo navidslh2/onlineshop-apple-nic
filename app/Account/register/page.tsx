@@ -1,6 +1,7 @@
 "use client";
 import TextTitle from "@/components/ui/TextTitle";
 import { fetchAddToCart, fetchRegister } from "@/lib/api";
+import type { cart } from "@/lib/types";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -35,21 +36,21 @@ const Register = () => {
         await signIn('credentials',{redirect:false,email,password})
         router.push("/payment/index");
       } catch (error) {
-        setError("لطفا مجدد تلاش کنید");
+        console.log("لطفا مجدد تلاش کنید", error);
       }
       const userGuest = localStorage.getItem("userCart");
       if (userGuest) {
         const cartProducts = JSON.parse(userGuest);
         try {
           await Promise.all(
-            cartProducts.map((item: any) =>
+            cartProducts.map((item: cart) =>
               fetchAddToCart(email, item.productId, item.quantity)
             )
           );
           router.push("/payment/index");
           localStorage.removeItem("userCart");
         } catch (error) {
-          console.log("error in syncing guest cart");
+          console.log("error in syncing guest cart",error);
         }
       } else {
         router.push("/");
@@ -203,7 +204,7 @@ const Register = () => {
           width={120}
           height={120}
           alt="logo"
-          className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2"
+          className="absolute rounded-full top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2"
         />
       </div>
       <form

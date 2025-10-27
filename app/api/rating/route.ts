@@ -17,10 +17,10 @@ export async function POST (req:Request) {
             await connection.commit()
             return NextResponse.json({success:true, message:'You have already rated'})
         }
-    }catch(error: any){
+    }catch(error: unknown){
         await connection.rollback()
         console.log(error)
-        return NextResponse.json({success: false, message:"rating is not successful", error:error.message })
+        return NextResponse.json({success: false, message:"rating is not successful"})
         
     }finally{
         connection.release()

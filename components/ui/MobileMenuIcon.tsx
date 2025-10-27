@@ -1,7 +1,6 @@
 "use client";
 import { AlignCenterIcon, X } from "lucide-react";
-import React, { useState, type FC } from "react";
-import DropDownMenu from "./DropDownMenu";
+import React from "react";
 interface Props {
   onOpen?: () => void;
   onClose?: () => void;

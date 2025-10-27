@@ -1,7 +1,8 @@
-import React, { type FC } from "react";
+import React from "react";
 import { headerData } from "@/lib/data";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 interface Props {
   isOpen: boolean;
   closeDropDown: () => void;
@@ -27,10 +28,11 @@ const DropDownMenu = ({ isOpen, closeDropDown }: Props) => {
                   onClick={closeDropDown}
                 >
                   {item.logo ? (
-                    <img
+                    <Image
                       src={item.logo}
                       alt={item.tooltip}
-                      className="w-6 h-6 "
+                      width={30}
+                      height={30}
                     />
                   ) : null}
                   <p className="text-gray-300 text-sm group-hover:text-white group-hover:cursor-pointer">

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { CircleUser, ShoppingBag } from "lucide-react";
-import { AnimatePresence, easeInOut, motion, scale } from "framer-motion";
+import { AnimatePresence, easeInOut, motion } from "framer-motion";
 import { signOut, useSession } from "next-auth/react";
 
 interface Props {

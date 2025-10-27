@@ -2,6 +2,7 @@ import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import pool from "./db";
 import bcrypt from "bcryptjs"
+import type { RowDataPacket } from "mysql2";
 
 
 
@@ -13,13 +14,13 @@ export const authOptions: NextAuthOptions = {
         email: { label: "email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials):Promise<any> {
+      async authorize(credentials) {
         if (!credentials?.email || !credentials.password) return null;
-        const [rows] = await pool.query(
+        const [rows] = await pool.query<RowDataPacket[]>(
           "SELECT id, name, email, password FROM users WHERE email = ?",
           [credentials.email]
         );
-        const users = rows as any[];
+        const users = rows;
         const user = users.length > 0 ? users[0] : null;
         if (!user) return null;
         const isValid = await bcrypt.compare(credentials.password, user.password) 

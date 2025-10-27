@@ -1,10 +1,8 @@
 "use client";
 import React, {
   useContext,
-  useEffect,
   useMemo,
   useState,
-  type FC,
 } from "react";
 import Logo from "../logo/Logo";
 import HeaderMenu from "../headerMenu/HeaderMenu";
@@ -19,6 +17,14 @@ import SearchField from "../search/SearchField";
 import SearchResults from "../search/SearchResults";
 import { ProductsContext } from "@/context/productsContext";
 import { useRouter } from "next/navigation";
+import type { Products } from "@/lib/types";
+
+const getProductSearched = (products: Products[], searchValue: string) =>{
+  if (!Array.isArray(products)) return []
+  return products.filter((pr) => pr.product_name.includes(searchValue))
+}
+  
+
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -29,10 +35,12 @@ const Navbar = () => {
   const [showBackdrop, setShowBackdrop] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const productsContext = useContext(ProductsContext);
-  const products = productsContext?.products ?? [];
+  const products = useMemo(()=> productsContext?.products ?? [],[productsContext?.products]) ;
   const route = useRouter()
-  const productsearched =  products.filter((pr) => pr.product_name.indexOf(searchValue) > -1) 
-
+  const productsearched = useMemo(() => getProductSearched(products, searchValue) ,[products, searchValue]
+);
+ 
+  
 
   const closeDropDown = () => {
     setIsMobileMenuOpen(false);

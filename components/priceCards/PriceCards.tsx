@@ -1,7 +1,7 @@
-import React, { useState, type memo } from "react";
+import React from "react";
 import PriceCard from "./PriceCard";
 import type { ProductsItem } from "@/lib/types";
-import { AnimatePresence, motion, scale, stagger } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface Props {
   productItem: ProductsItem[];

@@ -1,6 +1,5 @@
 "use client";
 import SliderCards from "@/components/card/SliderCards";
-import Cards from "@/components/card/SliderCards";
 import Loading from "@/components/loading/Loading";
 import TopBanner from "@/components/topBanner/TopBanner";
 import Container from "@/components/ui/Container";
@@ -8,9 +7,9 @@ import { CategoriesContext } from "@/context/catgoriesContext";
 import { ProductsContext } from "@/context/productsContext";
 import React, { useContext } from "react";
 
-const page = () => {
+const IpadPage = () => {
   const categoriesContext = useContext(CategoriesContext)
-    const prouductsContext = useContext(ProductsContext)
+  const prouductsContext = useContext(ProductsContext)
   if (!categoriesContext || !prouductsContext)  return <Loading />;
 
   const { categories } = categoriesContext;
@@ -37,4 +36,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default IpadPage;

@@ -1,4 +1,4 @@
-import type { Products, ProductsItem } from "@/lib/types";
+import type { Products } from "@/lib/types";
 import Image from "next/image";
 import React from "react";
 import TextTitle from "../ui/TextTitle";

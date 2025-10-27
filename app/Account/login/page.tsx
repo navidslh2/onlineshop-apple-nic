@@ -35,9 +35,9 @@ const Login = () => {
       return;
     }
     const res = await fetchEmailCheck(email)
-    if(res.length >0) setPage("password")
+    if(res.result) setPage("password")
     localStorage.setItem("registerEmail", email)
-    if(res.length === 0) router.push("/Account/register")
+    if(!res.result) router.push("/Account/register")
   };
 
   const handelPassword = async (e: React.FormEvent) =>{
@@ -56,11 +56,11 @@ const Login = () => {
       if(userGuest) {
         const cartProducts = JSON.parse(userGuest)
         try{
-          await Promise.all(cartProducts.map((item:any)=> fetchAddToCart(email,item.productId, item.quantity)))
+          await Promise.all(cartProducts.map((item:{productId:number, quantity:number})=> fetchAddToCart(email,item.productId, item.quantity)))
           router.push('/payment/index')
           localStorage.removeItem('userCart')
         }catch(error){
-          console.log('error in syncing guest cart')
+          console.log('error in syncing guest cart',error)
         }
       }else{
         router.push("/")
@@ -213,7 +213,7 @@ const Login = () => {
           width={120}
           height={120}
           alt="logo"
-          className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2"
+          className="absolute rounded-full top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2"
         />
       </div>
       {page === "email" && <SigninContent page={page} email={email} password={password} inputValueHandler={inputValueHandler} error={error} handelLogin={handelemail}/>}

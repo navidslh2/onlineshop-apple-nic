@@ -1,6 +1,6 @@
 "use client";
 import Slider from "@mui/material/Slider";
-import React, { useState } from "react";
+import React from "react";
 
 interface Props {
   maxPrice: number;

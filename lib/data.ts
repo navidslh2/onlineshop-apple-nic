@@ -54,30 +54,23 @@ export const headerData = [
     logo: "/wristwatch-outline-svgrepo-com.svg",
     img:"/accesorynew.webp"
   },
+
   {
     id: 9,
-    title: "صدا و تصویر",
-    href: "/accessories/headphone-speaker",
-    tooltip: "/audio and visual device",
-    logo: "speaker-svgrepo-com.svg",
-    img:"/audio-visual.webp"
-  },
-  {
-    id: 10,
     title: "قیمت روز",
     href: "/price-list",
     tooltip: "price",
     logo: "/document-filled-svgrepo-com.svg",
   },
   {
-    id: 11,
+    id: 10,
     title: "محصولات کارکرده",
     href: "/stockproduct",
     tooltip: "trade",
     logo: "",
   },
   {
-    id: 12,
+    id: 11,
     title: "تماس با ما",
     href: "/contact-us",
     tooltip: "contact us",
@@ -89,11 +82,11 @@ export interface StoreItem {
   id: number;
   title: string;
   className?: string;
-  href?: string;
+  href: string;
 }
 
 export const store: StoreItem[] = [
-  { id: 1, title: "فروشگاه", className: "font-bold" },
+  { id: 1, title: "فروشگاه", className: "font-bold", href:"" },
   { id: 2, title: "مک", href:"/mac" },
   { id: 3, title: "آیپد", href:"/ipad"  },
   { id: 4, title: "آیفون", href:"/iphone" },
@@ -105,11 +98,11 @@ export interface AccessoriesItem {
   id: number;
   title: string;
   className?: string;
-  href?: string;
+  href: string;
 }
 
 export const accessories:AccessoriesItem[] = [
-  { id: 1, title: "جانبی اپل", className: "font-bold" },
+  { id: 1, title: "جانبی اپل", className: "font-bold",href:"" },
   { id: 2, title: "لوازم جانبی آیفون", href:"/" },
   { id: 3, title: "لوازم جانبی مک", href:"/" },
   { id: 4, title: "لوازم جانبی آیپد", href:"" },
@@ -122,11 +115,11 @@ export interface NewProductItem {
   id: number;
   title: string;
   className?: string;
-  href?: string;
+  href: string;
 }
 
 export const newProduct:NewProductItem[] = [
-  { id: 1, title: "محصولات جدید 2025", className: "font-bold" },
+  { id: 1, title: "محصولات جدید 2025", className: "font-bold",href:"" },
   { id: 2, title: "قیمت آیفون 16 پرو مکس", href:"" },
   { id: 3, title: "قیمت آیفون 16 پرو", href:"" },
   { id: 4, title: "قیمت آیفون 16", href:"" },
@@ -139,11 +132,11 @@ export interface AfterSalesServiceItem {
   id: number;
   title: string;
   className?: string;
-  href?: string;
+  href: string;
 }
 
 export const afterSalesService:AfterSalesServiceItem[] = [
-  { id: 1, title: "خدمات پس از فروش", className: "font-bold" },
+  { id: 1, title: "خدمات پس از فروش", className: "font-bold" ,href:""},
   { id: 2, title: "گیفت کارت اپل", href:"" },
   { id: 3, title: "گیفت کارت پلی استیشن", href:"" },
   { id: 4, title: "گیفت کارت استیم", href:"" },
@@ -156,11 +149,11 @@ export interface ContactInformationItem {
   id: number;
   title: string;
   className?: string;
-  href?: string;
+  href: string;
 }
 
 export const contactInformation:ContactInformationItem[] = [
-  { id: 1, title: "اطلاعات تماس" },
+  { id: 1, title: "اطلاعات تماس",href:"" },
   { id: 2, title: "تماس با ما", href:"" },
   { id: 3, title: "درباره ما", href:"" },
   { id: 4, title: "نقشه سایت", href:"" },

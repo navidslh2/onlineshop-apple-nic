@@ -7,18 +7,14 @@ import Text from "@/components/ui/Text";
 import TextTitle from "@/components/ui/TextTitle";
 import { CartContext } from "@/context/cartContext";
 import { ProductsItemContext } from "@/context/productsItemContext";
-import type { ProductsItem } from "@/lib/types";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useMemo } from "react";
 
-interface CartProductItem extends ProductsItem {
-  quantity: number;
-}
 
 const IndexPayment = () => {
   const cartContext = useContext(CartContext);
   const productItemContext = useContext(ProductsItemContext);
-  const cartItems  = cartContext?.cartItems ?? []
-  const productsItem = productItemContext?.productsItem ?? []
+const cartItems = useMemo(() => cartContext?.cartItems ?? [], [cartContext?.cartItems]);
+  const productsItem = useMemo(() => productItemContext?.productsItem ?? [], [productItemContext?.productsItem]);
 
   const cartProducts = useMemo(()=>{
     return productsItem.filter(pr => cartItems.some(item => item.productId === pr.id)).map(pr =>{

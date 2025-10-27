@@ -14,10 +14,10 @@ export async function POST(req:Request) {
 
         await connection.commit()
         return NextResponse.json({success: true, message:"payment is successfully"})
-    }catch(error:any){
+    }catch(error:unknown){
         await connection.rollback()
         console.log(error)
-        return NextResponse.json({success: false, message:"payment is not successful", error:error.message }),{status:500}
+        return NextResponse.json({success: false, message:"payment is not successful"},{status:500})
     } finally {
         connection.release()
     }

@@ -11,7 +11,7 @@ import React, { useContext } from "react";
 
 
 
-const Category = () => {
+const IphonePage = () => {
   const categoriesContext = useContext(CategoriesContext);
   const prouductsContext = useContext(ProductsContext);
   if (!categoriesContext || !prouductsContext) return <Loading />;
@@ -47,4 +47,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default IphonePage;

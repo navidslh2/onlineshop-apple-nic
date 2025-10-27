@@ -14,11 +14,11 @@ import { ProductsContext } from "@/context/productsContext";
 import { ProductsItemContext } from "@/context/productsItemContext";
 import { RatingContext } from "@/context/ratingContext";
 import { fetchAddToCart } from "@/lib/api";
-import type { Products, ProductsItem } from "@/lib/types";
+import type { ProductsItem } from "@/lib/types";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 
 interface ModalProperty {
   isOpen?: boolean;
@@ -65,16 +65,22 @@ const Product = () => {
   const contextProducts = useContext(ProductsContext);
   const contextProductsItem = useContext(ProductsItemContext);
   const contextRating = useContext(RatingContext);
-  const { rating = [], dispatch = () => {} } = contextRating ?? {};
+  const { rating = [] } = contextRating ?? {};
   const pathName = useParams();
   const user = useSession();
   const email = user?.data?.user?.email ?? "";
   const [modalProperty, setModalProperty] = useState<ModalProperty>({});
   const cartContext = useContext(CartContext);
   const dispatchCart = cartContext?.dispatch ?? (() => {});
-  const products = contextProducts?.products ?? [];
+  const products = useMemo(
+    () => contextProducts?.products ?? [],
+    [contextProducts?.products]
+  );
   const productsLoading = contextProducts?.loading ?? true;
-  const productsItem = contextProductsItem?.productsItem ?? [];
+  const productsItem = useMemo(
+    () => contextProductsItem?.productsItem ?? [],
+    [contextProductsItem?.productsItem]
+  );
   const productsItemLoading = contextProducts?.loading ?? true;
 
   const capacityPath = pathName.product?.slice(
@@ -86,27 +92,21 @@ const Product = () => {
   );
   const pathNameProduct = pathName.product;
 
-   function productFunction (products:Products[]):Products | undefined { return products.find((pr) => {
-     if (!pr.capacity) {
-       return pr.productEName.trim() === pathName.product;
-     }
-     return (
-       pr.capacityEName === capacityPath &&
-       pr.productEName.trim() === productPath
-     );
-   })
- };
- 
-   const product = useMemo(()=> productFunction(products),[products])
-
-  // useEffect(() => {
-  //   if (product?.id && rating?.length > 0)
-  //     dispatch({ type: "FILTER", payload: product.category_id });
-  // }, [product?.id, dispatch]);
+  const product = useMemo(() => {
+    return products.find((pr) => {
+      if (!pr.capacity) {
+        return pr.productEName.trim() === pathName.product;
+      }
+      return (
+        pr.capacityEName === capacityPath &&
+        pr.productEName.trim() === productPath
+      );
+    });
+  }, [products, pathName.product, capacityPath, productPath]);
 
   const productsItemFiltered: ProductsItem[] = useMemo(
     () => sortProduct(productsItem, capacityPath, productPath, pathNameProduct),
-    [productsItem]
+    [productsItem, capacityPath, productPath, pathNameProduct]
   );
 
   const [filterVarient, setFilterVarient] = useState({
@@ -136,7 +136,7 @@ const Product = () => {
       (pr) => pr.id === activeCard && pr.stock !== 0
     );
     if (isInStock && email) {
-      const res = await fetchAddToCart(email, activeCard,1);
+      const res = await fetchAddToCart(email, activeCard, 1);
       if (res?.success) {
         setModalProperty({
           isOpen: true,
@@ -154,26 +154,38 @@ const Product = () => {
         const userCart: { productId: number; quantity: number }[] =
           JSON.parse(stored);
         const exist = userCart.find((item) => item.productId === activeCard);
-        
         if (exist) {
-          const updateUserCart =
-            userCart.map((item) =>
-              item.productId === activeCard
-                ? { ...item, quantity: item.quantity + 1 }
-                : item
-            );
+          const updateUserCart = userCart.map((item) =>
+            item.productId === activeCard
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          );
+          setModalProperty({
+            isOpen: true,
+            text: "کالا با موفقیت به سبد خرید اضافه شد",
+            color: "green",
+          });
           dispatchCart({
             type: "addToGuestCart",
             payload: updateUserCart,
           });
         } else {
-
+          setModalProperty({
+            isOpen: true,
+            text: "کالا با موفقیت به سبد خرید اضافه شد",
+            color: "green",
+          });
           dispatchCart({
             type: "addToCart",
             payload: { productId: activeCard, quantity: 1 },
           });
         }
       } else {
+        setModalProperty({
+          isOpen: true,
+          text: "کالا با موفقیت به سبد خرید اضافه شد",
+          color: "green",
+        });
         dispatchCart({
           type: "addToCart",
           payload: { productId: activeCard, quantity: 1 },
@@ -187,7 +199,10 @@ const Product = () => {
       });
     }
   };
-  const ratingProduct = useMemo(()=>  rating.find(item => item.productItemId === product?.category_id),[rating])
+  const ratingProduct = useMemo(
+    () => rating.find((item) => item.productItemId === product?.category_id),
+    [rating, product?.category_id]
+  );
   if (
     !contextProducts ||
     !contextProductsItem ||
@@ -195,8 +210,7 @@ const Product = () => {
     productsItemLoading
   )
     return <Loading />;
-    
-  
+
   return (
     <Container className="my-7">
       {product && <BreadCrumb product={product} />}
@@ -221,7 +235,7 @@ const Product = () => {
             </div>
           </div>
           <div className="flex justify-between border-b pb-8">
-           {product && <Rating rating={ratingProduct} product={product} />}
+            {product && <Rating rating={ratingProduct} product={product} />}
             <div className="flex">
               <Text className="font-bold">برند:</Text>
               <Text>{product?.brand}</Text>
