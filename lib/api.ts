@@ -94,7 +94,6 @@ export async function fetchCart(email: string): Promise<cart[]> {
     });
     if (!res.ok) throw new Error("fail to fetchCart");
     const data = await res.json();
-    console.log(data,'88888')
     return data;
   } catch (error) {
     console.error("fail to fetchCart", error);

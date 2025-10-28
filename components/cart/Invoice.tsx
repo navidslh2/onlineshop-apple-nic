@@ -34,6 +34,9 @@ const Invoice = ({ cartProductsItem }: Props) => {
     const isinStock = cartProductsItem.every(
       (item) => item.quantity <= item.stock
     );
+    localStorage.clear()
+    const buyList = cartProductsItem.map(item =>( {id:item.id, quantity:item.quantity}) ) 
+    localStorage.setItem('buyList', JSON.stringify(buyList))
     if (!isinStock) {
       return setModalProperty({
         isOpen: true,

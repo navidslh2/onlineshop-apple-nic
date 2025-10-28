@@ -2,6 +2,7 @@
 import Container from "@/components/ui/Container";
 import Modal from "@/components/ui/Modal";
 import { CartContext } from "@/context/cartContext";
+import { ProductsItemContext } from "@/context/productsItemContext";
 import { fetchPayment } from "@/lib/api";
 import type { ModalProperty } from "@/lib/types";
 import { useRouter } from "next/navigation";
@@ -11,8 +12,10 @@ import React, { useContext, useState } from "react";
 const Pay = () => {
   const route = useRouter();
   const cartContext = useContext(CartContext);
+  const productitemContext = useContext(ProductsItemContext)
   const cartId = cartContext?.cartItems[0]?.cartId ?? 0;
   const dispatch = cartContext?.dispatch ?? (() => {});
+  const dispatchProductItem = productitemContext?.dispatch ?? (()=> {})
   const [modalProperty, setModalProperty] = useState<ModalProperty>({});
 
   const successPaymentHandler = async () => {
@@ -21,6 +24,10 @@ const Pay = () => {
       text: "خرید شما با موفقیت انجام شد",
       color: "green",
     });
+    const localBuyList = localStorage.getItem('buyList')
+    let buylist = []
+    if(localBuyList)  buylist = JSON.parse(localBuyList) 
+    dispatchProductItem({type:'buy', payload:buylist})
     await fetchPayment(cartId);
     dispatch({ type: "payment" });
     setTimeout(() => {
