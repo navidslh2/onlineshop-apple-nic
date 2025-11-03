@@ -10,7 +10,6 @@ import {
   newProduct,
 } from "@/lib/data";
 import AboutUs from "./AboutUs";
-import Certificate from "./Certificate";
 import { usePathname } from "next/navigation";
 
 const Footer = () => {
@@ -29,7 +28,7 @@ const Footer = () => {
               <FooterSection data={contactInformation} />
             </div>
             <AboutUs />
-            <Certificate />
+           
             <p className="text-gray-700 text-sm flexCenter p-4">
               طراحی و توسعه توسط نوید صالحی جهت انجام پروژه{" "}
             </p>

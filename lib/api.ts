@@ -1,6 +1,4 @@
-
 import type { cart, Categories, Products, ProductsItem, Rating } from "./types";
-
 
 export async function fetchProducts(): Promise<Products[]> {
   try {
@@ -16,7 +14,9 @@ export async function fetchProducts(): Promise<Products[]> {
 
 export async function fetchCategories(): Promise<Categories[]> {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/categories`);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/categories`
+    );
     if (!res.ok) throw new Error("fail to fetch categories");
     const data: Categories[] = await res.json();
     return data;
@@ -28,7 +28,9 @@ export async function fetchCategories(): Promise<Categories[]> {
 
 export async function fetchProductsItem(): Promise<ProductsItem[]> {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/productsItem`);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/productsItem`
+    );
     if (!res.ok) throw new Error("fail to fetch productsItem");
     const data: ProductsItem[] = await res.json();
     return data;
@@ -50,13 +52,18 @@ export async function fetchgetRating(): Promise<Rating[]> {
   }
 }
 
-export async function fetchEmailCheck(email: string): Promise<{result:boolean, email:string}> {
+export async function fetchEmailCheck(
+  email: string
+): Promise<{ result: boolean; email: string }> {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/emailCheck`, {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(email),
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/emailCheck`,
+      {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(email),
+      }
+    );
     if (!res.ok) throw new Error("fail to fetch emailCheck");
     const data = await res.json();
     return data;
@@ -69,7 +76,7 @@ export async function fetchEmailCheck(email: string): Promise<{result:boolean, e
 export async function fetchRegister(
   email: string,
   password: string
-): Promise<{success: boolean}> {
+): Promise<{ success: boolean }> {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/register`, {
       method: "POST",
@@ -150,14 +157,17 @@ export async function fetchAddToCart(
   quentity: number
 ) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/addtocart`, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({ email, productItemId, quentity }),
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/addtocart`,
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ email, productItemId, quentity }),
+      }
+    );
     const data = await res.json();
     return data;
   } catch (error) {
@@ -184,6 +194,24 @@ export async function fetchRating(
     return data;
   } catch (error) {
     console.error("fail to rating", error);
+    throw error;
+  }
+}
+
+export async function fetchVisit(pathname: string) {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/visit`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ pathname }),
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("fail to set a visit", error);
     throw error;
   }
 }

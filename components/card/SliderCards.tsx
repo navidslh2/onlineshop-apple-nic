@@ -13,9 +13,12 @@ interface Props {
   category?: Categories;
 }
 const SliderCards = ({ product, category }: Props) => {
+  if (!product || product.length === 0) {
+    return null;
+  }
   return (
-    <div >
-      <CardTitle category={category}  />
+    <div>
+      <CardTitle category={category} />
       <Swiper
         
         modules={[Navigation]}
@@ -29,7 +32,7 @@ const SliderCards = ({ product, category }: Props) => {
       >
         {product.map((item, index) => (
           <SwiperSlide key={index}>
-            <Card product={item}  />
+            <Card product={item} />
           </SwiperSlide>
         ))}
       </Swiper>
