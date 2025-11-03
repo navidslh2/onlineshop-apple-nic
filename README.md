@@ -1,6 +1,6 @@
 #  فروشگاه آنلاین Apple-Nic 
 
-این پروژه یک نسخه از سایت (https://apple-nic.com)  است که با استفاده از Next.js MySQL2 Tailwind  و Framer Motion ساخته شده است.   
+این پروژه یک نسخه از سایت (https://apple-nic.com)  است که با استفاده از Next.js MySQL2 Tailwind  nextauthو Framer Motion ساخته شده است.   
 در این پروژه تلاش کرده‌ام سایت اپل‌نیک را با دقت و کیفیت بالا بازسازی کنم.
 
 
